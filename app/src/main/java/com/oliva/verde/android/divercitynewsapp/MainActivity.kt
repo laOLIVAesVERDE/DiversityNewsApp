@@ -3,7 +3,7 @@ package com.oliva.verde.android.divercitynewsapp
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
+import android.view.ContextMenu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -22,8 +22,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top)
+        val lvArticles = findViewById<ListView>(R.id.lvArticles)
+        registerForContextMenu(lvArticles)
         val receiver = NewsInfoReceiver()
         receiver.execute()
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menuInflater.inflate(R.menu.context_menu, menu)
+        menu.setHeaderTitle(R.string.news_list_context_header)
     }
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
