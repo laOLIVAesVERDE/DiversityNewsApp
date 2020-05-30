@@ -1,11 +1,14 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -25,8 +28,16 @@ class MainActivity : AppCompatActivity() {
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
         override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            val item = parent?.getItemAtPosition(position) as MutableMap<String, String>
-            
+            val item = parent?.getItemAtPosition(position) as Article // Articleクラスにキャスト
+            // url文字列を取得
+            val url = item.url
+            //以下、Custom Tabs機能を使って記事の詳細を表示する
+            // Custom Tabを表示するBuilderオブジェクトを取得
+            val builder = CustomTabsIntent.Builder()
+            // CustomTabsIntentオブジェクトを取得
+            val customTabsIntent = builder.build()
+            // Uriを指定し、Custom Tabを表示する
+            customTabsIntent.launchUrl(this@MainActivity, Uri.parse(url))
         }
     }
 
