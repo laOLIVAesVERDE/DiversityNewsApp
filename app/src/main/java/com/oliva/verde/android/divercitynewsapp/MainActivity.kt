@@ -17,6 +17,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
+    private val _helper = DataBaseHelper(this@MainActivity)
     var articleList = mutableListOf<Article>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
