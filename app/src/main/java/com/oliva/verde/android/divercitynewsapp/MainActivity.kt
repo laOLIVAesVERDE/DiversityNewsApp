@@ -1,24 +1,15 @@
 package com.oliva.verde.android.divercitynewsapp
 
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.SimpleAdapter
-import android.widget.TextView
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.news_row.*
+import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.lang.StringBuilder
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -32,6 +23,13 @@ class MainActivity : AppCompatActivity() {
         receiver.execute()
     }
 
+    private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+        override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val item = parent?.getItemAtPosition(position) as MutableMap<String, String>
+            
+        }
+    }
+
     private inner class NewsInfoReceiver() : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg params: String?): String {
             val apiKey = "413005df5f58476c868396878a752fb8"
@@ -42,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             con.requestMethod = "GET"
             con.connect()
             val stream = con.inputStream
+            // JSON形式に変換
             val result = is2String(stream)
             con.disconnect()
             stream.close()
@@ -66,7 +65,9 @@ class MainActivity : AppCompatActivity() {
 
             }
             val lvArticles = findViewById<ListView>(R.id.lvArticles)
+            // 独自定義のAdapterクラスをlayoutに紐づける
             lvArticles.adapter = ArticleAdapter(this@MainActivity, articleList)
+            lvArticles.onItemClickListener = ListItemClickListener()
         }
 
         private fun is2String(stream : InputStream) : String {
