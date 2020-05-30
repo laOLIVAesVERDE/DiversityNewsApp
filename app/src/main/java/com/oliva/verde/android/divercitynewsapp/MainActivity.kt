@@ -3,8 +3,12 @@ package com.oliva.verde.android.divercitynewsapp
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.ListView
+import android.widget.SimpleAdapter
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.news_row.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,39 +23,19 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
+    var articleList = mutableListOf<Article>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top)
-        // レシーバオブジェクト取得 & executeする
         val receiver = NewsInfoReceiver()
         receiver.execute()
-        /**
-        // Retrofit : API通信を行うためのライブラリ
-        // Retrofitオブジェクトを取得
-        val retrofit = Retrofit.Builder().baseUrl("https://newsapi.org/").addConverterFactory(GsonConverterFactory.create()).build()
-        // APIエンドポイント(APIにアクセスするためのURI)の生成
-        val api = retrofit.create(ApiService::class.java)
-        // エンドポイントにリクエスト
-        api.getNews("413005df5f58476c868396878a752fb8", "jp").enqueue(object: Callback<ResponseData> {
-            // 通信が失敗したときの処理
-            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-
-            }
-            // 通信成功したときの処理
-            override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
-                findViewById<TextView>(R.id.textview).text = response.body().toString()
-            }
-
-        })
-        */
-
     }
 
     private inner class NewsInfoReceiver() : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg params: String?): String {
             val apiKey = "413005df5f58476c868396878a752fb8"
-            val searchWords = arrayOf("多様性", "企業")
+            val searchWords = arrayOf("多様性推進", "企業")
             val urlStr = "http://newsapi.org/v2/everything?q=${searchWords[0]}+${searchWords[1]}&apiKey=${apiKey}"
             val url = URL(urlStr)
             val con = url.openConnection() as HttpURLConnection
@@ -66,12 +50,23 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(result: String?) {
             val rootJSON = JSONObject(result)
-            val articles = rootJSON.getJSONArray("articles")
-            val firstArticle = articles.getJSONObject(0)
-            val title = firstArticle.getString("title")
-            val tv = findViewById<TextView>(R.id.textview)
-            tv.text = title
+            val articleArray = rootJSON.getJSONArray("articles")
+            var title = ""
+            var publishedAt = ""
+            var urlToImage = ""
+            var url = ""
+            var article : JSONObject
+            for (i in 0..19) {
+                article = articleArray.getJSONObject(i)
+                title = article.getString("title")
+                publishedAt = article.getString("publishedAt")
+                urlToImage = article.getString("urlToImage")
+                url = article.getString("url")
+                articleList.add(Article(url, urlToImage, publishedAt, title))
 
+            }
+            val lvArticles = findViewById<ListView>(R.id.lvArticles)
+            lvArticles.adapter = ArticleAdapter(this@MainActivity, articleList)
         }
 
         private fun is2String(stream : InputStream) : String {
