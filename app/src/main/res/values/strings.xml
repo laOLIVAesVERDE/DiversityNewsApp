@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">NewsApp</string>
+    <string name="news_list_context_header">操作を選んでください</string>
     <string name="news_list_context_stock">ストックに追加</string>
     <string name="news_list_context_remove">ストックから削除</string>
+    <string name="success_to_add_to_stock">ストックに追加しました</string>
 </resources>

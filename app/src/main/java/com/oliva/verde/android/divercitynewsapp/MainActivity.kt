@@ -3,10 +3,12 @@ package com.oliva.verde.android.divercitynewsapp
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
+import android.view.ContextMenu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import org.json.JSONObject
@@ -15,15 +17,60 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.sql.Date
 
 class MainActivity : AppCompatActivity() {
+    private val _helper = DataBaseHelper(this@MainActivity)
     var articleList = mutableListOf<Article>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top)
+        val lvArticles = findViewById<ListView>(R.id.lvArticles)
+        registerForContextMenu(lvArticles)
         val receiver = NewsInfoReceiver()
         receiver.execute()
+    }
+
+    override fun onDestroy() {
+        _helper.close()
+        super.onDestroy()
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menuInflater.inflate(R.menu.context_menu, menu)
+        menu.setHeaderTitle(R.string.news_list_context_header)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        // 長押しされたViewに関する情報を取得する
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        // 長押しされたリストのポジションを取得
+        val listPosition = info.position
+        // ポジションに合致した記事データを取得
+        val article = articleList[listPosition]
+        // データベースに格納するデータを取得
+        val url = article.url
+        val urlToImage = article.urlToImage
+        val publishedAt = article.publishedAt.substring(0, 10)
+        val title = article.title
+
+        // 以下、データベースへの保存処理
+        val db = _helper.writableDatabase
+        val sqlInsert = "INSERT INTO stocked_articles (url, url_to_image, published_at, title) VALUES (?, ?, ?, ?)"
+        val stmt = db.compileStatement(sqlInsert)
+        stmt.bindString(1, url)
+        stmt.bindString(2, urlToImage)
+        stmt.bindString(3, publishedAt)
+        stmt.bindString(4, title)
+        stmt.executeInsert()
+        Toast.makeText(applicationContext, R.string.success_to_add_to_stock, Toast.LENGTH_LONG).show()
+        return super.onContextItemSelected(item)
     }
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
