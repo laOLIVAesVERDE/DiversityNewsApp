@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import android.widget.ListView
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -21,6 +22,11 @@ import java.net.URL
  */
 class HomeFragment : Fragment() {
     var articleList = mutableListOf<Article>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +46,44 @@ class HomeFragment : Fragment() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
         super.onDestroy()
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val menuInflater = MenuInflater(activity)
+        menuInflater.inflate(R.menu.context_menu, menu)
+        menu.setHeaderTitle(R.string.news_list_context_header)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        // 長押しされたViewに関する情報を取得する
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        // 長押しされたリストのポジションを取得
+        val listPosition = info.position
+        // ポジションに合致した記事データを取得
+        val article = articleList[listPosition]
+        // データベースに格納するデータを取得
+        val url = article.url
+        val urlToImage = article.urlToImage
+        val publishedAt = article.publishedAt.substring(0, 10)
+        val title = article.title
+
+        // 以下、データベースへの保存処理
+        val helper = DataBaseHelper(activity!!)
+        val db = helper.writableDatabase
+        val sqlInsert = "INSERT INTO stocked_articles (url, url_to_image, published_at, title) VALUES (?, ?, ?, ?)"
+        val stmt = db.compileStatement(sqlInsert)
+        stmt.bindString(1, url)
+        stmt.bindString(2, urlToImage)
+        stmt.bindString(3, publishedAt)
+        stmt.bindString(4, title)
+        stmt.executeInsert()
+        Toast.makeText(activity, R.string.success_to_add_to_stock, Toast.LENGTH_LONG).show()
+        return super.onContextItemSelected(item)
     }
 
 
