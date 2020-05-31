@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/navi_home">
+
+    <!-- idはbottom_navigation_menuで指定したものと対応させる-->
+    <fragment
+        android:id="@+id/navi_home"
+        android:name="com.oliva.verde.android.divercitynewsapp.HomeFragment"
+        android:label="@string/bottom_navigation_home_title"/>
+
+</navigation>

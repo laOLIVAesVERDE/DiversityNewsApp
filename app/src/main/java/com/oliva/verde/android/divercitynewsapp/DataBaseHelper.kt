@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import java.lang.StringBuilder
 
 // 第一引数 : このヘルパークラスを扱うコンテキスト
-class DataBaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         private const val DATABASE_NAME = "stocked_article.db"
         private const val DATABASE_VERSION = 1
