@@ -1,16 +1,18 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.ContextMenu
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.browser.customtabs.CustomTabsIntent
+//import androidx.browser.customtabs.CustomTabsIntent
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -26,12 +28,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top)
+        /**
         val lvArticles = findViewById<ListView>(R.id.lvArticles)
         registerForContextMenu(lvArticles)
         val receiver = NewsInfoReceiver()
         receiver.execute()
+        */
     }
 
+    /**
     override fun onDestroy() {
         _helper.close()
         super.onDestroy()
@@ -78,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             val item = parent?.getItemAtPosition(position) as Article // Articleクラスにキャスト
             // url文字列を取得
             val url = item.url
+            /**
             //以下、Custom Tabs機能を使って記事の詳細を表示する
             // Custom Tabを表示するBuilderオブジェクトを取得
             val builder = CustomTabsIntent.Builder()
@@ -85,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             val customTabsIntent = builder.build()
             // Uriを指定し、Custom Tabを表示する
             customTabsIntent.launchUrl(this@MainActivity, Uri.parse(url))
+            */
         }
     }
 
@@ -141,4 +148,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    */
 }
