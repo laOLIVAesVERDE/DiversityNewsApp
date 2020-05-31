@@ -17,14 +17,13 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class HomeFragment : Fragment() {
     var articleList = mutableListOf<Article>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
     }
 
