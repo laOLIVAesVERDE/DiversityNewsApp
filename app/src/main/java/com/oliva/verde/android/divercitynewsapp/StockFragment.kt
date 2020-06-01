@@ -6,9 +6,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
-import java.lang.StringBuilder
-import java.util.zip.Inflater
 
 /**
  * A simple [Fragment] subclass.
@@ -26,7 +25,6 @@ class StockFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
-        // 以下、データベースに登録してある記事をリストビューに表示する処理
         val helper = DataBaseHelper(activity!!)
         val db = helper.writableDatabase
         val sql = "SELECT * FROM stocked_articles"
@@ -48,8 +46,11 @@ class StockFragment : Fragment() {
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
         val lvArticles = view.findViewById<ListView>(R.id.lvArticles)
-        lvArticles.adapter = ArticleAdapter(activity!!, articleList)
+        lvArticles?.adapter = ArticleAdapter(activity!!, articleList)
+
+        //val lvArticles = view.findViewById<ListView>(R.id.lvArticles)
         lvArticles.onItemClickListener = ListItemClickListener()
+        registerForContextMenu(lvArticles)
 
         // Inflate the layout for this fragment
         return view
@@ -75,9 +76,42 @@ class StockFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         val position = info.position
-        val article = articleList[position]
 
+        val helper = DataBaseHelper(activity!!)
+        val db = helper.writableDatabase
+        val sql = "DELETE FROM stocked_articles WHERE _id = ?"
+        val stmt = db.compileStatement(sql)
+        stmt.bindLong(1, position.toLong())
+        stmt.executeUpdateDelete()
+        Toast.makeText(activity, R.string.news_list_context_remove, Toast.LENGTH_LONG).show()
+        // selectAllStockAriticle()
         return super.onContextItemSelected(item)
+    }
+
+    private fun selectAllStockAriticle() {
+        // 以下、データベースに登録してある記事をリストビューに表示する処理
+        val helper = DataBaseHelper(activity!!)
+        val db = helper.writableDatabase
+        val sql = "SELECT * FROM stocked_articles"
+        val cursor = db.rawQuery(sql, null)
+        var title = ""
+        var publishedAt = ""
+        var urlToImage = ""
+        var url = ""
+
+        while(cursor.moveToNext()) {
+            val idxTitle = cursor.getColumnIndex("title")
+            title = cursor.getString(idxTitle)
+            val idxPublishedAt = cursor.getColumnIndex("published_at")
+            publishedAt = cursor.getString(idxPublishedAt)
+            val idxUrlToImage = cursor.getColumnIndex("url_to_image")
+            urlToImage = cursor.getString(idxUrlToImage)
+            val idxUrl = cursor.getColumnIndex("url")
+            url = cursor.getString(idxUrl)
+            articleList.add(Article(url, urlToImage, publishedAt, title))
+        }
+        val lvArticles = view?.findViewById<ListView>(R.id.lvArticles)
+        lvArticles?.adapter = ArticleAdapter(activity!!, articleList)
     }
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
