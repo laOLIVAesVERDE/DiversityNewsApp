@@ -1,12 +1,14 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ListView
+import androidx.browser.customtabs.CustomTabsIntent
 import java.lang.StringBuilder
+import java.util.zip.Inflater
 
 /**
  * A simple [Fragment] subclass.
@@ -47,7 +49,7 @@ class StockFragment : Fragment() {
         }
         val lvArticles = view.findViewById<ListView>(R.id.lvArticles)
         lvArticles.adapter = ArticleAdapter(activity!!, articleList)
-
+        lvArticles.onItemClickListener = ListItemClickListener()
 
         // Inflate the layout for this fragment
         return view
@@ -57,6 +59,35 @@ class StockFragment : Fragment() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
         super.onDestroy()
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val menuInflater = MenuInflater(activity)
+        menuInflater.inflate(R.menu.context_menu_remove_from_stock, menu)
+        menu.setHeaderTitle(R.string.news_list_context_header)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val position = info.position
+        val article = articleList[position]
+
+        return super.onContextItemSelected(item)
+    }
+
+    private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+        override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val item = parent?.getItemAtPosition(position) as Article
+            val url = item.url
+            val builder = CustomTabsIntent.Builder()
+            val customTabsIntent = builder.build()
+            customTabsIntent.launchUrl(activity!!, Uri.parse(url))
+        }
     }
 
 }

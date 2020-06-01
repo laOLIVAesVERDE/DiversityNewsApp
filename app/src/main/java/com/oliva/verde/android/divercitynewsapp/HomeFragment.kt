@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
         val menuInflater = MenuInflater(activity)
-        menuInflater.inflate(R.menu.context_menu, menu)
+        menuInflater.inflate(R.menu.context_menu_add_to_stock, menu)
         menu.setHeaderTitle(R.string.news_list_context_header)
     }
 
