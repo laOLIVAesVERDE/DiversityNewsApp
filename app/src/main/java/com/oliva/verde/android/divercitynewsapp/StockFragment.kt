@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.AdapterView
@@ -74,14 +75,23 @@ class StockFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-        val position = info.position
-
         val helper = DataBaseHelper(activity!!)
         val db = helper.writableDatabase
-        val sql = "DELETE FROM stocked_articles WHERE _id = ?"
-        val stmt = db.compileStatement(sql)
-        stmt.bindLong(1, position.toLong())
+        val sqlSelectAll = "SELECT * FROM stocked_articles"
+        val cursor = db.rawQuery(sqlSelectAll, null)
+        val idArray = arrayListOf<Long>()
+        while(cursor.moveToNext()) {
+            val idxId = cursor.getColumnIndex("_id")
+            idArray.add(cursor.getLong(idxId))
+        }
+
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val position = info.position
+        val selectedArticleId = idArray[position]
+        // Log.i("NewsApp", selectedArticleId.toString())
+        val sqlDelete = "DELETE FROM stocked_articles WHERE _id = ?"
+        val stmt = db.compileStatement(sqlDelete)
+        stmt.bindLong(1, selectedArticleId)
         stmt.executeUpdateDelete()
         Toast.makeText(activity, R.string.news_list_context_remove, Toast.LENGTH_LONG).show()
         // selectAllStockAriticle()
