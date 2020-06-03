@@ -5,6 +5,7 @@
     <string name="news_list_context_stock">ストックに追加</string>
     <string name="news_list_context_remove">ストックから削除</string>
     <string name="success_to_add_to_stock">ストックに追加しました</string>
+    <string name="success_to_remove_from_stock">ストックから削除しました</string>
     <string name="bottom_navigation_home_title">ホーム</string>
     <string name="bottom_navigation_bookmark_title">ストック</string>
 
