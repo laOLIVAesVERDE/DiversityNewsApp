@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import java.util.zip.Inflater
 
 /**
  * A simple [Fragment] subclass.
@@ -78,13 +79,14 @@ class StockFragment : Fragment() {
         val helper = DataBaseHelper(activity!!)
         val db = helper.writableDatabase
         val sqlSelectAll = "SELECT * FROM stocked_articles"
-        val cursor = db.rawQuery(sqlSelectAll, null)
+        var cursor = db.rawQuery(sqlSelectAll, null)
         val idArray = arrayListOf<Long>()
         while(cursor.moveToNext()) {
             val idxId = cursor.getColumnIndex("_id")
             idArray.add(cursor.getLong(idxId))
         }
 
+        Log.i("NewsApp_1", cursor.count.toString())
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         val position = info.position
         val selectedArticleId = idArray[position]
@@ -93,12 +95,20 @@ class StockFragment : Fragment() {
         val stmt = db.compileStatement(sqlDelete)
         stmt.bindLong(1, selectedArticleId)
         stmt.executeUpdateDelete()
+
+        val lvArticles = view?.findViewById<ListView>(R.id.lvArticles)
+        val article = lvArticles?.getItemAtPosition(position) as Article
+        val adapter = lvArticles?.adapter as ArticleAdapter
+        articleList.remove(article)
+        adapter.notifyDataSetChanged()
+
+
         Toast.makeText(activity, R.string.news_list_context_remove, Toast.LENGTH_LONG).show()
-        // selectAllStockAriticle()
+
         return super.onContextItemSelected(item)
     }
 
-    private fun selectAllStockAriticle() {
+    private fun selectAllStockArticle(listView: ListView?) {
         // 以下、データベースに登録してある記事をリストビューに表示する処理
         val helper = DataBaseHelper(activity!!)
         val db = helper.writableDatabase
@@ -120,8 +130,9 @@ class StockFragment : Fragment() {
             url = cursor.getString(idxUrl)
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
-        val lvArticles = view?.findViewById<ListView>(R.id.lvArticles)
-        lvArticles?.adapter = ArticleAdapter(activity!!, articleList)
+        val adapter = ArticleAdapter(activity!!, articleList)
+        adapter.notifyDataSetChanged()
+        Log.i("NewsApp", cursor.count.toString())
     }
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
