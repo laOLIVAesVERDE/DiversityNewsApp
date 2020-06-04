@@ -10,7 +10,6 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
-import java.util.zip.Inflater
 
 /**
  * A simple [Fragment] subclass.
