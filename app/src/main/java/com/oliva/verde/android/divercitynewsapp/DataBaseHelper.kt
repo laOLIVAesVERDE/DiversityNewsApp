@@ -1,6 +1,7 @@
 package com.oliva.verde.android.divercitynewsapp
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.lang.StringBuilder
@@ -28,6 +29,12 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
 
+    }
+
+    fun selectAllArticle() : Cursor? {
+        val db = this.writableDatabase
+        val sql = "SELECT * FROM stocked_articles"
+        return db.rawQuery(sql, null)
     }
 
 }
