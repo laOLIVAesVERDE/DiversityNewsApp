@@ -28,11 +28,6 @@ class StockFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
-        /**
-        val helper = DataBaseHelper(activity!!)
-        val db = helper.writableDatabase
-        val sql = "SELECT * FROM stocked_articles"
-        */
         val cursor = selectAllArticle()
         var title = ""
         var publishedAt = ""
@@ -92,14 +87,16 @@ class StockFragment : Fragment() {
         stmt.bindLong(1, selectedArticleId)
         stmt.executeUpdateDelete()
 
-        // 長押しされた記事をリストビューから削除する
+        // 長押しされた記事オブジェクトをリストビューから削除する
         val lvArticles = view?.findViewById<ListView>(R.id.lvArticles)
-        //
+        // 長押しされた記事オブジェクトをリストビューから取得
         val article = lvArticles?.getItemAtPosition(position) as Article
+        // リストビューに設定されているアダプターを取得
         val adapter = lvArticles?.adapter as ArticleAdapter
+        // 記事オブジェクト配列から記事オブジェクトを削除
         articleList.remove(article)
+        // アダプターに、アダプト対象の記事オブジェクトの変更を知らせる
         adapter.notifyDataSetChanged()
-
         Toast.makeText(activity, R.string.success_to_remove_from_stock, Toast.LENGTH_LONG).show()
 
         return super.onContextItemSelected(item)
