@@ -8,7 +8,4 @@
     <string name="success_to_remove_from_stock">ストックから削除しました</string>
     <string name="bottom_navigation_home_title">ホーム</string>
     <string name="bottom_navigation_bookmark_title">ストック</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
