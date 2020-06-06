@@ -5,11 +5,13 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.*
-import android.widget.AdapterView
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.widget.ListView
-import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.news_row.view.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -33,10 +35,11 @@ class HomeFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val lvArticles = view.findViewById<ListView>(R.id.lvArticles)
+        val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         registerForContextMenu(lvArticles)
         val receiver = NewsInfoReceiver()
         receiver.execute()
+
         // Inflate the layout for this fragment
         return view
     }
@@ -85,6 +88,39 @@ class HomeFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
+    private inner class RecycleListViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        var imageRow : ImageView
+        var titleRow : TextView
+        var publishDateRow : TextView
+
+        init {
+            imageRow = itemView.findViewById(R.id.image_row)
+            titleRow = itemView.findViewById(R.id.title_row)
+            publishDateRow = itemView.findViewById(R.id.publish_date_row)
+        }
+    }
+
+    private inner class RecycleListAdapter(articleList: MutableList<Article>) : RecyclerView.Adapter<RecycleListViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleListViewHolder {
+            val inflater = LayoutInflater.from(activity)
+            val view = inflater.inflate(R.layout.news_row, parent, false)
+            val holder = RecycleListViewHolder(view)
+            return holder
+        }
+
+        override fun onBindViewHolder(holder: RecycleListViewHolder, position: Int) {
+            val article = articleList[position]
+            val title = article.title
+            val publishedAt = article.publishedAt
+            holder.titleRow.text = title
+            holder.publishDateRow.text = publishedAt.substring(0..10)
+            Picasso.get().load(article.urlToImage).into(holder.imageRow)
+        }
+
+        override fun getItemCount(): Int {
+            return  articleList.size
+        }
+    }
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
         override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -135,11 +171,12 @@ class HomeFragment : Fragment() {
                 articleList.add(Article(url, urlToImage, publishedAt, title))
 
             }
-            val lvArticles = view?.findViewById<ListView>(R.id.lvArticles)
+            val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+            val layout = LinearLayoutManager(activity)
+            lvArticles?.layoutManager = layout
             // 独自定義のAdapterクラスをlayoutに紐づける
-            val activity = activity as Context
-            lvArticles?.adapter = ArticleAdapter(activity, articleList)
-            lvArticles?.onItemClickListener = ListItemClickListener()
+            lvArticles?.adapter = RecycleListAdapter(articleList)
+            // lvArticles?.onItemClickListener = ListItemClickListener()
         }
 
         private fun is2String(stream : InputStream) : String {

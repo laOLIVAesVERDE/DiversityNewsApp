@@ -54,5 +54,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0' // Retrofit2 (通信用ライブラリ)
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0' // Gson (Json<->Javaクラス変換ライブラリ)
     implementation 'com.github.bumptech.glide:glide:4.8.0' // Glide (画像用ライブラリ)
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0' // Glide (画像用ライブラリ)
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.android.support:design:28.0.0'// Glide (画像用ライブラリ)
 }

@@ -44,10 +44,12 @@ class StockFragment : Fragment() {
             url = cursor.getString(idxUrl)
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
+        /**
         val lvArticles = view.findViewById<ListView>(R.id.lvArticles)
         lvArticles?.adapter = ArticleAdapter(activity!!, articleList)
         lvArticles?.onItemClickListener = ListItemClickListener()
         registerForContextMenu(lvArticles)
+        */
 
         return view
     }
