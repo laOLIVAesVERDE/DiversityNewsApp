@@ -4,10 +4,12 @@ import android.content.Context
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -18,6 +20,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.math.log
 
 
 class HomeFragment : Fragment() {
@@ -100,7 +103,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private inner class RecycleListAdapter(articleList: MutableList<Article>) : RecyclerView.Adapter<RecycleListViewHolder>() {
+    private inner class RecycleListAdapter() : RecyclerView.Adapter<RecycleListViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleListViewHolder {
             val inflater = LayoutInflater.from(activity)
             val view = inflater.inflate(R.layout.news_row, parent, false)
@@ -113,16 +116,31 @@ class HomeFragment : Fragment() {
             val title = article.title
             val publishedAt = article.publishedAt
             holder.titleRow.text = title
-            holder.publishDateRow.text = publishedAt.substring(0..10)
+            holder.publishDateRow.text = publishedAt.substring(0..9)
             Picasso.get().load(article.urlToImage).into(holder.imageRow)
+            holder.itemView.setOnClickListener(ListItemClickListener(position))
         }
 
         override fun getItemCount(): Int {
-            return  articleList.size
+            return articleList.size
         }
     }
 
-    private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+    private inner class ListItemClickListener(position : Int) : View.OnClickListener {
+        val position = position
+        override fun onClick(view: View?) {
+            val item = articleList[position]
+            // url文字列を取得
+            val url = item.url
+            //以下、Custom Tabs機能を使って記事の詳細を表示する
+            // Custom Tabを表示するBuilderオブジェクトを取得
+            val builder = CustomTabsIntent.Builder()
+            // CustomTabsIntentオブジェクトを取得
+            val customTabsIntent = builder.build()
+            // Uriを指定し、Custom Tabを表示する
+            customTabsIntent.launchUrl(activity!!, Uri.parse(url))
+        }
+        /**
         override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val item = parent?.getItemAtPosition(position) as Article // Articleクラスにキャスト
             // url文字列を取得
@@ -135,6 +153,7 @@ class HomeFragment : Fragment() {
             // Uriを指定し、Custom Tabを表示する
             customTabsIntent.launchUrl(activity!!, Uri.parse(url))
         }
+        */
     }
 
     private inner class NewsInfoReceiver() : AsyncTask<String, String, String>() {
@@ -175,7 +194,10 @@ class HomeFragment : Fragment() {
             val layout = LinearLayoutManager(activity)
             lvArticles?.layoutManager = layout
             // 独自定義のAdapterクラスをlayoutに紐づける
-            lvArticles?.adapter = RecycleListAdapter(articleList)
+            lvArticles?.adapter = RecycleListAdapter()
+
+            val decorator = DividerItemDecoration(activity, layout.orientation)
+            lvArticles?.addItemDecoration(decorator)
             // lvArticles?.onItemClickListener = ListItemClickListener()
         }
 
