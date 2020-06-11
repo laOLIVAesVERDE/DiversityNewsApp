@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
 
         return super.onContextItemSelected(item)
     }
-
+    /**
     private inner class RecycleListViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         var imageRow : ImageView
         var titleRow : TextView
@@ -102,7 +102,6 @@ class HomeFragment : Fragment() {
             titleRow = itemView.findViewById(R.id.title_row)
             publishDateRow = itemView.findViewById(R.id.publish_date_row)
         }
-
     }
 
     private inner class RecycleListAdapter() : RecyclerView.Adapter<RecycleListViewHolder>() {
@@ -130,17 +129,18 @@ class HomeFragment : Fragment() {
         }
 
     }
+    */
 
-    private inner class ListItemLongClickListener(position : Int) : View.OnLongClickListener {
+
+    inner class ListItemLongClickListener(position : Int) : View.OnLongClickListener {
         val pos = position
         override fun onLongClick(v: View?): Boolean {
-            Log.i("NewsApp", pos.toString())
             longClickedId = pos
             return false
         }
     }
 
-    private inner class ListItemClickListener(position : Int) : View.OnClickListener {
+    inner class ListItemClickListener(position : Int) : View.OnClickListener {
         val position = position
         override fun onClick(view: View?) {
             val item = articleList[position]
@@ -188,13 +188,12 @@ class HomeFragment : Fragment() {
                 urlToImage = article.getString("urlToImage")
                 url = article.getString("url")
                 articleList.add(Article(url, urlToImage, publishedAt, title))
-
             }
             val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
             val layout = LinearLayoutManager(activity)
             lvArticles?.layoutManager = layout
             // 独自定義のAdapterクラスをlayoutに紐づける
-            lvArticles?.adapter = RecycleListAdapter()
+            lvArticles?.adapter = RecycleListAdapter(this@HomeFragment, articleList)
             // リサイクラービューに区切り線を追加
             val decorator = DividerItemDecoration(activity, layout.orientation)
             lvArticles?.addItemDecoration(decorator)

@@ -29,7 +29,7 @@ class ArticleAdapter(val context : Context, val articles : List<Article>) : Base
         return position.toLong()
     }
 
-    // getView : データセット内の特定の一のデータを表示するViewオブジェクトを取得する
+    // getView : データセット内の特定の位置のデータを表示するViewオブジェクトを取得する
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         // inflateするlayoutファイルを指定
         val view = layoutInflater.inflate(R.layout.news_row, parent, false)
