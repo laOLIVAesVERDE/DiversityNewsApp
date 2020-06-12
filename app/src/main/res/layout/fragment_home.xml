@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lvArticles"
+        android:paddingBottom="60dp"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 

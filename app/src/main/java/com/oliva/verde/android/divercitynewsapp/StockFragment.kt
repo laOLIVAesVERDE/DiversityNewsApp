@@ -10,12 +10,16 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * A simple [Fragment] subclass.
  */
 class StockFragment : Fragment() {
     var articleList = mutableListOf<Article>()
+    var longClickedId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +48,13 @@ class StockFragment : Fragment() {
             url = cursor.getString(idxUrl)
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
-        val lvArticles = view.findViewById<ListView>(R.id.lvArticles)
-        lvArticles?.adapter = ArticleAdapter(activity!!, articleList)
-        lvArticles?.onItemClickListener = ListItemClickListener()
-        registerForContextMenu(lvArticles)
+        val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
+        val layout = LinearLayoutManager(activity)
+        lvArticles.layoutManager = layout
+        lvArticles.adapter = RecycleListAdapter(this@StockFragment, articleList)
+        // リサイクラービューに区切り線を追加
+        val decorator = DividerItemDecoration(activity, layout.orientation)
+        lvArticles?.addItemDecoration(decorator)
 
         return view
     }
@@ -70,28 +77,25 @@ class StockFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        // 長押しされた記事のデータベース上のidを取得
+        // データベースから記事データのIDを全て取得する
         val cursor = selectAllArticle()
         val idArray = arrayListOf<Long>()
         while(cursor.moveToNext()) {
             val idxId = cursor.getColumnIndex("_id")
             idArray.add(cursor.getLong(idxId))
         }
+        // 長押しされた記事のデータベース上のidを取得
+        val selectedArticleId = idArray[longClickedId]
         // 長押しされた記事をデータベース上から消去する
-        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-        val position = info.position
-        val selectedArticleId = idArray[position]
         val sqlDelete = "DELETE FROM stocked_articles WHERE _id = ?"
         val stmt = DataBaseHelper(activity!!).writableDatabase.compileStatement(sqlDelete)
         stmt.bindLong(1, selectedArticleId)
         stmt.executeUpdateDelete()
 
-        // 長押しされた記事オブジェクトをリストビューから削除する
-        val lvArticles = view?.findViewById<ListView>(R.id.lvArticles)
-        // 長押しされた記事オブジェクトをリストビューから取得
-        val article = lvArticles?.getItemAtPosition(position) as Article
-        // リストビューに設定されているアダプターを取得
-        val adapter = lvArticles?.adapter as ArticleAdapter
+        // 長押しされた記事オブジェクトをリサイクラービューから削除する
+        val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+        val article = articleList[longClickedId] // 長押しされた記事オブジェクトをリストビューから取得
+        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
         // 記事オブジェクト配列から記事オブジェクトを削除
         articleList.remove(article)
         // アダプターに、アダプト対象の記事オブジェクトの変更を知らせる
@@ -101,13 +105,27 @@ class StockFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
-    private inner class ListItemClickListener : AdapterView.OnItemClickListener {
-        override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            val item = parent?.getItemAtPosition(position) as Article
+    inner class ListItemClickListener(position: Int) : View.OnClickListener {
+        val position = position
+        override fun onClick(view: View?) {
+            val item = articleList[position]
+            // url文字列を取得
             val url = item.url
+            //以下、Custom Tabs機能を使って記事の詳細を表示する
+            // Custom Tabを表示するBuilderオブジェクトを取得
             val builder = CustomTabsIntent.Builder()
+            // CustomTabsIntentオブジェクトを取得
             val customTabsIntent = builder.build()
+            // Uriを指定し、Custom Tabを表示する
             customTabsIntent.launchUrl(activity!!, Uri.parse(url))
+        }
+    }
+
+    inner class ListItemLongClickListener(position: Int) : View.OnLongClickListener {
+        val pos = position
+        override fun onLongClick(v: View?): Boolean {
+            longClickedId = pos
+            return false
         }
     }
 
