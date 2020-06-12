@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.AsyncTask
