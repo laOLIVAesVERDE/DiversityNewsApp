@@ -136,8 +136,6 @@ class HomeFragment : Fragment() {
             // JSONオブジェクトから、記事のデータを取得
             val rootJSON = JSONObject(result)
             val articleArray = rootJSON.getJSONArray("articles")
-            val size = articleArray.length()
-            Log.i("NewsApp", size.toString())
             var title = ""
             var publishedAt = ""
             var urlToImage = ""
