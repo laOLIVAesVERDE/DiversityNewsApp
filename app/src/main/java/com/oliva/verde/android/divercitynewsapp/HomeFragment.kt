@@ -118,7 +118,7 @@ class HomeFragment : Fragment() {
     private inner class NewsInfoReceiver() : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg params: String?): String {
             val apiKey = "413005df5f58476c868396878a752fb8"
-            val searchWords = arrayOf("多様性推進", "企業")
+            val searchWords = arrayOf("LGBT", "企業")
             val urlStr = "http://newsapi.org/v2/everything?q=${searchWords[0]}+${searchWords[1]}&apiKey=${apiKey}"
             val url = URL(urlStr)
             val con = url.openConnection() as HttpURLConnection
@@ -136,12 +136,14 @@ class HomeFragment : Fragment() {
             // JSONオブジェクトから、記事のデータを取得
             val rootJSON = JSONObject(result)
             val articleArray = rootJSON.getJSONArray("articles")
+            val size = articleArray.length()
+            Log.i("NewsApp", size.toString())
             var title = ""
             var publishedAt = ""
             var urlToImage = ""
             var url = ""
             var article : JSONObject
-            for (i in 0..19) {
+            for (i in 0 until articleArray.length()) {
                 article = articleArray.getJSONObject(i)
                 title = article.getString("title")
                 publishedAt = article.getString("publishedAt")
