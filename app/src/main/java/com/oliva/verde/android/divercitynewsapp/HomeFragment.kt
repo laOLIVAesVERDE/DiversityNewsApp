@@ -118,7 +118,7 @@ class HomeFragment : Fragment() {
     private inner class NewsInfoReceiver() : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg params: String?): String {
             val apiKey = "413005df5f58476c868396878a752fb8"
-            val searchWords = arrayOf("LGBT", "企業")
+            val searchWords = arrayOf("LGBT", "取り組み")
             val urlStr = "http://newsapi.org/v2/everything?q=${searchWords[0]}+${searchWords[1]}&apiKey=${apiKey}"
             val url = URL(urlStr)
             val con = url.openConnection() as HttpURLConnection
