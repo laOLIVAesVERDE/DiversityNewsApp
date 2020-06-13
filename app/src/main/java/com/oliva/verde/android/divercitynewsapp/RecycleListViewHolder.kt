@@ -5,6 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// ビューホルダクラスを定義
+// ビューホルダ : 各アイテムの画面部品を保持するオブジェクト
 class RecycleListViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     var imageRow : ImageView
     var titleRow : TextView

@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class StockFragment : Fragment() {
     var articleList = mutableListOf<Article>()
     var longClickedId = -1
@@ -36,7 +34,6 @@ class StockFragment : Fragment() {
         var publishedAt = ""
         var urlToImage = ""
         var url = ""
-
         while(cursor.moveToNext()) {
             val idxTitle = cursor.getColumnIndex("title")
             title = cursor.getString(idxTitle)
@@ -49,8 +46,11 @@ class StockFragment : Fragment() {
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
-        val layout = LinearLayoutManager(activity)
-        lvArticles.layoutManager = layout
+        // LayoutManager : 各アイテムを表示形式を管理するクラス
+        val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
+        // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
+        lvArticles.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
+        // 独自定義のAdapterクラスをlayoutに紐づける
         lvArticles.adapter = RecycleListAdapter(this@StockFragment, articleList)
         // リサイクラービューに区切り線を追加
         val decorator = DividerItemDecoration(activity, layout.orientation)
@@ -121,6 +121,7 @@ class StockFragment : Fragment() {
         }
     }
 
+    // 長押しされた記事のポジションを設定
     inner class ListItemLongClickListener(position: Int) : View.OnLongClickListener {
         val pos = position
         override fun onLongClick(v: View?): Boolean {

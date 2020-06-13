@@ -40,8 +40,6 @@ class HomeFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
-        // registerForContextMenu(lvArticles)
         val receiver = NewsInfoReceiver()
         receiver.execute()
 
@@ -67,7 +65,6 @@ class HomeFragment : Fragment() {
 
     }
 
-
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされたViewに関する情報を取得する
         val article = articleList[longClickedId]
@@ -92,46 +89,6 @@ class HomeFragment : Fragment() {
 
         return super.onContextItemSelected(item)
     }
-    /**
-    private inner class RecycleListViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        var imageRow : ImageView
-        var titleRow : TextView
-        var publishDateRow : TextView
-
-        init {
-            imageRow = itemView.findViewById(R.id.image_row)
-            titleRow = itemView.findViewById(R.id.title_row)
-            publishDateRow = itemView.findViewById(R.id.publish_date_row)
-        }
-    }
-
-    private inner class RecycleListAdapter() : RecyclerView.Adapter<RecycleListViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleListViewHolder {
-            val inflater = LayoutInflater.from(activity)
-            val view = inflater.inflate(R.layout.news_row, parent, false)
-            val holder = RecycleListViewHolder(view)
-            return holder
-        }
-
-        override fun onBindViewHolder(holder: RecycleListViewHolder, position: Int) {
-            val article = articleList[position]
-            val title = article.title
-            val publishedAt = article.publishedAt
-            holder.titleRow.text = title
-            holder.publishDateRow.text = publishedAt.substring(0..9)
-            Picasso.get().load(article.urlToImage).into(holder.imageRow)
-            holder.itemView.setOnClickListener(ListItemClickListener(position))
-            holder.itemView.setOnLongClickListener(ListItemLongClickListener(position))
-            registerForContextMenu(holder.itemView)
-        }
-
-        override fun getItemCount(): Int {
-            return articleList.size
-        }
-
-    }
-    */
-
 
     inner class ListItemLongClickListener(position : Int) : View.OnLongClickListener {
         val pos = position
@@ -141,6 +98,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // 長押しされた記事のポジションを設定
     inner class ListItemClickListener(position : Int) : View.OnClickListener {
         val position = position
         override fun onClick(view: View?) {
@@ -175,6 +133,7 @@ class HomeFragment : Fragment() {
         }
 
         override fun onPostExecute(result: String?) {
+            // JSONオブジェクトから、記事のデータを取得
             val rootJSON = JSONObject(result)
             val articleArray = rootJSON.getJSONArray("articles")
             var title = ""
@@ -191,8 +150,10 @@ class HomeFragment : Fragment() {
                 articleList.add(Article(url, urlToImage, publishedAt, title))
             }
             val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-            val layout = LinearLayoutManager(activity)
-            lvArticles?.layoutManager = layout
+            // LayoutManager : 各アイテムを表示形式を管理するクラス
+            val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
+            // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
+            lvArticles?.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
             // 独自定義のAdapterクラスをlayoutに紐づける
             lvArticles?.adapter = RecycleListAdapter(this@HomeFragment, articleList)
             // リサイクラービューに区切り線を追加
@@ -212,5 +173,4 @@ class HomeFragment : Fragment() {
             return sb.toString()
         }
     }
-
 }
