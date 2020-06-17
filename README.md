@@ -16,16 +16,14 @@ Android Studio 4.0
 Kotlin  
 Picasso : 画像ライブラリ  
 Async Task : 非同期処理  
-HttpURLConnection : API通信  
+OkHttp : API通信  
 Recycler View : 記事のリスト表示  
 SQlite : ストック記事のデータベース  
   
 # 今後の展望  
 Android開発で用いられることの多いライブラリを使用していきたい。  
 ●非同期処理  
-　Async Task -> RxJava, Retrofit  
-●API通信  
-　HttpURLConnection -> OkHttp  
+　Async Task -> RxJava, Retrofit   
 ●データベース  
 　SQLite -> Realm  
   
