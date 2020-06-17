@@ -38,7 +38,12 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.2.2"
     implementation "androidx.navigation:navigation-ui-ktx:2.2.2"
 
+    // ImageViewへの画像流し込みのため
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // API通信のため
+    implementation  "com.squareup.okhttp3:okhttp:4.3.1"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'

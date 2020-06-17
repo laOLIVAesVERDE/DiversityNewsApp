@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Request
 import kotlinx.android.synthetic.main.news_row.view.*
+import okhttp3.OkHttpClient
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -121,6 +123,15 @@ class HomeFragment : Fragment() {
             val searchWords = arrayOf("LGBT", "取り組み")
             val urlStr = "http://newsapi.org/v2/everything?q=${searchWords[0]}+${searchWords[1]}&apiKey=${apiKey}"
             val url = URL(urlStr)
+            val client = OkHttpClient()
+            val request = okhttp3.Request.Builder().url(url).build()
+            val call = client.newCall(request)
+            val response = call.execute()
+            val body = response.body
+            val result = body?.string()
+            Log.i("NewsApp", result)
+
+            /**
             val con = url.openConnection() as HttpURLConnection
             con.requestMethod = "GET"
             con.connect()
@@ -129,7 +140,8 @@ class HomeFragment : Fragment() {
             val result = is2String(stream)
             con.disconnect()
             stream.close()
-            return result
+            */
+            return result!!
         }
 
         override fun onPostExecute(result: String?) {
