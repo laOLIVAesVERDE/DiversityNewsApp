@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Request
 import kotlinx.android.synthetic.main.news_row.view.*
+import okhttp3.OkHttpClient
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -121,15 +123,23 @@ class HomeFragment : Fragment() {
             val searchWords = arrayOf("LGBT", "取り組み")
             val urlStr = "http://newsapi.org/v2/everything?q=${searchWords[0]}+${searchWords[1]}&apiKey=${apiKey}"
             val url = URL(urlStr)
-            val con = url.openConnection() as HttpURLConnection
-            con.requestMethod = "GET"
-            con.connect()
-            val stream = con.inputStream
-            // JSON形式に変換
-            val result = is2String(stream)
-            con.disconnect()
-            stream.close()
-            return result
+            // OkHttpクライアントオブジェクトを取得
+            val client = OkHttpClient()
+            // ビルダーオブジェクトを取得
+            val bulider = okhttp3.Request.Builder()
+            // リクエスト先URLを指定し、リクエストオブジェクトを取得
+            val request = bulider.url(url).build()
+            // newCall : クライアントオブジェクトを指定リクエストに対する呼び出し準備完了状態にする
+            val call = client.newCall(request)
+            // リクエストを実行
+            val response = call.execute()
+            // レスポンスをテキストとして取得する
+            val body = response.body
+            val result = body?.string()
+            // クローズ処理
+            body?.close()
+
+            return result!!
         }
 
         override fun onPostExecute(result: String?) {
@@ -159,18 +169,6 @@ class HomeFragment : Fragment() {
             // リサイクラービューに区切り線を追加
             val decorator = DividerItemDecoration(activity, layout.orientation)
             lvArticles?.addItemDecoration(decorator)
-        }
-
-        private fun is2String(stream : InputStream) : String {
-            val sb = StringBuilder()
-            val reader = BufferedReader(InputStreamReader(stream, "UTF-8"))
-            var line = reader.readLine()
-            while (line != null) {
-                sb.append(line)
-                line = reader.readLine()
-            }
-            reader.close()
-            return sb.toString()
         }
     }
 }
