@@ -3,13 +3,10 @@ package com.oliva.verde.android.divercitynewsapp
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.AdapterView
-import android.widget.ListView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

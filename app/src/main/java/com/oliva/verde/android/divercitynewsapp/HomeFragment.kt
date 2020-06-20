@@ -1,29 +1,18 @@
 package com.oliva.verde.android.divercitynewsapp
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.*
-import androidx.fragment.app.Fragment
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Request
-import kotlinx.android.synthetic.main.news_row.view.*
 import okhttp3.OkHttpClient
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.math.log
 
 
 class HomeFragment : Fragment() {
