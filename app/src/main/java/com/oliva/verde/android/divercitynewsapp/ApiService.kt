@@ -5,9 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("/v2/top-headlines/")
+    @GET("/v2/everything/")
     fun getNews(@Query("apiKey") apiKey: String,
-                @Query("q", encoded = false) searchWord : String) : Call<ResponseData>
-                //@Query("firstSearchWord") firstSearchWord : String,
-                // @Query("secondSearchWord") secondSearchWord : String)
+                @Query("q") searchWord : String) : Call<ResponseData>
 }

@@ -1,7 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,14 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import okhttp3.OkHttpClient
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.URL
 
 
 class HomeFragment : Fragment() {
@@ -43,15 +39,12 @@ class HomeFragment : Fragment() {
                         .build()
         val api = retrofit.create(ApiService::class.java)
         val apiKey = "413005df5f58476c868396878a752fb8"
-        // val searchWords = listOf("LGBT", "取り組み")
-        val searchWord = "bitcoin"
+        val searchWord = "ダイバーシティ"
         api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> {
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                 Log.i("NewsApp", "onFailure")
-
             }
             override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
-                Log.i("NewsApp", "onSuccess")
                 val res = response.body()
                 Log.i("NewsApp", res.toString())
                 if (res != null) {
@@ -69,9 +62,6 @@ class HomeFragment : Fragment() {
                 lvArticles?.addItemDecoration(decorator)
             }
         })
-        // val receiver = NewsInfoReceiver()
-        // receiver.execute()
-
         // Inflate the layout for this fragment
         return view
     }
