@@ -1,3 +1,3 @@
 package com.oliva.verde.android.divercitynewsapp
 
-data class ResponseData(val articles : List<Article>)
+data class ResponseData(val articles : MutableList<Article>)
