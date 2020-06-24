@@ -1,8 +1,8 @@
 package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import okhttp3.OkHttpClient
-import org.json.JSONObject
-import java.net.URL
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class HomeFragment : Fragment() {
@@ -31,9 +33,35 @@ class HomeFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val receiver = NewsInfoReceiver()
-        receiver.execute()
-
+        val retrofit = Retrofit.Builder()
+                        .baseUrl("https://newsapi.org/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build()
+        val api = retrofit.create(ApiService::class.java)
+        val apiKey = "413005df5f58476c868396878a752fb8"
+        val searchWord = "ダイバーシティ"
+        api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> {
+            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                Log.i("NewsApp", "onFailure")
+            }
+            override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
+                val res = response.body()
+                Log.i("NewsApp", res.toString())
+                if (res != null) {
+                    articleList = res.articles
+                }
+                val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                // LayoutManager : 各アイテムを表示形式を管理するクラス
+                val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
+                // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
+                lvArticles?.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
+                // 独自定義のAdapterクラスをlayoutに紐づける
+                lvArticles?.adapter = RecycleListAdapter(this@HomeFragment, articleList)
+                // リサイクラービューに区切り線を追加
+                val decorator = DividerItemDecoration(activity, layout.orientation)
+                lvArticles?.addItemDecoration(decorator)
+            }
+        })
         // Inflate the layout for this fragment
         return view
     }
@@ -106,6 +134,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
     private inner class NewsInfoReceiver() : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg params: String?): String {
             val apiKey = "413005df5f58476c868396878a752fb8"
@@ -160,4 +189,5 @@ class HomeFragment : Fragment() {
             lvArticles?.addItemDecoration(decorator)
         }
     }
+    */
 }

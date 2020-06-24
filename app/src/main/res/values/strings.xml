@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DiversityNewsApp</string>
-    <string name="toolbar_title">Divercity News</string>
+    <string name="toolbar_title">Diversity News</string>
     <string name="news_list_context_header">操作を選んでください</string>
     <string name="news_list_option_access_to_stock">ストックした記事</string>
     <string name="news_list_context_stock">ストックに追加</string>
