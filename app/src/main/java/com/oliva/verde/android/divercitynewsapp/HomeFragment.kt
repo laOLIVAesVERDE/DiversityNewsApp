@@ -33,16 +33,18 @@ class HomeFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val retrofit = Retrofit.Builder()
-                        .baseUrl("https://newsapi.org/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
+        val retrofit = Retrofit.Builder() // ビルダーオブジェクトを取得
+                        .baseUrl("https://newsapi.org/") // baseurlを指定
+                        .addConverterFactory(GsonConverterFactory.create()) //
+                        .build() //
+        //
         val api = retrofit.create(ApiService::class.java)
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
         api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> {
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                 Log.i("NewsApp", "onFailure")
+                // ダイアログ表示させたい
             }
             override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
                 val res = response.body()
@@ -118,8 +120,7 @@ class HomeFragment : Fragment() {
     }
 
     // 長押しされた記事のポジションを設定
-    inner class ListItemClickListener(position : Int) : View.OnClickListener {
-        val position = position
+    inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
             val item = articleList[position]
             // url文字列を取得
