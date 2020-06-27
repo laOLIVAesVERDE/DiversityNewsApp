@@ -34,21 +34,27 @@ class HomeFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val retrofit = Retrofit.Builder() // ビルダーオブジェクトを取得
+                        // Calling baseUrl is required before calling build(). All other methods are optional.
+                        // build前にbaseUrlが必要となる。他はオプション
                         .baseUrl("https://newsapi.org/") // baseurlを指定
-                        .addConverterFactory(GsonConverterFactory.create()) //
-                        .build() //
-        //
+                        .addConverterFactory(GsonConverterFactory.create()) // JsonオブジェクトをGsonに変換
+                        .build() // Retrofitオブジェクトの生成
+
+        // RetrofitオブジェクトにAPIサービスインスタンスによって定義されたAPIエンドポイントを実装する
         val api = retrofit.create(ApiService::class.java)
+        // 検索クエリの指定
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
-        api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> {
+        // APIエンドポイントにリクエスト
+        api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> { // enqueue : 非同期でリクエストを実行
+            // 失敗時の処理
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                 Log.i("NewsApp", "onFailure")
                 // ダイアログ表示させたい
             }
+            // 成功時の処理
             override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
-                val res = response.body()
-                Log.i("NewsApp", res.toString())
+                val res = response.body() // ResponseData(articles=[Article(), Article(), ...]
                 if (res != null) {
                     articleList = res.articles
                 }
