@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(bottom_navigation, navController)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setTitle(R.string.toolbar_title)
-        toolbar.setTitleTextColor(Color.WHITE)
+        toolbar.setLogo(R.drawable.ic_toolbar_icon)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 }
