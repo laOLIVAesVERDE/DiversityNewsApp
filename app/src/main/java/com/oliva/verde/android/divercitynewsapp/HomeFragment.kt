@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
@@ -20,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class HomeFragment : Fragment() {
     var articleList = mutableListOf<Article>()
     var longClickedId = -1
+    var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +80,14 @@ class HomeFragment : Fragment() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.option_menu_search_article, menu)
+        val menuItem = menu.findItem(R.id.search_article)
+        val searchView = menuItem.actionView
+
     }
 
     override fun onCreateContextMenu(
