@@ -20,8 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class HomeFragment : Fragment() {
     var articleList = mutableListOf<Article>()
+    var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
-    var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +59,7 @@ class HomeFragment : Fragment() {
                 val res = response.body() // ResponseData(articles=[Article(), Article(), ...]
                 if (res != null) {
                     articleList = res.articles
+                    copiedArticleList = articleList.toMutableList()
                 }
                 val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                 // LayoutManager : 各アイテムを表示形式を管理するクラス
@@ -82,12 +83,58 @@ class HomeFragment : Fragment() {
         super.onDestroy()
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu_search_article, menu)
         val menuItem = menu.findItem(R.id.search_article)
-        val searchView = menuItem.actionView
+        val searchView = menuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchRequest(query)
+                Log.i("NewsApp", "onQueryTextSubmit")
+                return true
+            }
 
+            override fun onQueryTextChange(newText: String): Boolean {
+                Log.i("NewsApp", "onQueryTextChange")
+                return if (newText.isEmpty()) {
+                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                    val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+                    articleList.clear()
+                    articleList.addAll(copiedArticleList)
+                    adapter.notifyDataSetChanged()
+                    true
+                } else {
+                    false
+                }
+            }
+        })
+    }
+
+
+    fun searchRequest(text : String) {
+        Log.i("NewsApp_copied", copiedArticleList.toString())
+        val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+        val filteredList = articleList.filter { it.title.contains(text) }
+        Log.i("NewsApp", "isNotEmpty")
+        articleList.clear()
+        articleList.addAll(filteredList)
+        /**
+        if (text.isEmpty()) {
+            Log.i("NewsApp", "isEmpty")
+            articleList.addAll(copiedArticleList)
+        } else {
+            Log.i("NewsApp", "isNotEmpty")
+            articleList.clear()
+            articleList.addAll(filteredList)
+        }
+        */
+        Log.i("NewsApp_notFiltered", articleList.toString())
+        Log.i("NewsApp_copied", copiedArticleList.toString())
+
+        adapter.notifyDataSetChanged()
     }
 
     override fun onCreateContextMenu(

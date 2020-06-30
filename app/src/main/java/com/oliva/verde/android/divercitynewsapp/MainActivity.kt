@@ -2,6 +2,9 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController

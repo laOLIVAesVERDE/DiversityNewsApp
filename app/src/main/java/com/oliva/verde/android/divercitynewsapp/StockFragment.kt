@@ -3,7 +3,9 @@ package com.oliva.verde.android.divercitynewsapp
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
@@ -60,6 +62,40 @@ class StockFragment : Fragment() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.option_menu_search_article, menu)
+        val menuItem = menu.findItem(R.id.search_article)
+        val searchView = menuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchRequest(query)
+                Log.i("NewsApp", "onQueryTextSubmit")
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchRequest(newText)
+                Log.i("NewsApp", articleList.size.toString())
+                Log.i("NewsApp", "onQueryTextChange")
+
+                return true
+            }
+        })
+    }
+
+    fun searchRequest(text : String) {
+        val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+        val filteredList = articleList.filter { it.title.contains(text) }
+        articleList.clear()
+        for(article in filteredList) {
+            articleList.add(article)
+        }
+        Log.i("NewsApp", filteredList.toString())
+        adapter.notifyDataSetChanged()
     }
 
     override fun onCreateContextMenu(
