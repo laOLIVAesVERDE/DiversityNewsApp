@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class StockFragment : Fragment() {
@@ -59,7 +60,7 @@ class StockFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        val helper = DataBaseHelper(activity!!)
+        val helper = DataBaseHelper(requireActivity())
         helper.close()
         super.onDestroy()
     }
@@ -77,11 +78,25 @@ class StockFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 return if (newText.isEmpty()) {
-                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-                    val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
                     articleList.clear()
-                    articleList.addAll(copiedArticleList)
-                    adapter.notifyDataSetChanged()
+                    val cursor = selectAllArticle()
+                    var title = ""
+                    var publishedAt = ""
+                    var urlToImage = ""
+                    var url = ""
+                    while(cursor.moveToNext()) {
+                        val idxTitle = cursor.getColumnIndex("title")
+                        title = cursor.getString(idxTitle)
+                        val idxPublishedAt = cursor.getColumnIndex("published_at")
+                        publishedAt = cursor.getString(idxPublishedAt)
+                        val idxUrlToImage = cursor.getColumnIndex("url_to_image")
+                        urlToImage = cursor.getString(idxUrlToImage)
+                        val idxUrl = cursor.getColumnIndex("url")
+                        url = cursor.getString(idxUrl)
+                        articleList.add(Article(url, urlToImage, publishedAt, title))
+                    }
+                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                    lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
                     true
                 } else {
                     false
@@ -122,7 +137,7 @@ class StockFragment : Fragment() {
         val selectedArticleId = idArray[longClickedId]
         // 長押しされた記事をデータベース上から消去する
         val sqlDelete = "DELETE FROM stocked_articles WHERE _id = ?"
-        val stmt = DataBaseHelper(activity!!).writableDatabase.compileStatement(sqlDelete)
+        val stmt = DataBaseHelper(requireActivity()).writableDatabase.compileStatement(sqlDelete)
         stmt.bindLong(1, selectedArticleId)
         stmt.executeUpdateDelete()
 
@@ -139,8 +154,7 @@ class StockFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
-    inner class ListItemClickListener(position: Int) : View.OnClickListener {
-        val position = position
+    inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
             val item = articleList[position]
             // url文字列を取得
@@ -156,16 +170,15 @@ class StockFragment : Fragment() {
     }
 
     // 長押しされた記事のポジションを設定
-    inner class ListItemLongClickListener(position: Int) : View.OnLongClickListener {
-        val pos = position
+    inner class ListItemLongClickListener(val position: Int) : View.OnLongClickListener {
         override fun onLongClick(v: View?): Boolean {
-            longClickedId = pos
+            longClickedId = position
             return false
         }
     }
 
     private fun selectAllArticle() : Cursor {
-        val helper = DataBaseHelper(activity!!)
+        val helper = DataBaseHelper(requireActivity())
         val db = helper.writableDatabase
         val sql = "SELECT * FROM stocked_articles"
         return db.rawQuery(sql, null)
