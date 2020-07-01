@@ -3,7 +3,6 @@ package com.oliva.verde.android.divercitynewsapp
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class StockFragment : Fragment() {
     var articleList = mutableListOf<Article>()
+    var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +44,7 @@ class StockFragment : Fragment() {
             url = cursor.getString(idxUrl)
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
+        copiedArticleList = articleList.toMutableList()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス
         val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
@@ -54,7 +55,6 @@ class StockFragment : Fragment() {
         // リサイクラービューに区切り線を追加
         val decorator = DividerItemDecoration(activity, layout.orientation)
         lvArticles?.addItemDecoration(decorator)
-
         return view
     }
 
@@ -72,16 +72,20 @@ class StockFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchRequest(query)
-                Log.i("NewsApp", "onQueryTextSubmit")
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                searchRequest(newText)
-                Log.i("NewsApp", articleList.size.toString())
-                Log.i("NewsApp", "onQueryTextChange")
-
-                return true
+                return if (newText.isEmpty()) {
+                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                    val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+                    articleList.clear()
+                    articleList.addAll(copiedArticleList)
+                    adapter.notifyDataSetChanged()
+                    true
+                } else {
+                    false
+                }
             }
         })
     }
@@ -91,10 +95,7 @@ class StockFragment : Fragment() {
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
         val filteredList = articleList.filter { it.title.contains(text) }
         articleList.clear()
-        for(article in filteredList) {
-            articleList.add(article)
-        }
-        Log.i("NewsApp", filteredList.toString())
+        articleList.addAll(filteredList)
         adapter.notifyDataSetChanged()
     }
 

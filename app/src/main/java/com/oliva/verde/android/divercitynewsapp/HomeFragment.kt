@@ -2,7 +2,6 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -51,7 +50,6 @@ class HomeFragment : Fragment() {
         api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> { // enqueue : 非同期でリクエストを実行
             // 失敗時の処理
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                Log.i("NewsApp", "onFailure")
                 // ダイアログ表示させたい
             }
             // 成功時の処理
@@ -83,7 +81,6 @@ class HomeFragment : Fragment() {
         super.onDestroy()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu_search_article, menu)
@@ -92,12 +89,9 @@ class HomeFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchRequest(query)
-                Log.i("NewsApp", "onQueryTextSubmit")
                 return true
             }
-
             override fun onQueryTextChange(newText: String): Boolean {
-                Log.i("NewsApp", "onQueryTextChange")
                 return if (newText.isEmpty()) {
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
@@ -114,26 +108,11 @@ class HomeFragment : Fragment() {
 
 
     fun searchRequest(text : String) {
-        Log.i("NewsApp_copied", copiedArticleList.toString())
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
         val filteredList = articleList.filter { it.title.contains(text) }
-        Log.i("NewsApp", "isNotEmpty")
         articleList.clear()
         articleList.addAll(filteredList)
-        /**
-        if (text.isEmpty()) {
-            Log.i("NewsApp", "isEmpty")
-            articleList.addAll(copiedArticleList)
-        } else {
-            Log.i("NewsApp", "isNotEmpty")
-            articleList.clear()
-            articleList.addAll(filteredList)
-        }
-        */
-        Log.i("NewsApp_notFiltered", articleList.toString())
-        Log.i("NewsApp_copied", copiedArticleList.toString())
-
         adapter.notifyDataSetChanged()
     }
 
