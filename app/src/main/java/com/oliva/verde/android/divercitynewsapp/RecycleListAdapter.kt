@@ -1,13 +1,12 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
-class RecycleListAdapter(fragment : Any, articleList : MutableList<Article>) : RecyclerView.Adapter<RecycleListViewHolder>() {
-    private var fragment = fragment
-    private var articleList = articleList
+class RecycleListAdapter(val fragment : Any, var articleList : MutableList<Article>) : RecyclerView.Adapter<RecycleListViewHolder>() {
     private lateinit var holder : RecycleListViewHolder // 変数を lateinit 宣言することにより、non-null な初期化済みの変数として参照することができる
 
     // 各アイテムの画面部品が記述されたレイアウトファイルを元にビューホルダオブジェクトを生成する

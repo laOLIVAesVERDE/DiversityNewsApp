@@ -4,16 +4,19 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class StockFragment : Fragment() {
     var articleList = mutableListOf<Article>()
+    var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +45,7 @@ class StockFragment : Fragment() {
             url = cursor.getString(idxUrl)
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
+        copiedArticleList = articleList.toMutableList()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス
         val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
@@ -52,14 +56,62 @@ class StockFragment : Fragment() {
         // リサイクラービューに区切り線を追加
         val decorator = DividerItemDecoration(activity, layout.orientation)
         lvArticles?.addItemDecoration(decorator)
-
         return view
     }
 
     override fun onDestroy() {
-        val helper = DataBaseHelper(activity!!)
+        val helper = DataBaseHelper(requireActivity())
         helper.close()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.option_menu_search_article, menu)
+        val menuItem = menu.findItem(R.id.search_article)
+        val searchView = menuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchRequest(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return if (newText.isEmpty()) {
+                    articleList.clear()
+                    val cursor = selectAllArticle()
+                    var title = ""
+                    var publishedAt = ""
+                    var urlToImage = ""
+                    var url = ""
+                    while(cursor.moveToNext()) {
+                        val idxTitle = cursor.getColumnIndex("title")
+                        title = cursor.getString(idxTitle)
+                        val idxPublishedAt = cursor.getColumnIndex("published_at")
+                        publishedAt = cursor.getString(idxPublishedAt)
+                        val idxUrlToImage = cursor.getColumnIndex("url_to_image")
+                        urlToImage = cursor.getString(idxUrlToImage)
+                        val idxUrl = cursor.getColumnIndex("url")
+                        url = cursor.getString(idxUrl)
+                        articleList.add(Article(url, urlToImage, publishedAt, title))
+                    }
+                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                    lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
+                    true
+                } else {
+                    false
+                }
+            }
+        })
+    }
+
+    fun searchRequest(text : String) {
+        val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+        val filteredList = articleList.filter { it.title.contains(text) }
+        articleList.clear()
+        articleList.addAll(filteredList)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onCreateContextMenu(
@@ -85,7 +137,7 @@ class StockFragment : Fragment() {
         val selectedArticleId = idArray[longClickedId]
         // 長押しされた記事をデータベース上から消去する
         val sqlDelete = "DELETE FROM stocked_articles WHERE _id = ?"
-        val stmt = DataBaseHelper(activity!!).writableDatabase.compileStatement(sqlDelete)
+        val stmt = DataBaseHelper(requireActivity()).writableDatabase.compileStatement(sqlDelete)
         stmt.bindLong(1, selectedArticleId)
         stmt.executeUpdateDelete()
 
@@ -102,8 +154,7 @@ class StockFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
-    inner class ListItemClickListener(position: Int) : View.OnClickListener {
-        val position = position
+    inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
             val item = articleList[position]
             // url文字列を取得
@@ -119,16 +170,15 @@ class StockFragment : Fragment() {
     }
 
     // 長押しされた記事のポジションを設定
-    inner class ListItemLongClickListener(position: Int) : View.OnLongClickListener {
-        val pos = position
+    inner class ListItemLongClickListener(val position: Int) : View.OnLongClickListener {
         override fun onLongClick(v: View?): Boolean {
-            longClickedId = pos
+            longClickedId = position
             return false
         }
     }
 
     private fun selectAllArticle() : Cursor {
-        val helper = DataBaseHelper(activity!!)
+        val helper = DataBaseHelper(requireActivity())
         val db = helper.writableDatabase
         val sql = "SELECT * FROM stocked_articles"
         return db.rawQuery(sql, null)

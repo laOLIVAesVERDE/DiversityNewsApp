@@ -9,4 +9,5 @@
     <string name="success_to_remove_from_stock">ストックから削除しました</string>
     <string name="bottom_navigation_home_title">ホーム</string>
     <string name="bottom_navigation_bookmark_title">ストック</string>
+    <string name="search_view_title">記事を検索</string>
 </resources>

@@ -2,8 +2,8 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class HomeFragment : Fragment() {
     var articleList = mutableListOf<Article>()
+    var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +50,6 @@ class HomeFragment : Fragment() {
         api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> { // enqueue : 非同期でリクエストを実行
             // 失敗時の処理
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                Log.i("NewsApp", "onFailure")
                 // ダイアログ表示させたい
             }
             // 成功時の処理
@@ -57,6 +57,7 @@ class HomeFragment : Fragment() {
                 val res = response.body() // ResponseData(articles=[Article(), Article(), ...]
                 if (res != null) {
                     articleList = res.articles
+                    copiedArticleList = articleList.toMutableList()
                 }
                 val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                 // LayoutManager : 各アイテムを表示形式を管理するクラス
@@ -78,6 +79,41 @@ class HomeFragment : Fragment() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.option_menu_search_article, menu)
+        val menuItem = menu.findItem(R.id.search_article)
+        val searchView = menuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchRequest(query)
+                return true
+            }
+            override fun onQueryTextChange(newText: String): Boolean {
+                return if (newText.isEmpty()) {
+                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                    val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+                    articleList.clear()
+                    articleList.addAll(copiedArticleList)
+                    adapter.notifyDataSetChanged()
+                    true
+                } else {
+                    false
+                }
+            }
+        })
+    }
+
+
+    fun searchRequest(text : String) {
+        val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+        val filteredList = articleList.filter { it.title.contains(text) }
+        articleList.clear()
+        articleList.addAll(filteredList)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onCreateContextMenu(
