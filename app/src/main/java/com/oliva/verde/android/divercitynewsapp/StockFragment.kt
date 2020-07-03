@@ -29,6 +29,8 @@ class StockFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
+        articleList = selectAllArticle()
+        /**
         val cursor = selectAllArticle()
         var title = ""
         var publishedAt = ""
@@ -45,6 +47,7 @@ class StockFragment : Fragment() {
             url = cursor.getString(idxUrl)
             articleList.add(Article(url, urlToImage, publishedAt, title))
         }
+        */
         copiedArticleList = articleList.toMutableList()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス
@@ -79,6 +82,8 @@ class StockFragment : Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 return if (newText.isEmpty()) {
                     articleList.clear()
+                    articleList = selectAllArticle()
+                    /**
                     val cursor = selectAllArticle()
                     var title = ""
                     var publishedAt = ""
@@ -95,6 +100,7 @@ class StockFragment : Fragment() {
                         url = cursor.getString(idxUrl)
                         articleList.add(Article(url, urlToImage, publishedAt, title))
                     }
+                    */
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
                     true
@@ -127,7 +133,10 @@ class StockFragment : Fragment() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // データベースから記事データのIDを全て取得する
-        val cursor = selectAllArticle()
+        val helper = DataBaseHelper(requireActivity())
+        val db = helper.writableDatabase
+        val sql = "SELECT * FROM stocked_articles"
+        val cursor = db.rawQuery(sql, null)
         val idArray = arrayListOf<Long>()
         while(cursor.moveToNext()) {
             val idxId = cursor.getColumnIndex("_id")
@@ -177,10 +186,28 @@ class StockFragment : Fragment() {
         }
     }
 
-    private fun selectAllArticle() : Cursor {
+    private fun selectAllArticle() : MutableList<Article> {
+        val allStockedArticles = mutableListOf<Article>()
         val helper = DataBaseHelper(requireActivity())
         val db = helper.writableDatabase
         val sql = "SELECT * FROM stocked_articles"
-        return db.rawQuery(sql, null)
+        val cursor =  db.rawQuery(sql, null)
+        var title = ""
+        var publishedAt = ""
+        var urlToImage = ""
+        var url = ""
+        while(cursor.moveToNext()) {
+            val idxTitle = cursor.getColumnIndex("title")
+            title = cursor.getString(idxTitle)
+            val idxPublishedAt = cursor.getColumnIndex("published_at")
+            publishedAt = cursor.getString(idxPublishedAt)
+            val idxUrlToImage = cursor.getColumnIndex("url_to_image")
+            urlToImage = cursor.getString(idxUrlToImage)
+            val idxUrl = cursor.getColumnIndex("url")
+            url = cursor.getString(idxUrl)
+            allStockedArticles.add(Article(url, urlToImage, publishedAt, title))
+        }
+        return allStockedArticles
+
     }
 }
