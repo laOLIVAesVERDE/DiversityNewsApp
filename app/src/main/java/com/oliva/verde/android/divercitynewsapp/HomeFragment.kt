@@ -131,32 +131,16 @@ class HomeFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされたViewに関する情報を取得する
         val article = articleList[longClickedId]
-
-        // データベースに格納するデータを取得
-        val url = article.url
-        val urlToImage = article.urlToImage
-        val publishedAt = article.publishedAt.substring(0, 10)
-        val title = article.title
-
-        // 以下、データベースへの保存処理
         val helper = DataBaseHelper(activity!!)
-        val db = helper.writableDatabase
-        val sqlInsert = "INSERT INTO stocked_articles (url, url_to_image, published_at, title) VALUES (?, ?, ?, ?)"
-        val stmt = db.compileStatement(sqlInsert)
-        stmt.bindString(1, url)
-        stmt.bindString(2, urlToImage)
-        stmt.bindString(3, publishedAt)
-        stmt.bindString(4, title)
-        stmt.executeInsert()
+        helper.InsertArticle(article)
         Toast.makeText(activity, R.string.success_to_add_to_stock, Toast.LENGTH_LONG).show()
 
         return super.onContextItemSelected(item)
     }
 
-    inner class ListItemLongClickListener(position : Int) : View.OnLongClickListener {
-        val pos = position
+    inner class ListItemLongClickListener(val position : Int) : View.OnLongClickListener {
         override fun onLongClick(v: View?): Boolean {
-            longClickedId = pos
+            longClickedId = position
             return false
         }
     }

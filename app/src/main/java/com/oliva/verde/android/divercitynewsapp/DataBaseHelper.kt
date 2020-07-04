@@ -31,10 +31,16 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     }
 
-    fun selectAllArticle() : Cursor? {
+    // 渡された記事をデータベースに保存する
+    fun InsertArticle(article : Article) {
         val db = this.writableDatabase
-        val sql = "SELECT * FROM stocked_articles"
-        return db.rawQuery(sql, null)
+        val sqlInsert = "INSERT INTO stocked_articles (url, url_to_image, published_at, title) VALUES (?, ?, ?, ?)"
+        val stmt = db.compileStatement(sqlInsert)
+        stmt.bindString(1, article.url)
+        stmt.bindString(2, article.urlToImage)
+        stmt.bindString(3, article.publishedAt)
+        stmt.bindString(4, article.title)
+        stmt.executeInsert()
     }
 
 }

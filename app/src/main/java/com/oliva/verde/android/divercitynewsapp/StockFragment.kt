@@ -30,24 +30,6 @@ class StockFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
         articleList = selectAllArticle()
-        /**
-        val cursor = selectAllArticle()
-        var title = ""
-        var publishedAt = ""
-        var urlToImage = ""
-        var url = ""
-        while(cursor.moveToNext()) {
-            val idxTitle = cursor.getColumnIndex("title")
-            title = cursor.getString(idxTitle)
-            val idxPublishedAt = cursor.getColumnIndex("published_at")
-            publishedAt = cursor.getString(idxPublishedAt)
-            val idxUrlToImage = cursor.getColumnIndex("url_to_image")
-            urlToImage = cursor.getString(idxUrlToImage)
-            val idxUrl = cursor.getColumnIndex("url")
-            url = cursor.getString(idxUrl)
-            articleList.add(Article(url, urlToImage, publishedAt, title))
-        }
-        */
         copiedArticleList = articleList.toMutableList()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス
@@ -83,24 +65,6 @@ class StockFragment : Fragment() {
                 return if (newText.isEmpty()) {
                     articleList.clear()
                     articleList = selectAllArticle()
-                    /**
-                    val cursor = selectAllArticle()
-                    var title = ""
-                    var publishedAt = ""
-                    var urlToImage = ""
-                    var url = ""
-                    while(cursor.moveToNext()) {
-                        val idxTitle = cursor.getColumnIndex("title")
-                        title = cursor.getString(idxTitle)
-                        val idxPublishedAt = cursor.getColumnIndex("published_at")
-                        publishedAt = cursor.getString(idxPublishedAt)
-                        val idxUrlToImage = cursor.getColumnIndex("url_to_image")
-                        urlToImage = cursor.getString(idxUrlToImage)
-                        val idxUrl = cursor.getColumnIndex("url")
-                        url = cursor.getString(idxUrl)
-                        articleList.add(Article(url, urlToImage, publishedAt, title))
-                    }
-                    */
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
                     true
