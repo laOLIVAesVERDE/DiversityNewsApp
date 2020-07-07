@@ -1,4 +1,6 @@
 # Diversity News概要
+**■Google Play URL : https://play.google.com/store/apps/details?id=com.oliva.verde.android.divercitynewsapp** 
+
 **■作成のきっかけ**  
 　友人にトランスジェンダーの方がおり、LGBTに関連したニュースが閲覧できるようなアプリがあると  
 　よいとのことから、作成にいたりました。
