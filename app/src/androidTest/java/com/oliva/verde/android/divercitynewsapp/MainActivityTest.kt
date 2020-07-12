@@ -18,6 +18,6 @@ class MainActivityTest {
 
     @Test fun checkStartActivity() {
         val activity : MainActivity = activityTestRule.launchActivity(null)
-        
+
     }
 }
