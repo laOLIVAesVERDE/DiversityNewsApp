@@ -12,6 +12,7 @@ android {
         targetSdkVersion 29
         versionCode 3
         versionName "1.1"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,6 +52,8 @@ dependencies {
 
     // Json->Gsonコンバートのため
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    compile 'com.android.support:multidex:1.0.3'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
