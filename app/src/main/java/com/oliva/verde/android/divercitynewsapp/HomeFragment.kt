@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -10,11 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -39,13 +46,22 @@ class HomeFragment : Fragment() {
                         // build前にbaseUrlが必要となる。他はオプション
                         .baseUrl("https://newsapi.org/") // baseurlを指定
                         .addConverterFactory(GsonConverterFactory.create()) // JsonオブジェクトをGsonに変換
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build() // Retrofitオブジェクトの生成
 
-        // RetrofitオブジェクトにAPIサービスインスタンスによって定義されたAPIエンドポイントを実装する
+        // Retrofitオブジェクトに、APIサービスインスタンスによって定義されたAPIエンドポイントを実装する
         val api = retrofit.create(ApiService::class.java)
         // 検索クエリの指定
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
+        api.getNews(apiKey, searchWord)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe( {
+
+            })
+
+        /**
         // APIエンドポイントにリクエスト
         api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> { // enqueue : 非同期でリクエストを実行
             // 失敗時の処理
@@ -71,6 +87,7 @@ class HomeFragment : Fragment() {
                 lvArticles?.addItemDecoration(decorator)
             }
         })
+        */
         // Inflate the layout for this fragment
         return view
     }
