@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.internal.subscriptions.ArrayCompositeSubscription
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +28,7 @@ import java.util.*
 
 
 class HomeFragment : Fragment() {
+    var compositeDisposable = CompositeDisposable()
     var articleList = mutableListOf<Article>()
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
@@ -54,12 +58,27 @@ class HomeFragment : Fragment() {
         // 検索クエリの指定
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
-        api.getNews(apiKey, searchWord)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( {
-
-            })
+        compositeDisposable.clear()
+        compositeDisposable.add(
+            api.getNews(apiKey, searchWord)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { result ->
+                    val res = result.articles
+                    articleList = res
+                    copiedArticleList = articleList.toMutableList()
+                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                    // LayoutManager : 各アイテムを表示形式を管理するクラス
+                    val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
+                    // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
+                    lvArticles?.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
+                    // 独自定義のAdapterクラスをlayoutに紐づける
+                    lvArticles?.adapter = RecycleListAdapter(this@HomeFragment, articleList)
+                    // リサイクラービューに区切り線を追加
+                    val decorator = DividerItemDecoration(activity, layout.orientation)
+                    lvArticles?.addItemDecoration(decorator)
+                }
+        )
 
         /**
         // APIエンドポイントにリクエスト
@@ -95,6 +114,7 @@ class HomeFragment : Fragment() {
     override fun onDestroy() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
+        compositeDisposable.clear()
         super.onDestroy()
     }
 
