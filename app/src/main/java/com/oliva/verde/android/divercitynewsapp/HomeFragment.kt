@@ -28,6 +28,7 @@ import java.util.*
 
 
 class HomeFragment : Fragment() {
+    // CompositeDisposable : 複数の要素(API通信など)をまとめて格納・削除ができる
     var compositeDisposable = CompositeDisposable()
     var articleList = mutableListOf<Article>()
     var copiedArticleList = mutableListOf<Article>()
@@ -45,27 +46,19 @@ class HomeFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val retrofit = Retrofit.Builder() // ビルダーオブジェクトを取得
-                        // Calling baseUrl is required before calling build(). All other methods are optional.
-                        // build前にbaseUrlが必要となる。他はオプション
-                        .baseUrl("https://newsapi.org/") // baseurlを指定
-                        .addConverterFactory(GsonConverterFactory.create()) // JsonオブジェクトをGsonに変換
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build() // Retrofitオブジェクトの生成
-
-        // Retrofitオブジェクトに、APIサービスインスタンスによって定義されたAPIエンドポイントを実装する
-        val api = retrofit.create(ApiService::class.java)
         // 検索クエリの指定
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
         compositeDisposable.clear()
         compositeDisposable.add(
-            api.getNews(apiKey, searchWord)
-                .subscribeOn(Schedulers.io())
+            // APIリクエスト
+            ApiServiceManager.apiService.getNews(apiKey, searchWord)
+                // subscribeOn : subscribeされたときに実行する処理のスケジューラーを変更する
+                .subscribeOn(Schedulers.io()) // 非同期I/Oを利用
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { result ->
-                    val res = result.articles
-                    articleList = res
+                // subscribe : Observable型から流れてくるデータを受け止める
+                .subscribe { response ->
+                    articleList = response.articles
                     copiedArticleList = articleList.toMutableList()
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     // LayoutManager : 各アイテムを表示形式を管理するクラス
@@ -79,6 +72,8 @@ class HomeFragment : Fragment() {
                     lvArticles?.addItemDecoration(decorator)
                 }
         )
+        // Inflate the layout for this fragment
+        return view
 
         /**
         // APIエンドポイントにリクエスト
@@ -107,8 +102,6 @@ class HomeFragment : Fragment() {
             }
         })
         */
-        // Inflate the layout for this fragment
-        return view
     }
 
     override fun onDestroy() {
