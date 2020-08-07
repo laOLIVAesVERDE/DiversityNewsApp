@@ -16,6 +16,6 @@ open class ApiServiceManager {
                 // RxJava2CallAdapterFactory : Observable型を返すことが可能となる
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-                .create(ApiService::class.java)
+                .create(ApiService::class.java) // Retrofitオブジェクトに、APIサービスインスタンスによって定義されたAPIエンドポイントを実装する
     }
 }

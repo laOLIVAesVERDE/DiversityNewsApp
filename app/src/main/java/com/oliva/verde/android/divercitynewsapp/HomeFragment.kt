@@ -46,25 +46,13 @@ class HomeFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val retrofit = Retrofit.Builder() // ビルダーオブジェクトを取得
-            // Calling baseUrl is required before calling build(). All other methods are optional.
-            // build前にbaseUrlが必要となる。他はオプション
-            .baseUrl("https://newsapi.org/") // baseurlを指定
-            .addConverterFactory(GsonConverterFactory.create()) // JsonオブジェクトをGsonに変換
-            // addCallAdapterFactory : Call以外の型を返す
-            // RxJava2CallAdapterFactory : Observable型を返すことが可能となる
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-
-
-        // Retrofitオブジェクトに、APIサービスインスタンスによって定義されたAPIエンドポイントを実装する
-        val api = retrofit.create(ApiService::class.java)
         // 検索クエリの指定
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
         compositeDisposable.clear()
         compositeDisposable.add(
-            api.getNews(apiKey, searchWord)
+            // APIリクエスト
+            ApiServiceManager.apiService.getNews(apiKey, searchWord)
                 // subscribeOn : subscribeされたときに実行する処理のスケジューラーを変更する
                 .subscribeOn(Schedulers.io()) // 非同期I/Oを利用
                 .observeOn(AndroidSchedulers.mainThread())
