@@ -2,7 +2,6 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -11,20 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.subscriptions.ArrayCompositeSubscription
 import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 
 class HomeFragment : Fragment() {
