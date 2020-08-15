@@ -155,6 +155,7 @@ class HomeFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
+    // 長押しされた記事のポジションを設定
     inner class ListItemLongClickListener(val position : Int) : View.OnLongClickListener {
         override fun onLongClick(v: View?): Boolean {
             longClickedId = position
@@ -162,7 +163,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // 長押しされた記事のポジションを設定
     inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
             val item = articleList[position]
