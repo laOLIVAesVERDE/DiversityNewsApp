@@ -3,6 +3,7 @@ package com.oliva.verde.android.divercitynewsapp
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -65,7 +66,7 @@ class StockFragment : Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 return if (newText.isEmpty()) {
                     articleList.clear()
-                    articleList = selectAllArticle()
+                    articleList = RealmHelper().read()
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
                     true
@@ -97,6 +98,7 @@ class StockFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
+        /**
         // データベースから記事データのIDを全て取得する
         val helper = DataBaseHelper(requireActivity())
         val db = helper.writableDatabase
@@ -114,13 +116,17 @@ class StockFragment : Fragment() {
         val stmt = DataBaseHelper(requireActivity()).writableDatabase.compileStatement(sqlDelete)
         stmt.bindLong(1, selectedArticleId)
         stmt.executeUpdateDelete()
+        */
+
 
         // 長押しされた記事オブジェクトをリサイクラービューから削除する
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val article = articleList[longClickedId] // 長押しされた記事オブジェクトをリストビューから取得
+        RealmHelper().delete(article.id)
+        Log.d("NewsApp", RealmHelper().read().toString())
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
         // 記事オブジェクト配列から記事オブジェクトを削除
-        articleList.remove(article)
+        // articleList.remove(article)
         // アダプターに、アダプト対象の記事オブジェクトの変更を知らせる
         adapter.notifyDataSetChanged()
         Toast.makeText(activity, R.string.success_to_remove_from_stock, Toast.LENGTH_LONG).show()
@@ -147,6 +153,7 @@ class StockFragment : Fragment() {
     inner class ListItemLongClickListener(val position: Int) : View.OnLongClickListener {
         override fun onLongClick(v: View?): Boolean {
             longClickedId = position
+            Log.d("NewsApp", articleList[position].id)
             return false
         }
     }

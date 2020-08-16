@@ -2,11 +2,17 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.util.Log
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import java.util.*
 
 class RealmHelper {
-    var mRealm = Realm.getDefaultInstance()
+    var mRealm = Realm.getInstance(
+         RealmConfiguration.Builder()
+        .deleteRealmIfMigrationNeeded()
+        .build()
+    )
+
     fun create(url : String,
                urlToImage : String,
                publishedAt : String,
@@ -19,6 +25,7 @@ class RealmHelper {
             article.publishedAt = publishedAt
             article.title = title
             mRealm.copyToRealm(article)
+            Log.d("NewsApp", article.id)
         }
     }
 
@@ -27,9 +34,10 @@ class RealmHelper {
     }
 
     fun delete(id : String) {
+        Log.d("NewsApp", "Realm Delete")
         mRealm.executeTransaction {
-            var article = mRealm.where(Article::class.java).equalTo("id", id).findAll()
-            article.deleteFromRealm(0)
+            var article = mRealm.where(Article::class.java).equalTo("id", id).findFirst()
+            article.deleteFromRealm()
         }
     }
 }
