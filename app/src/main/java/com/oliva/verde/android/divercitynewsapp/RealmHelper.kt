@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.util.Log
 import io.realm.Realm
 import io.realm.RealmResults
 import java.util.*
@@ -10,12 +11,14 @@ class RealmHelper {
                urlToImage : String,
                publishedAt : String,
                title : String) {
+        Log.d("NewsApp", title)
         mRealm.executeTransaction {
             var article = mRealm.createObject(Article::class.java, UUID.randomUUID().toString())
             article.url = url
             article.urlToImage = urlToImage
             article.publishedAt = publishedAt
             article.title = title
+            mRealm.copyToRealm(article)
         }
     }
 

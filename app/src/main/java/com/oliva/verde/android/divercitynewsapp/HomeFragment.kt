@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
 
 
 class HomeFragment : Fragment() {
     // CompositeDisposable : 複数の要素(API通信など)をまとめて格納・削除ができる
     var compositeDisposable = CompositeDisposable()
+    // var mRealm = RealmHelper().mRealm
     var articleList = mutableListOf<Article>()
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
@@ -26,6 +28,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
+        // Realm.init(activity)
     }
 
     override fun onCreateView(
@@ -95,6 +98,7 @@ class HomeFragment : Fragment() {
     override fun onDestroy() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
+        // mRealm.close()
         compositeDisposable.clear()
         super.onDestroy()
     }
@@ -148,10 +152,10 @@ class HomeFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされたViewに関する情報を取得する
         val article = articleList[longClickedId]
-        val helper = DataBaseHelper(activity!!)
-        helper.InsertArticle(article)
+        // val helper = DataBaseHelper(activity!!)
+        // helper.InsertArticle(article)
+        RealmHelper().create(article.url, article.urlToImage, article.publishedAt, article.title)
         Toast.makeText(activity, R.string.success_to_add_to_stock, Toast.LENGTH_LONG).show()
-
         return super.onContextItemSelected(item)
     }
 

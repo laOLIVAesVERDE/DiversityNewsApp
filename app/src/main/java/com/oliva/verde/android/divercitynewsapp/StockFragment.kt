@@ -29,7 +29,8 @@ class StockFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
-        articleList = selectAllArticle()
+        // articleList = selectAllArticle()
+        articleList = RealmHelper().read()
         copiedArticleList = articleList.toMutableList()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス

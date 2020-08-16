@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_top.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,5 +24,8 @@ class MainActivity : AppCompatActivity() {
         toolbar.setLogo(R.drawable.ic_toolbar_icon)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        Realm.init(this)
     }
+
 }
