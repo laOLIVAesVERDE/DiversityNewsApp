@@ -32,6 +32,7 @@ class StockFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
         // articleList = selectAllArticle()
         articleList = RealmHelper().read()
+        Log.d("NewsApp", articleList.toString())
         copiedArticleList = articleList.toMutableList()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス
@@ -52,6 +53,7 @@ class StockFragment : Fragment() {
         super.onDestroy()
     }
 
+    /**
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu_search_article, menu)
@@ -65,8 +67,17 @@ class StockFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 return if (newText.isEmpty()) {
-                    articleList.clear()
-                    articleList = RealmHelper().read()
+                    Log.d("NewsApp", copiedArticleList.toString())
+                    RealmHelper().deleteAll()
+                    for (article in copiedArticleList) {
+                        RealmHelper().create(
+                            article.url,
+                            article.urlToImage,
+                            article.publishedAt,
+                            article.title
+                        )
+                    }
+                    RealmHelper().read()
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
                     true
@@ -76,13 +87,20 @@ class StockFragment : Fragment() {
             }
         })
     }
+    */
 
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
-        val filteredList = articleList.filter { it.title.contains(text) }
-        articleList.clear()
-        articleList.addAll(filteredList)
+        val filteredList = RealmHelper().search(text)
+        Log.d("NewsApp", filteredList.toString())
+        // RealmHelper().deleteAll()
+        Log.d("NewsApp", filteredList.toString())
+
+        RealmHelper().read()
+        Log.d("NewsApp", RealmHelper().read().toString())
+        // articleList = filteredList
+        // articleList.addAll(filteredList)
         adapter.notifyDataSetChanged()
     }
 
@@ -98,27 +116,6 @@ class StockFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        /**
-        // データベースから記事データのIDを全て取得する
-        val helper = DataBaseHelper(requireActivity())
-        val db = helper.writableDatabase
-        val sql = "SELECT * FROM stocked_articles"
-        val cursor = db.rawQuery(sql, null)
-        val idArray = arrayListOf<Long>()
-        while(cursor.moveToNext()) {
-            val idxId = cursor.getColumnIndex("_id")
-            idArray.add(cursor.getLong(idxId))
-        }
-        // 長押しされた記事のデータベース上のidを取得
-        val selectedArticleId = idArray[longClickedId]
-        // 長押しされた記事をデータベース上から消去する
-        val sqlDelete = "DELETE FROM stocked_articles WHERE _id = ?"
-        val stmt = DataBaseHelper(requireActivity()).writableDatabase.compileStatement(sqlDelete)
-        stmt.bindLong(1, selectedArticleId)
-        stmt.executeUpdateDelete()
-        */
-
-
         // 長押しされた記事オブジェクトをリサイクラービューから削除する
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val article = articleList[longClickedId] // 長押しされた記事オブジェクトをリストビューから取得
@@ -160,6 +157,23 @@ class StockFragment : Fragment() {
 
     private fun selectAllArticle() : MutableList<Article> {
         val allStockedArticles = mutableListOf<Article>()
+
+        var title = ""
+        var publishedAt = ""
+        var urlToImage = ""
+        var url = ""
+        Log.d("NewsApp", RealmHelper().read().toString())
+        for (articleData in RealmHelper().read()) {
+            url = articleData.url
+            Log.d("NewsApp", "url : ${url}")
+            urlToImage = articleData.urlToImage
+            publishedAt = articleData.publishedAt
+            title = articleData.title
+            Log.d("NewsApp", Article(url, urlToImage, publishedAt, title).toString())
+            allStockedArticles.add(Article(url, urlToImage, publishedAt, title))
+        }
+
+        /**
         val helper = DataBaseHelper(requireActivity())
         val db = helper.writableDatabase
         val sql = "SELECT * FROM stocked_articles"
@@ -179,6 +193,9 @@ class StockFragment : Fragment() {
             url = cursor.getString(idxUrl)
             allStockedArticles.add(Article(url, urlToImage, publishedAt, title))
         }
+        */
+
+        Log.d("NewsApp", allStockedArticles.toString())
         return allStockedArticles
 
     }

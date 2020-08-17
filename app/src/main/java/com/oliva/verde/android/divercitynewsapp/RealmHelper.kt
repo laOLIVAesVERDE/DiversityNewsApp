@@ -3,6 +3,7 @@ package com.oliva.verde.android.divercitynewsapp
 import android.util.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.RealmQuery
 import io.realm.RealmResults
 import java.util.*
 
@@ -38,6 +39,22 @@ class RealmHelper {
         mRealm.executeTransaction {
             var article = mRealm.where(Article::class.java).equalTo("id", id).findFirst()
             article.deleteFromRealm()
+        }
+    }
+
+    fun search(query : String): MutableList<Article> {
+
+        mRealm.executeTransaction {
+            mRealm.where(Article::class.java).not().contains("title", query).findAll().deleteAllFromRealm()
+        }
+
+        return mRealm.where(Article::class.java).findAll()
+
+    }
+
+    fun deleteAll() {
+        mRealm.executeTransaction {
+            mRealm.where(Article::class.java).findAll().deleteAllFromRealm()
         }
     }
 }
