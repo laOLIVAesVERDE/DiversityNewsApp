@@ -2,7 +2,6 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -11,25 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.subscriptions.ArrayCompositeSubscription
 import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
+import io.realm.Realm
 
 
 class HomeFragment : Fragment() {
     // CompositeDisposable : 複数の要素(API通信など)をまとめて格納・削除ができる
     var compositeDisposable = CompositeDisposable()
+    // var mRealm = RealmHelper().mRealm
     var articleList = mutableListOf<Article>()
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
@@ -38,6 +28,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
+        // Realm.init(activity)
     }
 
     override fun onCreateView(
@@ -107,6 +98,7 @@ class HomeFragment : Fragment() {
     override fun onDestroy() {
         val helper = DataBaseHelper(activity!!)
         helper.close()
+        // mRealm.close()
         compositeDisposable.clear()
         super.onDestroy()
     }
@@ -155,19 +147,19 @@ class HomeFragment : Fragment() {
         val menuInflater = MenuInflater(activity)
         menuInflater.inflate(R.menu.context_menu_add_to_stock, menu)
         menu.setHeaderTitle(R.string.news_list_context_header)
-
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされたViewに関する情報を取得する
         val article = articleList[longClickedId]
-        val helper = DataBaseHelper(activity!!)
-        helper.InsertArticle(article)
+        // val helper = DataBaseHelper(activity!!)
+        // helper.InsertArticle(article)
+        RealmHelper().create(article.url, article.urlToImage, article.publishedAt, article.title)
         Toast.makeText(activity, R.string.success_to_add_to_stock, Toast.LENGTH_LONG).show()
-
         return super.onContextItemSelected(item)
     }
 
+    // 長押しされた記事のポジションを設定
     inner class ListItemLongClickListener(val position : Int) : View.OnLongClickListener {
         override fun onLongClick(v: View?): Boolean {
             longClickedId = position
@@ -175,7 +167,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // 長押しされた記事のポジションを設定
     inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
             val item = articleList[position]
