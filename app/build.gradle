@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     // Realmで検索を実行可能にするため
-    implementation 'com.github.thorbenprimke:realm-searchview:0.9.1'
+    implementation 'com.github.thorbenprimke:realm-searchview:0.9.6'
 
     implementation 'com.android.support:multidex:1.0.3'
 
