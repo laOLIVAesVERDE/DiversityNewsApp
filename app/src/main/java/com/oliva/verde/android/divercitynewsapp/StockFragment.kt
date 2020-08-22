@@ -17,8 +17,9 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class StockFragment : Fragment() {
     var articleList = mutableListOf<Article>()
-    var copiedArticleList = mutableListOf<Article>()
+    var filteredList = mutableListOf<Article>()
     var longClickedId = -1
+    var filteringFlag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class StockFragment : Fragment() {
         // articleList = selectAllArticle()
         articleList = RealmHelper().read()
         Log.d("NewsApp", articleList.toString())
-        copiedArticleList = articleList.toMutableList()
+        // copiedArticleList = articleList.toMutableList()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス
         val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
@@ -62,6 +63,7 @@ class StockFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchRequest(query)
+                filteringFlag = 1
                 return true
             }
 
@@ -71,6 +73,7 @@ class StockFragment : Fragment() {
                     articleList = RealmHelper().read()
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
+                    filteringFlag = 0
                     true
                 } else {
                     false
@@ -82,7 +85,7 @@ class StockFragment : Fragment() {
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
-        val filteredList = RealmHelper().search(text)
+        filteredList = RealmHelper().search(text)
         lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
         Log.d("NewsApp", filteredList.toString())
         adapter.notifyDataSetChanged()
@@ -102,7 +105,14 @@ class StockFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされた記事オブジェクトをリサイクラービューから削除する
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-        val article = articleList[longClickedId] // 長押しされた記事オブジェクトをリストビューから取得
+        var article : Article
+        // 長押しされた記事オブジェクトをリストビューから取得
+        if (filteringFlag == 0) {
+            article = articleList[longClickedId]
+        } else {
+            article = filteredList[longClickedId]
+        }
+        Log.d("NewsApp", article.toString())
         RealmHelper().delete(article.id)
         Log.d("NewsApp", RealmHelper().read().toString())
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
