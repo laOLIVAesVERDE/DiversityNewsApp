@@ -53,7 +53,7 @@ class StockFragment : Fragment() {
         super.onDestroy()
     }
 
-    /**
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu_search_article, menu)
@@ -67,17 +67,8 @@ class StockFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 return if (newText.isEmpty()) {
-                    Log.d("NewsApp", copiedArticleList.toString())
-                    RealmHelper().deleteAll()
-                    for (article in copiedArticleList) {
-                        RealmHelper().create(
-                            article.url,
-                            article.urlToImage,
-                            article.publishedAt,
-                            article.title
-                        )
-                    }
-                    RealmHelper().read()
+                    // Log.d("NewsApp", copiedArticleList.toString())
+                    articleList = RealmHelper().read()
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
                     true
@@ -87,20 +78,13 @@ class StockFragment : Fragment() {
             }
         })
     }
-    */
 
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
         val filteredList = RealmHelper().search(text)
+        lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
         Log.d("NewsApp", filteredList.toString())
-        // RealmHelper().deleteAll()
-        Log.d("NewsApp", filteredList.toString())
-
-        RealmHelper().read()
-        Log.d("NewsApp", RealmHelper().read().toString())
-        // articleList = filteredList
-        // articleList.addAll(filteredList)
         adapter.notifyDataSetChanged()
     }
 

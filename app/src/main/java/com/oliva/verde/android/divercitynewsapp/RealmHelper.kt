@@ -43,13 +43,7 @@ class RealmHelper {
     }
 
     fun search(query : String): MutableList<Article> {
-
-        mRealm.executeTransaction {
-            mRealm.where(Article::class.java).not().contains("title", query).findAll().deleteAllFromRealm()
-        }
-
-        return mRealm.where(Article::class.java).findAll()
-
+        return mRealm.where(Article::class.java).contains("title", query).findAll()
     }
 
     fun deleteAll() {
