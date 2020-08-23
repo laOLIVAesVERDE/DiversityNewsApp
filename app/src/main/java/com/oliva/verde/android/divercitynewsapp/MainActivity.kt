@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_top.*
 
 class MainActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top)
@@ -27,5 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         Realm.init(this)
     }
+
 
 }
