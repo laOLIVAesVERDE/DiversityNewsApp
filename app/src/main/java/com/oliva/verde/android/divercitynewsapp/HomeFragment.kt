@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.realm.Realm
 
 
 class HomeFragment : Fragment() {
@@ -96,9 +95,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        val helper = DataBaseHelper(activity!!)
-        helper.close()
-        // mRealm.close()
+        RealmHelper().mRealm.close()
         compositeDisposable.clear()
         super.onDestroy()
     }
@@ -152,8 +149,6 @@ class HomeFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされたViewに関する情報を取得する
         val article = articleList[longClickedId]
-        // val helper = DataBaseHelper(activity!!)
-        // helper.InsertArticle(article)
         RealmHelper().create(article.url, article.urlToImage, article.publishedAt, article.title)
         Toast.makeText(activity, R.string.success_to_add_to_stock, Toast.LENGTH_LONG).show()
         return super.onContextItemSelected(item)
