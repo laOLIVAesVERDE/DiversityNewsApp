@@ -22,14 +22,14 @@ Kotlin
 Picasso : 画像表示  
 Rxjava, Retrofit : 非同期処理    
 Recycler View : 記事のリスト表示  
-SQlite : ストック記事のデータベース  
+Realm : ストック記事のデータベース  
   
 # 今後の展望  
 Android開発で用いられることの多いライブラリを使用していきたい。  
 ●非同期処理  
-　RxJava => 8/8実装済み    
+　RxJava => 2020/8/8実装済み    
 ●データベース  
-　SQLite -> Realm  
+　Realm  => 2020/8/23実装済み  
  
 # プライバシーポリシー  
 DiversityNewsは個人情報を取得しません。  
