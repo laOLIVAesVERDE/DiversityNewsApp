@@ -22,6 +22,7 @@ class RealmHelper {
             article.urlToImage = urlToImage
             article.publishedAt = publishedAt
             article.title = title
+            article.isReadFlag = false
             mRealm.copyToRealm(article)
         }
     }
@@ -40,5 +41,7 @@ class RealmHelper {
     fun search(query : String): MutableList<Article> {
         return mRealm.where(Article::class.java).contains("title", query).findAll()
     }
+
+    // fun updateFlag()
 
 }
