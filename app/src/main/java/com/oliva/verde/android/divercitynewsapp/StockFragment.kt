@@ -115,9 +115,14 @@ class StockFragment : Fragment() {
 
     inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
-            val item = articleList[position]
+            val article : Article
+            if (filteringFlag == 0) {
+                article = articleList[position]
+            } else {
+                article = filteredList[position]
+            }
             // url文字列を取得
-            val url = item.url
+            val url = article.url
             //以下、Custom Tabs機能を使って記事の詳細を表示する
             // Custom Tabを表示するBuilderオブジェクトを取得
             val builder = CustomTabsIntent.Builder()
