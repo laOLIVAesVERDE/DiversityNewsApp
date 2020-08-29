@@ -49,4 +49,8 @@ class RealmHelper {
         }
     }
 
+    fun readIsNotRead() :RealmResults<Article> {
+        return mRealm.where(Article::class.java).equalTo("isReadFlag", false).findAll()
+    }
+
 }

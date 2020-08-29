@@ -6,6 +6,15 @@
         android:title="@string/search_view_title"
         android:id="@+id/search_article"
         app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
+    <item
+        android:title="@string/is_read_filter_title"
+        android:id="@+id/is_read"
+        app:showAsAction="never" />
+
+    <item
+        android:title="@string/all_article_title"
+        android:id="@+id/all_article"
+        app:showAsAction="never" />
 </menu>

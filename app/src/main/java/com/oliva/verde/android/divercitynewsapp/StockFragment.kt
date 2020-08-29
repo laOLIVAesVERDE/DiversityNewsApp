@@ -75,6 +75,18 @@ class StockFragment : Fragment() {
         })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+        val adapter = lvArticles?.adapter as RecycleListAdapter
+        when(item.itemId) {
+            R.id.is_read ->
+                filteredList = RealmHelper().readIsNotRead()
+        }
+        lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+        adapter.notifyDataSetChanged()
+        return super.onOptionsItemSelected(item)
+    }
+
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
