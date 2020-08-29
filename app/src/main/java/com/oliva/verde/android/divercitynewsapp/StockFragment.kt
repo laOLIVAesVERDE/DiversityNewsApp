@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -96,12 +97,11 @@ class StockFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされた記事オブジェクトをリサイクラービューから削除する
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-        val article : Article
         // 長押しされた記事オブジェクトを取得
-        if (filteringFlag == 0) {
-            article = articleList[longClickedId]
+        val article : Article = if (filteringFlag == 0) {
+            articleList[longClickedId]
         } else {
-            article = filteredList[longClickedId]
+            filteredList[longClickedId]
         }
         // 記事DBから記事オブジェクトを削除
         RealmHelper().delete(article.id)
@@ -115,14 +115,14 @@ class StockFragment : Fragment() {
 
     inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
-            val article : Article
-            if (filteringFlag == 0) {
-                article = articleList[position]
+            val article : Article = if (filteringFlag == 0) {
+                articleList[position]
             } else {
-                article = filteredList[position]
+                filteredList[position]
             }
             // url文字列を取得
             val url = article.url
+            RealmHelper().updateFlag(article.id)
             //以下、Custom Tabs機能を使って記事の詳細を表示する
             // Custom Tabを表示するBuilderオブジェクトを取得
             val builder = CustomTabsIntent.Builder()

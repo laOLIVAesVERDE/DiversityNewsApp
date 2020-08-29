@@ -42,6 +42,11 @@ class RealmHelper {
         return mRealm.where(Article::class.java).contains("title", query).findAll()
     }
 
-    // fun updateFlag()
+    fun updateFlag(id : String) {
+        mRealm.executeTransaction {
+            val article = mRealm.where(Article::class.java).equalTo("id", id).findFirst()
+            article.isReadFlag = true
+        }
+    }
 
 }
