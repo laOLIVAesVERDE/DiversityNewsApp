@@ -79,10 +79,17 @@ class StockFragment : Fragment() {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val adapter = lvArticles?.adapter as RecycleListAdapter
         when(item.itemId) {
-            R.id.is_read ->
+            R.id.is_read -> {
+                filteringFlag = 1
                 filteredList = RealmHelper().readIsNotRead()
+                lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+            }
+            R.id.all_article -> {
+                filteringFlag = 0
+                articleList = RealmHelper().read()
+                lvArticles.adapter = RecycleListAdapter(this@StockFragment, articleList)
+            }
         }
-        lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
         adapter.notifyDataSetChanged()
         return super.onOptionsItemSelected(item)
     }
