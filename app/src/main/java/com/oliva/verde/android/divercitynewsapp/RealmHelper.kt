@@ -22,6 +22,7 @@ class RealmHelper {
             article.urlToImage = urlToImage
             article.publishedAt = publishedAt
             article.title = title
+            article.isReadFlag = false
             mRealm.copyToRealm(article)
         }
     }
@@ -39,6 +40,24 @@ class RealmHelper {
 
     fun search(query : String): MutableList<Article> {
         return mRealm.where(Article::class.java).contains("title", query).findAll()
+    }
+
+    fun searchFromIsNotRead(query: String) : MutableList<Article> {
+        return mRealm.where(Article::class.java)
+            .equalTo("isReadFlag", false)
+            .contains("title", query)
+            .findAll()
+    }
+
+    fun updateFlag(id : String) {
+        mRealm.executeTransaction {
+            val article = mRealm.where(Article::class.java).equalTo("id", id).findFirst()
+            article.isReadFlag = true
+        }
+    }
+
+    fun readIsNotRead() :RealmResults<Article> {
+        return mRealm.where(Article::class.java).equalTo("isReadFlag", false).findAll()
     }
 
 }

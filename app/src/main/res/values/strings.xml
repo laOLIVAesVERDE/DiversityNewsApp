@@ -10,4 +10,6 @@
     <string name="bottom_navigation_home_title">ホーム</string>
     <string name="bottom_navigation_bookmark_title">ストック</string>
     <string name="search_view_title">記事を検索</string>
+    <string name="is_read_filter_title">未読の記事</string>
+    <string name="all_article_title">全ての記事</string>
 </resources>

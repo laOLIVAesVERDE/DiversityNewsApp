@@ -9,4 +9,5 @@ open class Article(
     open var url: String = "url",
     open var urlToImage: String = "urlToImage",
     open var publishedAt: String = "publishedAt",
-    open var title: String = "title") : RealmObject() {}
+    open var title: String = "title",
+    open var isReadFlag : Boolean = false) : RealmObject() {}
