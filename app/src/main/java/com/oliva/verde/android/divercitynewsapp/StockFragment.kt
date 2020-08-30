@@ -44,6 +44,7 @@ class StockFragment : Fragment() {
         return view
     }
 
+    // CustomTabsIntentで記事を閲覧した後、未読記事表示中であればリストを更新
     override fun onResume() {
         super.onResume()
         if (isReadFilteringFlag == 1) {
@@ -135,7 +136,6 @@ class StockFragment : Fragment() {
         // 長押しされた記事オブジェクトを取得
         val article : Article = if (searchFilteringFlag == 1 || isReadFilteringFlag == 1) {
             filteredList[longClickedId]
-
         } else {
             articleList[longClickedId]
         }
@@ -176,5 +176,4 @@ class StockFragment : Fragment() {
             return false
         }
     }
-
 }
