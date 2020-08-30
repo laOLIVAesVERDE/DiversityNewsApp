@@ -44,6 +44,17 @@ class StockFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (isReadFilteringFlag == 1) {
+            filteredList = RealmHelper().readIsNotRead()
+            val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+            val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+            lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+            adapter.notifyDataSetChanged()
+        }
+    }
+
     override fun onDestroy() {
         RealmHelper().mRealm.close()
         super.onDestroy()
