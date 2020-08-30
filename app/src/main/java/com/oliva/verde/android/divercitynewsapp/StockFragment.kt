@@ -114,7 +114,12 @@ class StockFragment : Fragment() {
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
-        filteredList = RealmHelper().search(text)
+        filteredList = if (isReadFilteringFlag == 1) {
+            RealmHelper().searchFromIsNotRead(text)
+        } else {
+            RealmHelper().search(text)
+        }
+        // filteredList = RealmHelper().search(text)
         lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
         adapter.notifyDataSetChanged()
     }
