@@ -2,7 +2,6 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -63,7 +62,7 @@ class StockFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.option_menu_search_article, menu)
+        inflater.inflate(R.menu.option_menu_for_stock_fragment, menu)
         val menuItem = menu.findItem(R.id.search_article)
         val searchView = menuItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
