@@ -17,7 +17,8 @@ class StockFragment : Fragment() {
     var articleList = mutableListOf<Article>()
     var filteredList = mutableListOf<Article>()
     var longClickedId = -1
-    var filteringFlag = 0
+    var searchFilteringFlag = 0
+    var isReadFilteringFlag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,6 @@ class StockFragment : Fragment() {
         super.onDestroy()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu_search_article, menu)
@@ -57,16 +57,21 @@ class StockFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchRequest(query)
-                filteringFlag = 1
+                searchFilteringFlag = 1
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                return if (newText.isEmpty()) {
+                val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                return if (newText.isEmpty() && isReadFilteringFlag == 0) {
                     articleList = RealmHelper().read()
-                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
-                    filteringFlag = 0
+                    searchFilteringFlag = 0
+                    true
+                } else if(newText.isEmpty() && isReadFilteringFlag == 1) {
+                    filteredList = RealmHelper().readIsNotRead()
+                    lvArticles?.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+                    searchFilteringFlag = 0
                     true
                 } else {
                     false
@@ -80,12 +85,12 @@ class StockFragment : Fragment() {
         val adapter = lvArticles?.adapter as RecycleListAdapter
         when(item.itemId) {
             R.id.is_read -> {
-                filteringFlag = 1
+                isReadFilteringFlag = 1
                 filteredList = RealmHelper().readIsNotRead()
                 lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
             }
             R.id.all_article -> {
-                filteringFlag = 0
+                isReadFilteringFlag = 0
                 articleList = RealmHelper().read()
                 lvArticles.adapter = RecycleListAdapter(this@StockFragment, articleList)
             }
@@ -117,10 +122,11 @@ class StockFragment : Fragment() {
         // 長押しされた記事オブジェクトをリサイクラービューから削除する
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         // 長押しされた記事オブジェクトを取得
-        val article : Article = if (filteringFlag == 0) {
-            articleList[longClickedId]
-        } else {
+        val article : Article = if (searchFilteringFlag == 1 || isReadFilteringFlag == 1) {
             filteredList[longClickedId]
+
+        } else {
+            articleList[longClickedId]
         }
         // 記事DBから記事オブジェクトを削除
         RealmHelper().delete(article.id)
@@ -134,10 +140,10 @@ class StockFragment : Fragment() {
 
     inner class ListItemClickListener(val position: Int) : View.OnClickListener {
         override fun onClick(view: View?) {
-            val article : Article = if (filteringFlag == 0) {
-                articleList[position]
-            } else {
+            val article : Article = if (searchFilteringFlag == 1 || isReadFilteringFlag == 1) {
                 filteredList[position]
+            } else {
+                articleList[position]
             }
             // url文字列を取得
             val url = article.url
