@@ -42,6 +42,7 @@ class RealmHelper {
         return mRealm.where(Article::class.java).contains("title", query).findAll()
     }
 
+    // 未読記事から記事を検索
     fun searchFromIsNotRead(query: String) : MutableList<Article> {
         return mRealm.where(Article::class.java)
             .equalTo("isReadFlag", false)

@@ -47,6 +47,7 @@ class StockFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (isReadFilteringFlag == 1) {
+            // 再度、未読記事をリサイクラービューにセットする
             filteredList = RealmHelper().readIsNotRead()
             val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
             val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
@@ -74,11 +75,13 @@ class StockFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
+                // 検索ワードがブランクかつ全ての記事を表示中
                 return if (newText.isEmpty() && isReadFilteringFlag == 0) {
                     articleList = RealmHelper().read()
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
                     searchFilteringFlag = 0
                     true
+                // 検索ワードがブランクかつ未読記事を表示中
                 } else if(newText.isEmpty() && isReadFilteringFlag == 1) {
                     filteredList = RealmHelper().readIsNotRead()
                     lvArticles?.adapter = RecycleListAdapter(this@StockFragment, filteredList)
@@ -112,13 +115,13 @@ class StockFragment : Fragment() {
 
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+        val adapter = lvArticles?.adapter as RecycleListAdapter
+        // 未読記事表示のフラグによって、DBから読み出す記事を変える
         filteredList = if (isReadFilteringFlag == 1) {
             RealmHelper().searchFromIsNotRead(text)
         } else {
             RealmHelper().search(text)
         }
-        // filteredList = RealmHelper().search(text)
         lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
         adapter.notifyDataSetChanged()
     }
@@ -138,6 +141,7 @@ class StockFragment : Fragment() {
         // 長押しされた記事オブジェクトをリサイクラービューから削除する
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
         // 長押しされた記事オブジェクトを取得
+        // 検索中または未読記事表示中であれば、フィルター済みの記事リストより記事データを取得する
         val article : Article = if (searchFilteringFlag == 1 || isReadFilteringFlag == 1) {
             filteredList[longClickedId]
         } else {
