@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.oliva.verde.android.divercitynewsapp"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 4
         versionName "1.1"
         multiDexEnabled true
@@ -50,7 +50,7 @@ dependencies {
 
     // API通信のため
     implementation  "com.squareup.okhttp3:okhttp:4.3.1" // OkHttp
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0' // Retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0' // Retrofit2
 
     // 非同期処理のため
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9' // Rxjava
@@ -60,13 +60,26 @@ dependencies {
     // Json->Gsonコンバートのため
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 
+    // moshi
+    def moshi_version = "1.5.0"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
+
+    // Architecture component
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.2.0'
+    implementation 'androidx.activity:activity-ktx:1.1.0'
+
+    // Indexエラー回避
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
