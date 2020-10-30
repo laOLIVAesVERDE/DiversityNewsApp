@@ -4,8 +4,13 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-open class ApiServiceManager {
-    companion object {
+object ApiServiceManager {
+        val ENDPOINT = "https://newsapi.org/"
+        val retrofit : Retrofit
+
+        init {
+            val intercepter = HttpLoggingInterceptor()
+        }
         val apiService : ApiService
             get() = Retrofit.Builder() // ビルダーオブジェクトを取得
                 // Calling baseUrl is required before calling build(). All other methods are optional.
