@@ -1,9 +1,10 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 object ApiServiceManager {
         val ENDPOINT = "https://newsapi.org/"
@@ -11,17 +12,14 @@ object ApiServiceManager {
 
         init {
             val intercepter = HttpLoggingInterceptor()
-        }
-        val apiService : ApiService
-            get() = Retrofit.Builder() // ビルダーオブジェクトを取得
-                // Calling baseUrl is required before calling build(). All other methods are optional.
-                // build前にbaseUrlが必要となる。他はオプション
-                .baseUrl("https://newsapi.org/") // baseurlを指定
-                .addConverterFactory(GsonConverterFactory.create()) // JsonオブジェクトをGsonに変換
-                // addCallAdapterFactory : Call以外の型を返す
-                // RxJava2CallAdapterFactory : Observable型を返すことが可能となる
+            intercepter.level = HttpLoggingInterceptor.Level.BODY
+            val httpClient = OkHttpClient.Builder().addInterceptor(intercepter).build()
+
+            val builder = Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(ApiService::class.java) // Retrofitオブジェクトに、APIサービスインスタンスによって定義されたAPIエンドポイントを実装する
-    }
+                .client(httpClient)
+            retrofit = builder.build()
+        }
 }
