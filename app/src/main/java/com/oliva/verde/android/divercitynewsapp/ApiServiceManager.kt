@@ -11,9 +11,9 @@ object ApiServiceManager {
         val retrofit : Retrofit
 
         init {
-            val intercepter = HttpLoggingInterceptor()
-            intercepter.level = HttpLoggingInterceptor.Level.BODY
-            val httpClient = OkHttpClient.Builder().addInterceptor(intercepter).build()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            val httpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
             val builder = Retrofit.Builder()
                 .baseUrl(ENDPOINT)
