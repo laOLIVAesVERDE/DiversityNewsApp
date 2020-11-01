@@ -10,12 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
 class HomeFragment : Fragment() {
+
+    private lateinit var homeFragmentViewModel: HomeFragmentViewModel
+    private lateinit var binding : NewsRowBinding
+    private lateinit var recycleListAdapter: RecycleListAdapter
+    
     // CompositeDisposable : 複数の要素(API通信など)をまとめて格納・削除ができる
     var compositeDisposable = CompositeDisposable()
     // var mRealm = RealmHelper().mRealm
