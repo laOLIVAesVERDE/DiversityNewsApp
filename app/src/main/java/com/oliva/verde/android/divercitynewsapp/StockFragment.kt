@@ -36,7 +36,7 @@ class StockFragment : Fragment() {
         // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
         lvArticles.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
         // 独自定義のAdapterクラスをlayoutに紐づける
-        lvArticles.adapter = RecycleListAdapter(this@StockFragment, articleList)
+        lvArticles.adapter = ArticleAdapter(this@StockFragment, articleList)
         // リサイクラービューに区切り線を追加
         val decorator = DividerItemDecoration(activity, layout.orientation)
         lvArticles?.addItemDecoration(decorator)
@@ -50,8 +50,8 @@ class StockFragment : Fragment() {
             // 再度、未読記事をリサイクラービューにセットする
             filteredList = RealmHelper().readIsNotRead()
             val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-            val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
-            lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+            val adapter = lvArticles?.adapter as ArticleAdapter // リサイクラービューに設定されているアダプターを取得
+            lvArticles.adapter = ArticleAdapter(this@StockFragment, filteredList)
             adapter.notifyDataSetChanged()
         }
     }
@@ -78,13 +78,13 @@ class StockFragment : Fragment() {
                 // 検索ワードがブランクかつ全ての記事を表示中
                 return if (newText.isEmpty() && isReadFilteringFlag == 0) {
                     articleList = RealmHelper().read()
-                    lvArticles?.adapter = RecycleListAdapter(this@StockFragment, articleList)
+                    lvArticles?.adapter = ArticleAdapter(this@StockFragment, articleList)
                     searchFilteringFlag = 0
                     true
                 // 検索ワードがブランクかつ未読記事を表示中
                 } else if(newText.isEmpty() && isReadFilteringFlag == 1) {
                     filteredList = RealmHelper().readIsNotRead()
-                    lvArticles?.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+                    lvArticles?.adapter = ArticleAdapter(this@StockFragment, filteredList)
                     searchFilteringFlag = 0
                     true
                 } else {
@@ -96,17 +96,17 @@ class StockFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-        val adapter = lvArticles?.adapter as RecycleListAdapter
+        val adapter = lvArticles?.adapter as ArticleAdapter
         when(item.itemId) {
             R.id.is_read -> {
                 isReadFilteringFlag = 1
                 filteredList = RealmHelper().readIsNotRead()
-                lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+                lvArticles.adapter = ArticleAdapter(this@StockFragment, filteredList)
             }
             R.id.all_article -> {
                 isReadFilteringFlag = 0
                 articleList = RealmHelper().read()
-                lvArticles.adapter = RecycleListAdapter(this@StockFragment, articleList)
+                lvArticles.adapter = ArticleAdapter(this@StockFragment, articleList)
             }
         }
         adapter.notifyDataSetChanged()
@@ -115,14 +115,14 @@ class StockFragment : Fragment() {
 
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-        val adapter = lvArticles?.adapter as RecycleListAdapter
+        val adapter = lvArticles?.adapter as ArticleAdapter
         // 未読記事表示のフラグによって、DBから読み出す記事を変える
         filteredList = if (isReadFilteringFlag == 1) {
             RealmHelper().searchFromIsNotRead(text)
         } else {
             RealmHelper().search(text)
         }
-        lvArticles.adapter = RecycleListAdapter(this@StockFragment, filteredList)
+        lvArticles.adapter = ArticleAdapter(this@StockFragment, filteredList)
         adapter.notifyDataSetChanged()
     }
 
@@ -149,7 +149,7 @@ class StockFragment : Fragment() {
         }
         // 記事DBから記事オブジェクトを削除
         RealmHelper().delete(article.id)
-        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+        val adapter = lvArticles?.adapter as ArticleAdapter // リサイクラービューに設定されているアダプターを取得
         // アダプターに、アダプト対象の記事オブジェクトの変更を知らせる
         adapter.notifyDataSetChanged()
         Toast.makeText(activity, R.string.success_to_remove_from_stock, Toast.LENGTH_LONG).show()

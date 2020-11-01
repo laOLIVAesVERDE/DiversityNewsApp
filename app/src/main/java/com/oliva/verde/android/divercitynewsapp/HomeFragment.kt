@@ -20,8 +20,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeFragmentViewModel: HomeFragmentViewModel
     private lateinit var binding : NewsRowBinding
-    private lateinit var recycleListAdapter: RecycleListAdapter
-    
+    private lateinit var articleAdapter: ArticleAdapter
+
     // CompositeDisposable : 複数の要素(API通信など)をまとめて格納・削除ができる
     var compositeDisposable = CompositeDisposable()
     // var mRealm = RealmHelper().mRealm
@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
                     // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
                     lvArticles?.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
                     // 独自定義のAdapterクラスをlayoutに紐づける
-                    lvArticles?.adapter = RecycleListAdapter(this@HomeFragment, articleList)
+                    lvArticles?.adapter = ArticleAdapter(this@HomeFragment, articleList)
                     // リサイクラービューに区切り線を追加
                     val decorator = DividerItemDecoration(activity, layout.orientation)
                     lvArticles?.addItemDecoration(decorator)
@@ -119,7 +119,7 @@ class HomeFragment : Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 return if (newText.isEmpty()) {
                     val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-                    val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+                    val adapter = lvArticles?.adapter as ArticleAdapter // リサイクラービューに設定されているアダプターを取得
                     articleList.clear()
                     articleList.addAll(copiedArticleList)
                     adapter.notifyDataSetChanged()
@@ -134,7 +134,7 @@ class HomeFragment : Fragment() {
 
     fun searchRequest(text : String) {
         val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-        val adapter = lvArticles?.adapter as RecycleListAdapter // リサイクラービューに設定されているアダプターを取得
+        val adapter = lvArticles?.adapter as ArticleAdapter // リサイクラービューに設定されているアダプターを取得
         val filteredList = articleList.filter { it.title.contains(text) }
         articleList.clear()
         articleList.addAll(filteredList)
