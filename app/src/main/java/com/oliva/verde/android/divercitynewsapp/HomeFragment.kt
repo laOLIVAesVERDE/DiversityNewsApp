@@ -42,62 +42,9 @@ class HomeFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        // 検索クエリの指定
-        val apiKey = "413005df5f58476c868396878a752fb8"
-        val searchWord = "ダイバーシティ"
-        compositeDisposable.clear()
-        compositeDisposable.add(
-            // APIリクエスト
-            ApiServiceManager.apiService.getNews(apiKey, searchWord)
-                // subscribeOn : subscribeされたときに実行する処理のスケジューラーを変更する
-                .subscribeOn(Schedulers.io()) // 非同期I/Oを利用
-                .observeOn(AndroidSchedulers.mainThread())
-                // subscribe : Observable型から流れてくるデータを受け止める
-                .subscribe { response ->
-                    articleList = response.articles
-                    copiedArticleList = articleList.toMutableList()
-                    val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-                    // LayoutManager : 各アイテムを表示形式を管理するクラス
-                    val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
-                    // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
-                    lvArticles?.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
-                    // 独自定義のAdapterクラスをlayoutに紐づける
-                    lvArticles?.adapter = ArticleAdapter(this@HomeFragment, articleList)
-                    // リサイクラービューに区切り線を追加
-                    val decorator = DividerItemDecoration(activity, layout.orientation)
-                    lvArticles?.addItemDecoration(decorator)
-                }
-        )
+        
         // Inflate the layout for this fragment
         return view
-
-        /**
-        // APIエンドポイントにリクエスト
-        api.getNews(apiKey, searchWord).enqueue(object : Callback<ResponseData> { // enqueue : 非同期でリクエストを実行
-            // 失敗時の処理
-            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                // ダイアログ表示させたい
-            }
-            // 成功時の処理
-            override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
-                val res = response.body() // ResponseData(articles=[Article(), Article(), ...]
-                if (res != null) {
-                    articleList = res.articles
-                    copiedArticleList = articleList.toMutableList()
-                }
-                val lvArticles = view?.findViewById<RecyclerView>(R.id.lvArticles)
-                // LayoutManager : 各アイテムを表示形式を管理するクラス
-                val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
-                // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
-                lvArticles?.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
-                // 独自定義のAdapterクラスをlayoutに紐づける
-                lvArticles?.adapter = RecycleListAdapter(this@HomeFragment, articleList)
-                // リサイクラービューに区切り線を追加
-                val decorator = DividerItemDecoration(activity, layout.orientation)
-                lvArticles?.addItemDecoration(decorator)
-            }
-        })
-        */
     }
 
     override fun onDestroy() {
