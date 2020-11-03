@@ -8,21 +8,22 @@ import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import io.reactivex.disposables.CompositeDisposable
+import java.util.zip.Inflater
 
 
 class HomeFragment : Fragment() {
-
+    private var articleList = mutableListOf<Article>()
     private lateinit var homeFragmentViewModel: HomeFragmentViewModel
-    private lateinit var binding : NewsRowBinding
     private lateinit var articleAdapter: ArticleAdapter
+    private lateinit var binding : FragmentHomeBinding
 
-    // CompositeDisposable : 複数の要素(API通信など)をまとめて格納・削除ができる
-    var compositeDisposable = CompositeDisposable()
-    // var mRealm = RealmHelper().mRealm
-    var articleList = mutableListOf<Article>()
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
 
@@ -39,13 +40,28 @@ class HomeFragment : Fragment() {
     ): View? {
         // containerとはなんぞや
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
+        homeFragmentViewModel = ViewModelProvider(
+            this,
+            HomeViewModelFactory(RepositoryFactory.createRepository())
+        ).get(HomeFragmentViewModel::class.java)
 
+        val apiKey = "413005df5f58476c868396878a752fb8"
+        val searchWord = "ダイバーシティ"
+        homeFragmentViewModel.getArticles(apiKey, searchWord)
 
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
+            it.forEach{ article ->
+                articleList.add(article)
+            }
+            binding.rvArticles.adapter = ArticleAdapter(articleList)
+            binding.rvArticles.layoutManager = LinearLayoutManager(activity)
+            ArticleAdapter(articleList).notifyDataSetChanged()
+        })
 
         // Inflate the layout for this fragment
-        return view
+        return binding.root
     }
 
     override fun onDestroy() {
