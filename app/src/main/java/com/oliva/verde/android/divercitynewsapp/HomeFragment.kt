@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
@@ -36,7 +37,11 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
+        // containerとはなんぞや
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
+
+
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         // Inflate the layout for this fragment
@@ -45,7 +50,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         RealmHelper().mRealm.close()
-        compositeDisposable.clear()
         super.onDestroy()
     }
 
@@ -56,7 +60,7 @@ class HomeFragment : Fragment() {
         val searchView = menuItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                searchRequest(query)
+                // searchRequest(query)
                 return true
             }
             override fun onQueryTextChange(newText: String): Boolean {
