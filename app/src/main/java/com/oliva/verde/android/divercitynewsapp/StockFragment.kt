@@ -29,6 +29,7 @@ class StockFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
+        /**
         articleList = RealmHelper().read()
         val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
         // LayoutManager : 各アイテムを表示形式を管理するクラス
@@ -40,9 +41,11 @@ class StockFragment : Fragment() {
         // リサイクラービューに区切り線を追加
         val decorator = DividerItemDecoration(activity, layout.orientation)
         lvArticles?.addItemDecoration(decorator)
+        */
         return view
     }
 
+    /**
     // CustomTabsIntentで記事を閲覧した後、未読記事表示中であればリストを更新
     override fun onResume() {
         super.onResume()
@@ -55,7 +58,9 @@ class StockFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
     }
+    **/
 
+    /**
     override fun onDestroy() {
         RealmHelper().mRealm.close()
         super.onDestroy()
@@ -184,4 +189,5 @@ class StockFragment : Fragment() {
             return false
         }
     }
+    */
 }
