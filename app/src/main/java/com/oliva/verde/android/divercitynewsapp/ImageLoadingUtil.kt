@@ -4,6 +4,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 
+/**
 object ImageLoadingUtil {
     @BindingAdapter("imageUrl")
     @JvmStatic
@@ -16,3 +17,4 @@ object ImageLoadingUtil {
             .into(imageView)
     }
 }
+ */
