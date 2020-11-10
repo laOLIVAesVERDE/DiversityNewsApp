@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("ConfirmOnCreate", "OnCreate")
         // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
         // Realm.init(activity)
@@ -38,6 +40,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("ConfirmOnCreateView", "OnCreateView")
         // containerとはなんぞや
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -69,6 +72,7 @@ class HomeFragment : Fragment() {
         super.onDestroy()
     }
 
+    /**
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu_for_home_fragment, menu)
@@ -145,4 +149,5 @@ class HomeFragment : Fragment() {
             customTabsIntent.launchUrl(activity!!, Uri.parse(url))
         }
     }
+    */
 }
