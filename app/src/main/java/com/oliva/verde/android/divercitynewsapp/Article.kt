@@ -5,9 +5,17 @@ import io.realm.annotations.PrimaryKey
 import java.util.*
 
 open class Article(
-    @PrimaryKey open var id : String = UUID.randomUUID().toString(),
+    val url : String = "",
+    val urlToImage : String = "",
+    val publishedAt : String = "",
+    val title : String = ""
+)
+    /**
+    //@PrimaryKey open var id : String = UUID.randomUUID().toString(),
     open var url: String = "url",
     open var urlToImage: String = "urlToImage",
     open var publishedAt: String = "publishedAt",
     open var title: String = "title",
-    open var isReadFlag : Boolean = false) : RealmObject() {}
+    open var isReadFlag : Boolean = false)
+    // : RealmObject() {}
+    */
