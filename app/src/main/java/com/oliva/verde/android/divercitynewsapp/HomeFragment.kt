@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        RealmHelper().mRealm.close()
+        // RealmHelper().mRealm.close()
         super.onDestroy()
     }
 
