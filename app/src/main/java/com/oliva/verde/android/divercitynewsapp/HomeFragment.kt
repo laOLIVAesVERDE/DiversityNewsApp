@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import io.reactivex.disposables.CompositeDisposable
-import java.util.zip.Inflater
 
 
 class HomeFragment : Fragment() {
@@ -50,11 +49,10 @@ class HomeFragment : Fragment() {
         // containerとはなんぞや
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        
+
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
         homeFragmentViewModel.getArticles(apiKey, searchWord)
-
         homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
             it.forEach{ article ->
                 articleList.add(article)
