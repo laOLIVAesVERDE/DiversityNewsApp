@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         toolbar.setLogo(R.drawable.ic_toolbar_icon)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        Realm.init(this)
     }
 
 

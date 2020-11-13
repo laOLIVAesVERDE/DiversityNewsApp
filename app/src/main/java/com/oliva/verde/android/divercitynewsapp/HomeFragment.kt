@@ -21,7 +21,13 @@ import java.util.zip.Inflater
 
 class HomeFragment : Fragment() {
     private var articleList = mutableListOf<Article>()
-    private lateinit var homeFragmentViewModel: HomeFragmentViewModel
+    private val homeFragmentViewModel by lazy {
+        ViewModelProvider(
+            this,
+            HomeViewModelFactory(RepositoryFactory.createRepository())
+        ).get(HomeFragmentViewModel::class.java)
+
+    }
     private lateinit var articleAdapter: ArticleAdapter
     private lateinit var binding : FragmentHomeBinding
 
@@ -44,12 +50,7 @@ class HomeFragment : Fragment() {
         // containerとはなんぞや
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-
-        homeFragmentViewModel = ViewModelProvider(
-            this,
-            HomeViewModelFactory(RepositoryFactory.createRepository())
-        ).get(HomeFragmentViewModel::class.java)
-
+        
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
         homeFragmentViewModel.getArticles(apiKey, searchWord)
