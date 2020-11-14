@@ -5,9 +5,11 @@
         android:icon="@drawable/ic_home_24dp"
         android:title="@string/bottom_navigation_home_title"/>
 
+    <!--
     <item
         android:id="@+id/navi_bookmark"
         android:icon="@drawable/ic_bookmark_border_24dp"
         android:title="@string/bottom_navigation_bookmark_title"/>
+        -->
 
 </menu>
