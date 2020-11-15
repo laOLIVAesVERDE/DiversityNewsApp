@@ -57,8 +57,9 @@ class HomeFragment : Fragment() {
             it.forEach{ article ->
                 articleList.add(article)
             }
+            Log.d("ConfirmArticleList", articleList.toString())
             binding.rvArticles.adapter = ArticleAdapter(articleList)
-            binding.rvArticles.layoutManager = LinearLayoutManager(activity)
+            binding.rvArticles.layoutManager = LinearLayoutManager(this.context)
             ArticleAdapter(articleList).notifyDataSetChanged()
         })
 
