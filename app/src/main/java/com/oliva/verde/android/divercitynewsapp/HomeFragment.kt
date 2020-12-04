@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("ConfirmOnCreateView", "OnCreateView")
-        // containerとはなんぞや
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
