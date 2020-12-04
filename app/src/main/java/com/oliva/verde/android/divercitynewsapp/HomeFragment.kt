@@ -52,6 +52,7 @@ class HomeFragment : Fragment() {
 
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
+        /*
         homeFragmentViewModel.getArticles(apiKey, searchWord)
         homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
             it.forEach{ article ->
@@ -62,6 +63,8 @@ class HomeFragment : Fragment() {
             binding.rvArticles.layoutManager = LinearLayoutManager(this.context)
             ArticleAdapter(articleList).notifyDataSetChanged()
         })
+
+         */
 
         // Inflate the layout for this fragment
         return binding.root
