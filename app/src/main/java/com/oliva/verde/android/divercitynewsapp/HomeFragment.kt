@@ -15,18 +15,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
+import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
+    @Inject
+    lateinit var repository: Repository
     private var articleList = mutableListOf<Article>()
+
     private val homeFragmentViewModel by lazy {
         ViewModelProvider(
             this,
-            HomeViewModelFactory(RepositoryFactory.createRepository())
+            HomeViewModelFactory(repository)
         ).get(HomeFragmentViewModel::class.java)
 
     }
+
     private lateinit var articleAdapter: ArticleAdapter
     private lateinit var binding : FragmentHomeBinding
 
@@ -39,6 +45,7 @@ class HomeFragment : Fragment() {
         // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
         // Realm.init(activity)
+        DaggerApiComponent.create().inject(this)
     }
 
     override fun onCreateView(
@@ -52,8 +59,9 @@ class HomeFragment : Fragment() {
 
         val apiKey = "413005df5f58476c868396878a752fb8"
         val searchWord = "ダイバーシティ"
-        /*
+
         homeFragmentViewModel.getArticles(apiKey, searchWord)
+        /*
         homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
             it.forEach{ article ->
                 articleList.add(article)
@@ -70,9 +78,22 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        observeViewModel(homeFragmentViewModel)
+    }
+
     override fun onDestroy() {
         // RealmHelper().mRealm.close()
         super.onDestroy()
+    }
+
+    private fun observeViewModel(viewModel: HomeFragmentViewModel) {
+        viewModel.articles.observe(viewLifecycleOwner, Observer { articles ->
+            if (articles != null) {
+
+            }
+        })
     }
 
     /**

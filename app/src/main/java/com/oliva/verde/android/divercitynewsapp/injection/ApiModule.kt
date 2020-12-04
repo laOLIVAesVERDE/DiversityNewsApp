@@ -1,8 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.injection
 
 import com.oliva.verde.android.divercitynewsapp.ApiService
-import com.oliva.verde.android.divercitynewsapp.ApiServiceManager
-import com.oliva.verde.android.divercitynewsapp.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.Repository
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
@@ -35,7 +33,7 @@ class ApiModule {
         val ENDPOINT = "https://newsapi.org/"
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(ApiServiceManager.ENDPOINT)
+            .baseUrl(ENDPOINT)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
@@ -47,6 +45,4 @@ class ApiModule {
     fun provideRepository(apiService: ApiService) : Repository {
         return Repository(apiService)
     }
-
-
 }
