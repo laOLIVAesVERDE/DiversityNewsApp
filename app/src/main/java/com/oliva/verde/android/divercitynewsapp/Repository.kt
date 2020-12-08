@@ -8,14 +8,7 @@ import java.io.IOException
 
 class Repository(val apiService: ApiService) {
 
-    fun getNewsArticles(apiKey : String, searchWord : String) : Single<List<Article>> {
+    suspend fun getNewsArticles(apiKey: String, searchWord: String): Response<List<Article>> {
         return apiService.getNews(apiKey, searchWord)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map {
-                val body = it.body()
-                    ?: throw IOException("failed to fetch")
-                return@map body
-            }
     }
 }

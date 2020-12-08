@@ -21,15 +21,10 @@ import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
-    @Inject
-    lateinit var repository: Repository
     private var articleList = mutableListOf<Article>()
 
     private val homeFragmentViewModel by lazy {
-        ViewModelProvider(
-            this,
-            HomeViewModelFactory(repository)
-        ).get(HomeFragmentViewModel::class.java)
+        ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
 
     }
 
@@ -45,7 +40,6 @@ class HomeFragment : Fragment() {
         // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
         // Realm.init(activity)
-        DaggerApiComponent.create().inject(this)
     }
 
     override fun onCreateView(
@@ -57,10 +51,7 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val apiKey = "413005df5f58476c868396878a752fb8"
-        val searchWord = "ダイバーシティ"
 
-        homeFragmentViewModel.getArticles(apiKey, searchWord)
         /*
         homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
             it.forEach{ article ->
@@ -89,9 +80,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel(viewModel: HomeFragmentViewModel) {
+        Log.d("ObserveViewModel", "ObserveViewModel")
         viewModel.articles.observe(viewLifecycleOwner, Observer { articles ->
             if (articles != null) {
-
+                Log.d("Articles", articles.toString())
             }
         })
     }
