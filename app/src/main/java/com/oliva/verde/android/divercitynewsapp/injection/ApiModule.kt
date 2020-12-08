@@ -43,6 +43,7 @@ class ApiModule {
     }
 
     @Provides
+    @Singleton
     fun provideRepository(apiService: ApiService) : Repository {
         return Repository(apiService)
     }

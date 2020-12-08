@@ -16,23 +16,21 @@ class HomeFragmentViewModel : ViewModel() {
     @Inject
     lateinit var repository: Repository
 
-    private val _articles : MutableLiveData<List<Article>> = MutableLiveData()
-    val articles : LiveData<List<Article>> = _articles
+    var articles : MutableLiveData<List<Article>> = MutableLiveData()
+
+    // val articles : LiveData<List<Article>> = _articles
 
     init {
         DaggerApiComponent.create().inject(this)
         loadArticles()
     }
 
-    fun loadArticles() {
-
-        viewModelScope.launch {
+    fun loadArticles() = viewModelScope.launch {
             try {
                 val request = repository.getNewsArticles(APIKEY, SEARCHWORD)
-                _articles.postValue(request.body())
+                articles.postValue(request.body())
             } catch (e: Exception) {
                 e.stackTrace
             }
-        }
     }
 }

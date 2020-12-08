@@ -49,8 +49,6 @@ class HomeFragment : Fragment() {
         Log.d("ConfirmOnCreateView", "OnCreateView")
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-
 
         /*
         homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
@@ -83,7 +81,9 @@ class HomeFragment : Fragment() {
         Log.d("ObserveViewModel", "ObserveViewModel")
         viewModel.articles.observe(viewLifecycleOwner, Observer { articles ->
             if (articles != null) {
-                Log.d("Articles", articles.toString())
+                for (article in articles) {
+                    Log.d("Confirm Article", article.toString())
+                }
             }
         })
     }
