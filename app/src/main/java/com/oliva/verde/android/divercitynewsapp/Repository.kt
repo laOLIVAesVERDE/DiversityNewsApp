@@ -12,7 +12,7 @@ class Repository {
     private lateinit var apiService : ApiService
 
     init {
-        // DaggerApiComponent.create().inject(this)
+        DaggerApiComponent.create().inject(this)
     }
 
     companion object Factory {

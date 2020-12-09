@@ -11,11 +11,13 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-const val LOGTAG = "HomeFragmentViewModel"
-const val APIKEY = "413005df5f58476c868396878a752fb8"
-const val SEARCHWORD = "ダイバーシティ"
+
 
 class HomeFragmentViewModel : ViewModel() {
+    val LOGTAG = "HomeFragmentViewModel"
+    val APIKEY = "413005df5f58476c868396878a752fb8"
+    val SEARCHWORD = "ダイバーシティ"
+
     private val repository = Repository.instance
     var articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
 
