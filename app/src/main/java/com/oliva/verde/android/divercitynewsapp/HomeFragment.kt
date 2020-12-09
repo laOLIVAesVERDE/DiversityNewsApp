@@ -69,7 +69,12 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        observeViewModel(homeFragmentViewModel)
+        Log.d("ConfirmActivityCreated", "onActivityCreated")
+        homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer { articles ->
+            for (article in articles) {
+                Log.d("confirmArticle", article.toString())
+            }
+        })
     }
 
     override fun onDestroy() {

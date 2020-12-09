@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,8 +11,10 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
+const val LOGTAG = "HomeFragmentViewModel"
 const val APIKEY = "413005df5f58476c868396878a752fb8"
 const val SEARCHWORD = "ダイバーシティ"
+
 class HomeFragmentViewModel : ViewModel() {
     @Inject
     lateinit var repository: Repository
@@ -25,7 +28,8 @@ class HomeFragmentViewModel : ViewModel() {
         loadArticles()
     }
 
-    fun loadArticles() = viewModelScope.launch {
+    private fun loadArticles() = viewModelScope.launch {
+            Log.d(LOGTAG, "loadArticiles")
             try {
                 val request = repository.getNewsArticles(APIKEY, SEARCHWORD)
                 articles.postValue(request.body())
