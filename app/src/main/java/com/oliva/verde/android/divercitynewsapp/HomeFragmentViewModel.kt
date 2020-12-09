@@ -16,23 +16,20 @@ const val APIKEY = "413005df5f58476c868396878a752fb8"
 const val SEARCHWORD = "ダイバーシティ"
 
 class HomeFragmentViewModel : ViewModel() {
-    @Inject
-    lateinit var repository: Repository
-
-    var articles : MutableLiveData<List<Article>> = MutableLiveData()
+    private val repository = Repository.instance
+    var articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
 
     // val articles : LiveData<List<Article>> = _articles
 
     init {
-        DaggerApiComponent.create().inject(this)
         loadArticles()
     }
 
     private fun loadArticles() = viewModelScope.launch {
             Log.d(LOGTAG, "loadArticiles")
             try {
-                val request = repository.getNewsArticles(APIKEY, SEARCHWORD)
-                articles.postValue(request.body())
+                val response = repository.getNewsArticles(APIKEY, SEARCHWORD)
+                articleListLiveData.postValue(response.body())
             } catch (e: Exception) {
                 e.stackTrace
             }

@@ -70,11 +70,14 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d("ConfirmActivityCreated", "onActivityCreated")
+        /*
         homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer { articles ->
             for (article in articles) {
                 Log.d("confirmArticle", article.toString())
             }
         })
+
+         */
     }
 
     override fun onDestroy() {
@@ -82,16 +85,6 @@ class HomeFragment : Fragment() {
         super.onDestroy()
     }
 
-    private fun observeViewModel(viewModel: HomeFragmentViewModel) {
-        Log.d("ObserveViewModel", "ObserveViewModel")
-        viewModel.articles.observe(viewLifecycleOwner, Observer { articles ->
-            if (articles != null) {
-                for (article in articles) {
-                    Log.d("Confirm Article", article.toString())
-                }
-            }
-        })
-    }
 
     /**
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

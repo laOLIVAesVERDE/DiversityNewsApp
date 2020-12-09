@@ -41,9 +41,4 @@ class ApiModule {
             .build()
         return retrofit.create(ApiService::class.java)
     }
-
-    @Provides
-    fun provideRepository(apiService: ApiService) : Repository {
-        return Repository(apiService)
-    }
 }
