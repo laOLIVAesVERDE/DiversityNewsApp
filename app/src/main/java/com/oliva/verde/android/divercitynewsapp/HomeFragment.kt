@@ -71,9 +71,12 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Log.d("ConfirmActivityCreated", "onActivityCreated")
 
-        homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
-            for (article in articles) {
-                Log.d("confirmArticle", article.title)
+        homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { result ->
+            result.onSuccess { response ->
+                response?.articles?.forEach { it ->
+                    Log.d("confirmArticle", it.toString())
+                }
+
             }
         })
     }
