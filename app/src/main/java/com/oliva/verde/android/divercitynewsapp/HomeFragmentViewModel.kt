@@ -19,14 +19,16 @@ class HomeFragmentViewModel : ViewModel() {
     val SEARCHWORD = "bitcoin"
 
     private val repository = Repository.instance
-    var articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    var articleListLiveData : MutableLiveData<Result<ResponseData?>> = MutableLiveData()
 
     // val articles : LiveData<List<Article>> = _articles
 
     suspend fun loadArticles() {
         repository.getNewsArticles(APIKEY, SEARCHWORD).also { response ->
             if (response.isSuccessful) {
-                articleListLiveData.postValue(response.body())
+                articleListLiveData.postValue(Result.success(response.body()) )
+            } else {
+                articleListLiveData.postValue(Result.failure(Throwable(response.errorBody().toString())))
             }
         }
     }
