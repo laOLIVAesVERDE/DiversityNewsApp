@@ -15,21 +15,18 @@ import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
     val LOGTAG = "HomeFragmentViewModel"
-    val APIKEY = "413005df5f58476c868396878a752fb8"
-    val SEARCHWORD = "bitcoin"
+
 
     private val repository = Repository.instance
-    var articleListLiveData : MutableLiveData<Result<ResponseData?>> = MutableLiveData()
+    private var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
 
     // val articles : LiveData<List<Article>> = _articles
 
-    suspend fun loadArticles() {
-        repository.getNewsArticles(APIKEY, SEARCHWORD).also { response ->
-            if (response.isSuccessful) {
-                articleListLiveData.postValue(Result.success(response.body()) )
-            } else {
-                articleListLiveData.postValue(Result.failure(Throwable(response.errorBody().toString())))
+    fun loadArticles(apiKey : String, searchWord : String) {
+        repository.getNewsArticles(apiKey, searchWord)
+            .subscribe { articles : List<Article> ->
+                _articleListLiveData.postValue(articleListLiveData)
             }
-        }
     }
 }
