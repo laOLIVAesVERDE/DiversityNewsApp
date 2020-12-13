@@ -18,7 +18,7 @@ class HomeFragmentViewModel : ViewModel() {
 
 
     private val repository = Repository.instance
-    private var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    private val _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
     val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
 
     // val articles : LiveData<List<Article>> = _articles
@@ -26,7 +26,7 @@ class HomeFragmentViewModel : ViewModel() {
     fun loadArticles(apiKey : String, searchWord : String) {
         repository.getNewsArticles(apiKey, searchWord)
             .subscribe { articles : List<Article> ->
-                _articleListLiveData.postValue(articleListLiveData)
+                _articleListLiveData.postValue(articles)
             }
     }
 }

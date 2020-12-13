@@ -1,12 +1,15 @@
 package com.oliva.verde.android.divercitynewsapp
 
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class Repository {
-    private lateinit var apiService : ApiService
+    @Inject
+    lateinit var apiService : ApiService
 
     init {
         DaggerApiComponent.create().inject(this)
@@ -19,12 +22,12 @@ class Repository {
         }
     }
 
-    fun getNewsArticles(apiKey: String, searchWord: String): Single<List<Article>> {
+    fun getNewsArticles(apiKey: String, searchWord: String): Observable<List<Article>> {
         return apiService.getNews(apiKey, searchWord)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-                return@map it.body()
+                return@map it.articles
             }
     }
 }

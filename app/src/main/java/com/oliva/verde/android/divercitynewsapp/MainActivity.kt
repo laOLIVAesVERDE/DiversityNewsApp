@@ -28,7 +28,10 @@ class MainActivity : AppCompatActivity() {
         toolbar.setLogo(R.drawable.ic_toolbar_icon)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.nav_host_fragment, HomeFragment())
+            .commit()
     }
-
-
 }

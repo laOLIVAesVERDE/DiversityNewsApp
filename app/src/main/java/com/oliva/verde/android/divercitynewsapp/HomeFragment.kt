@@ -21,11 +21,12 @@ import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
+    val apiKey = "413005df5f58476c868396878a752fb8"
+    val searchWord = "bitcoin"
     private var articleList = mutableListOf<Article>()
 
     private val homeFragmentViewModel by lazy {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
-
     }
 
     private lateinit var articleAdapter: ArticleAdapter
@@ -69,16 +70,15 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d("ConfirmActivityCreated", "onActivityCreated")
-
+        Log.d("onActivityCreated", "starting load articles")
+        homeFragmentViewModel.loadArticles(apiKey, searchWord)
+        /*
+        Log.d("onActivityCreated", "starting observe articles")
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { result ->
-            result.onSuccess { response ->
-                response?.articles?.forEach { it ->
-                    Log.d("confirmArticle", it.toString())
-                }
-
-            }
+            Log.d("ConfirmArticles", result.toString())
         })
+
+         */
     }
 
     override fun onDestroy() {

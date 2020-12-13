@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Response
@@ -10,7 +11,7 @@ interface ApiService {
     // https://newsapi.org/v2/everything/?apiKey=${apiKey}&q=ダイバーシティ というURLオブジェクトにGETリクエスト
     @GET("v2/everything/") // アノテーション : ソースコード中に登場する要素（クラスやメソッドなど）に対して、コンパイラや実行環境に伝達したい付加的な情報（メタデータ）を注記する仕組み
     fun getNews(@Query("apiKey") apiKey: String,
-                @Query("q") searchWord : String) : Single<Response<List<Article>>> // 返り値をSingle型とする(参照：https://qiita.com/takahirom/items/f3e576e91b219c7239e7)
+                @Query("q") searchWord : String) : Observable<ResponseData> // 返り値をSingle型とする(参照：https://qiita.com/takahirom/items/f3e576e91b219c7239e7)
 
     /**
    @GET("/v2/everything/")
