@@ -32,10 +32,11 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
                     getApplication<Application>().getString(R.string.search_word))
             if (response.isSuccessful) {
                 Log.d(LOGTAG, "response is successful")
-                articleListLiveData.postValue(response.body())
+                articleListLiveData.postValue(response.body()?.articles)
             }
         } catch (e: Exception) {
             Log.d(LOGTAG, "response is failure")
+            Log.d(LOGTAG, "Error detail : ${e.toString()}")
             e.stackTrace
         }
     }
