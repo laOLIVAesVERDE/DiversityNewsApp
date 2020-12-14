@@ -6,17 +6,19 @@ import androidx.lifecycle.*
 import com.oliva.verde.android.divercitynewsapp.injection.ApiComponent
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.lang.Exception
 import javax.inject.Inject
-
 
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
     val LOGTAG = "HomeFragmentViewModel"
 
     private val repository = Repository.instance
-    var articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
-    // val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
+    var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
     // val articles : LiveData<List<Article>> = _articles
 
     init {
@@ -24,20 +26,24 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun loadArticles() = viewModelScope.launch {
-        try {
-            Log.d(LOGTAG, "loadArticles called")
-            val response = repository
-                .getNewsArticles(
-                    getApplication<Application>().getString(R.string.api_key),
-                    getApplication<Application>().getString(R.string.search_word))
-            if (response.isSuccessful) {
-                Log.d(LOGTAG, "response is successful")
-                articleListLiveData.postValue(response.body()?.articles)
-            }
-        } catch (e: Exception) {
-            Log.d(LOGTAG, "response is failure")
-            Log.d(LOGTAG, "Error detail : ${e.toString()}")
-            e.stackTrace
-        }
+        Log.d(LOGTAG, "loadArticles called")
+        repository.getNewsArticles(
+            getApplication<Application>().getString(R.string.api_key),
+            getApplication<Application>().getString(R.string.search_word))
+            .enqueue(object : Callback<ResponseData> {
+                override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                    Log.d(LOGTAG, "response is failure")
+                    Log.d(LOGTAG, "Error detail : $t")
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseData>,
+                    response: Response<ResponseData>
+                ) {
+                    val res = response?.body()?.articles
+                    Log.d(LOGTAG, "response is successful")
+                    _articleListLiveData.postValue(res)
+                }
+            })
     }
 }

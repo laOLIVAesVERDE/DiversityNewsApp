@@ -6,6 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -28,6 +29,6 @@ class Repository {
         }
     }
 
-    suspend fun getNewsArticles(apiKey: String, searchWord: String): Response<ResponseData> =
+    fun getNewsArticles(apiKey: String, searchWord: String): Call<ResponseData> =
         apiService.getNews(apiKey, searchWord)
 }

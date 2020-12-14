@@ -38,7 +38,6 @@ class ApiModule {
         val retrofit = Retrofit.Builder()
             .baseUrl(ENDPOINT)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
             .build()
         return retrofit.create(ApiService::class.java)
