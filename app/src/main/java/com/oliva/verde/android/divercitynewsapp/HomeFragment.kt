@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
-import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -74,6 +73,10 @@ class HomeFragment : Fragment() {
         Log.d("onActivityCreated", "starting load articles")
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
+            val jsonResult = view?.findViewById<TextView>(R.id.jsonResult)
+            if (jsonResult != null) {
+                jsonResult.text = articles.toString()
+            }
         })
 
 
