@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
@@ -72,6 +73,8 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Log.d("onActivityCreated", "starting load articles")
         homeFragmentViewModel.loadArticles(apiKey, searchWord)
+
+
         /*
         Log.d("onActivityCreated", "starting observe articles")
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { result ->
