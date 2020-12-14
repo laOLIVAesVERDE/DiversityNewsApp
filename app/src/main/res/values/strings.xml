@@ -12,4 +12,6 @@
     <string name="search_view_title">記事を検索</string>
     <string name="is_read_filter_title">未読の記事</string>
     <string name="all_article_title">全ての記事</string>
+    <string name="api_key">413005df5f58476c868396878a752fb8</string>
+    <string name="search_word">bitcoin</string>
 </resources>

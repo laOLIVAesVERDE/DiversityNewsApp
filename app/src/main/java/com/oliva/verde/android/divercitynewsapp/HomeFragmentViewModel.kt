@@ -21,9 +21,21 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     // val articles : LiveData<List<Article>> = _articles
 
+    init {
+        loadArticles()
+    }
+
     fun loadArticles() = viewModelScope.launch {
         try {
-            val response = repository.getNewsArticles(getApplication<Application>().getString(R.string.))
+            val response = repository
+                .getNewsArticles(
+                    getApplication<Application>().getString(R.string.api_key),
+                    getApplication<Application>().getString(R.string.search_word))
+            if (response.isSuccessful) {
+                articleListLiveData.postValue(response.body())
+            }
+        } catch (e: Exception) {
+            e.stackTrace
         }
     }
 }
