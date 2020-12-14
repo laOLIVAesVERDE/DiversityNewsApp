@@ -23,16 +23,19 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         loadArticles()
     }
 
-    fun loadArticles() = viewModelScope.launch {
+    private fun loadArticles() = viewModelScope.launch {
         try {
+            Log.d(LOGTAG, "loadArticles called")
             val response = repository
                 .getNewsArticles(
                     getApplication<Application>().getString(R.string.api_key),
                     getApplication<Application>().getString(R.string.search_word))
             if (response.isSuccessful) {
+                Log.d(LOGTAG, "response is successful")
                 articleListLiveData.postValue(response.body())
             }
         } catch (e: Exception) {
+            Log.d(LOGTAG, "response is failure")
             e.stackTrace
         }
     }

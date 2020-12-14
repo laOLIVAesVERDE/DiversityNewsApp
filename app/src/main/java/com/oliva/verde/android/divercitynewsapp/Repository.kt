@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -9,11 +10,15 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class Repository {
+    val LOGTAG = "Repository"
+
     @Inject
     lateinit var apiService : ApiService
 
     init {
         DaggerApiComponent.create().inject(this)
+        Log.d(LOGTAG, "getNewsArticles called")
+
     }
 
     companion object Factory {
