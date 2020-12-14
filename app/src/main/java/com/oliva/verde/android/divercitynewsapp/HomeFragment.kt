@@ -72,7 +72,9 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d("onActivityCreated", "starting load articles")
-        homeFragmentViewModel.loadArticles(apiKey, searchWord)
+        homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
+            Log.d("confirmArticle", articles.toString())
+        })
 
 
         /*

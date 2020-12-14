@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.nav_host_fragment, HomeFragment())
+            .add(R.id.fragment_container, HomeFragment())
             .commit()
     }
 }
