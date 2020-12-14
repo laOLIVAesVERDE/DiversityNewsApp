@@ -14,11 +14,9 @@ import javax.inject.Inject
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
     val LOGTAG = "HomeFragmentViewModel"
 
-
     private val repository = Repository.instance
     var articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
     // val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
-
     // val articles : LiveData<List<Article>> = _articles
 
     init {

@@ -25,7 +25,9 @@ class ApiModule {
     @Provides
     fun provideOkHttpClient() : OkHttpClient {
         val builder = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
         return  builder.build()
     }
 
