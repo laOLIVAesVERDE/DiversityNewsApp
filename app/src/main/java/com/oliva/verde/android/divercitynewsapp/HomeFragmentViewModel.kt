@@ -1,10 +1,8 @@
 package com.oliva.verde.android.divercitynewsapp
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.oliva.verde.android.divercitynewsapp.injection.ApiComponent
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import kotlinx.coroutines.launch
@@ -13,20 +11,19 @@ import javax.inject.Inject
 
 
 
-class HomeFragmentViewModel : ViewModel() {
+class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
     val LOGTAG = "HomeFragmentViewModel"
 
 
     private val repository = Repository.instance
-    private val _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
-    val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
+    private val articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    // val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
 
     // val articles : LiveData<List<Article>> = _articles
 
-    fun loadArticles(apiKey : String, searchWord : String) {
-        repository.getNewsArticles(apiKey, searchWord)
-            .subscribe { articles : List<Article> ->
-                _articleListLiveData.postValue(articles)
-            }
+    fun loadArticles() = viewModelScope.launch {
+        try {
+            val response = repository.getNewsArticles(getApplication<Application>().getString(R.string.))
+        }
     }
 }
