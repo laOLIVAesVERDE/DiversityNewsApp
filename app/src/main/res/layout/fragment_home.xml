@@ -9,11 +9,6 @@
         android:orientation="vertical"
         tools:context=".HomeFragment">
 
-        <TextView
-            android:id="@+id/jsonResult"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvArticles"
             android:paddingBottom="60dp"
