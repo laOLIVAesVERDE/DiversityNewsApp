@@ -68,24 +68,13 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        Log.d("onActivityCreated", "starting load articles")
+    override fun onResume() {
+        super.onResume()
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
-            
         })
-
-
-        /*
-        Log.d("onActivityCreated", "starting observe articles")
-        homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { result ->
-            Log.d("ConfirmArticles", result.toString())
-        })
-
-         */
     }
-
+    
     override fun onDestroy() {
         // RealmHelper().mRealm.close()
         super.onDestroy()
