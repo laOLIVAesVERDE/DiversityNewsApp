@@ -73,10 +73,7 @@ class HomeFragment : Fragment() {
         Log.d("onActivityCreated", "starting load articles")
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
-            val jsonResult = view?.findViewById<TextView>(R.id.jsonResult)
-            if (jsonResult != null) {
-                jsonResult.text = articles.toString()
-            }
+            
         })
 
 

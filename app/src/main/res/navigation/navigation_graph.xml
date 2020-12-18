@@ -10,11 +10,9 @@
         android:name="com.oliva.verde.android.divercitynewsapp.HomeFragment"
         android:label="@string/bottom_navigation_home_title"/>
 
-    <!--
     <fragment
         android:id="@+id/navi_bookmark"
         android:name="com.oliva.verde.android.divercitynewsapp.StockFragment"
         android:label="@string/bottom_navigation_bookmark_title"/>
-        -->
 
 </navigation>
