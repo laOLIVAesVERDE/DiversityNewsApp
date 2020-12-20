@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
             Log.d("confirmArticle", articles.toString())
         })
     }
-    
+
     override fun onDestroy() {
         // RealmHelper().mRealm.close()
         super.onDestroy()
