@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
+        articleAdapter = ArticleAdapter(articleList)
         /*
         homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
             it.forEach{ article ->
@@ -72,6 +73,11 @@ class HomeFragment : Fragment() {
         super.onResume()
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
+            articles.forEach{ it ->
+                articleList.add(it)
+            }
+            binding.rvArticles.adapter = articleAdapter
+            binding.rvArticles.layoutManager = LinearLayoutManager(this.context)
         })
     }
 
