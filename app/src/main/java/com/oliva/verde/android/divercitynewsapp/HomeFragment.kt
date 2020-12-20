@@ -52,25 +52,6 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         articleAdapter = ArticleAdapter(articleList)
-        /*
-        homeFragmentViewModel.articles.observe(viewLifecycleOwner, Observer {
-            it.forEach{ article ->
-                articleList.add(article)
-            }
-            Log.d("ConfirmArticleList", articleList.toString())
-            binding.rvArticles.adapter = ArticleAdapter(articleList)
-            binding.rvArticles.layoutManager = LinearLayoutManager(this.context)
-            ArticleAdapter(articleList).notifyDataSetChanged()
-        })
-
-         */
-
-        // Inflate the layout for this fragment
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
             articles.forEach{ it ->
@@ -79,6 +60,9 @@ class HomeFragment : Fragment() {
             binding.rvArticles.adapter = articleAdapter
             binding.rvArticles.layoutManager = LinearLayoutManager(this.context)
         })
+
+        // Inflate the layout for this fragment
+        return binding.root
     }
 
     override fun onDestroy() {
