@@ -40,7 +40,6 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
                     response: Response<ResponseData>
                 ) {
                     val res = response?.body()?.articles
-                    Log.d(LOGTAG, "response is successful")
                     _articleListLiveData.postValue(res)
                 }
             })
