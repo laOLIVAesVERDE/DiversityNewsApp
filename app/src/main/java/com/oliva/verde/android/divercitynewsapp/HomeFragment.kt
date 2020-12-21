@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        articleAdapter = ArticleAdapter(articleList)
+
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
             articles.forEach{ it ->
@@ -60,11 +60,8 @@ class HomeFragment : Fragment() {
             }
             binding.rvArticles.adapter = articleAdapter
             binding.rvArticles.layoutManager = LinearLayoutManager(activity)
-            /*
-            val decorator = DividerItemDecoration(activity, binding.rvArticles.layoutManager.get)
-            binding.rvArticles.addItemDecoration(decorator)
 
-             */
+
         })
 
         // Inflate the layout for this fragment
