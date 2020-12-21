@@ -9,7 +9,7 @@ class ArticleAdapter(var articleList : MutableList<Article>) : RecyclerView.Adap
 
     // 各アイテムの画面部品が記述されたレイアウトファイルを元にビューホルダオブジェクトを生成する
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder {
-        val layoutInflater = LayoutInflater.from(parent!!.context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val binding = NewsRowBinding.inflate(layoutInflater, parent, false)
         // 生成したビューホルダをリターンする
         return BindingHolder(binding)

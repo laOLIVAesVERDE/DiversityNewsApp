@@ -5,8 +5,11 @@
 
     <data>
         <variable
-            name="article"
-            type="com.oliva.verde.android.divercitynewsapp.Article" />
+            name="viewModel"
+            type="com.oliva.verde.android.divercitynewsapp.HomeFragmentViewModel" />
+        <variable
+            name="position"
+            type="Integer" />
     </data>
 
     <LinearLayout
@@ -36,14 +39,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@{article.title}"/>
+                android:text="@{}"/>
 
             <TextView
                 android:id="@+id/publish_date_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@{article.publishedAt.substring(0, 10)}"/>
+                android:text="@{}"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
@@ -58,7 +59,12 @@ class HomeFragment : Fragment() {
                 articleList.add(it)
             }
             binding.rvArticles.adapter = articleAdapter
-            binding.rvArticles.layoutManager = LinearLayoutManager(this.context)
+            binding.rvArticles.layoutManager = LinearLayoutManager(activity)
+            /*
+            val decorator = DividerItemDecoration(activity, binding.rvArticles.layoutManager.get)
+            binding.rvArticles.addItemDecoration(decorator)
+
+             */
         })
 
         // Inflate the layout for this fragment
