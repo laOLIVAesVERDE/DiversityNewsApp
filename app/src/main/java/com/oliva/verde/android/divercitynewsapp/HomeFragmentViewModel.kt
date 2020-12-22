@@ -17,8 +17,8 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     val LOGTAG = "HomeFragmentViewModel"
 
     private val repository = Repository.instance
-    var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
-    val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
+    var articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    // val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
 
     init {
         loadArticles()
@@ -26,22 +26,10 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     private fun loadArticles() = viewModelScope.launch {
         Log.d(LOGTAG, "loadArticles called")
-        repository.getNewsArticles(
-            getApplication<Application>().getString(R.string.api_key),
-            getApplication<Application>().getString(R.string.search_word))
-            .enqueue(object : Callback<ResponseData> {
-                override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                    Log.d(LOGTAG, "response is failure")
-                    Log.d(LOGTAG, "Error detail : $t")
-                }
+        val response = repository.getNewsArticles(getApplication<Application>().getString(R.string.api_key), getApplication<Application>().getString(R.string.search_word))
+        if (response.isSuccessful) {
+            articleListLiveData.postValue(response.body())
+        }
 
-                override fun onResponse(
-                    call: Call<ResponseData>,
-                    response: Response<ResponseData>
-                ) {
-                    val res = response?.body()?.articles
-                    _articleListLiveData.postValue(res)
-                }
-            })
     }
 }

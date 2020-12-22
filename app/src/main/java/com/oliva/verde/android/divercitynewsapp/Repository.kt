@@ -29,6 +29,6 @@ class Repository {
         }
     }
 
-    fun getNewsArticles(apiKey: String, searchWord: String): Call<ResponseData> =
+    suspend fun getNewsArticles(apiKey: String, searchWord: String): Response<List<Article>> =
         apiService.getNews(apiKey, searchWord)
 }
