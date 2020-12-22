@@ -54,11 +54,6 @@ class HomeFragment : Fragment() {
         binding.apply {
             rvArticles.adapter = articleAdapter
         }
-        /*
-
-
-         */
-
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -67,14 +62,12 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
-            
-            articles.forEach{ it ->
-                articleList.add(it)
+            articles.let {
+                articleAdapter.setArticleList(articles)
             }
-            binding.rvArticles.adapter = articleAdapter
-            binding.rvArticles.layoutManager = LinearLayoutManager(activity)
-
-
+            articles.forEach{ it ->
+                Log.d("ConfirmArticle", it.title)
+            }
         })
     }
     override fun onDestroy() {
