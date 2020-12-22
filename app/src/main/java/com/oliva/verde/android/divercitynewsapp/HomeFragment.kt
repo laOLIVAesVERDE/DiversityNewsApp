@@ -51,9 +51,23 @@ class HomeFragment : Fragment() {
         Log.d("ConfirmOnCreateView", "OnCreateView")
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding.apply {
+            rvArticles.adapter = articleAdapter
+        }
+        /*
 
+
+         */
+
+        // Inflate the layout for this fragment
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
+            
             articles.forEach{ it ->
                 articleList.add(it)
             }
@@ -62,11 +76,7 @@ class HomeFragment : Fragment() {
 
 
         })
-
-        // Inflate the layout for this fragment
-        return binding.root
     }
-
     override fun onDestroy() {
         // RealmHelper().mRealm.close()
         super.onDestroy()
