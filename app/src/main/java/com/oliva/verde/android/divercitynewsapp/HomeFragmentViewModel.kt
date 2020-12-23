@@ -17,8 +17,8 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     val LOGTAG = "HomeFragmentViewModel"
 
     private val repository = Repository.instance
-    var articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
-    // val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
+    var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
 
     init {
         loadArticles()
@@ -28,7 +28,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         Log.d(LOGTAG, "loadArticles called")
         val response = repository.getNewsArticles(getApplication<Application>().getString(R.string.api_key), getApplication<Application>().getString(R.string.search_word))
         if (response.isSuccessful) {
-            articleListLiveData.postValue(response.body()?.articles)
+            _articleListLiveData.postValue(response.body()?.articles)
         }
 
     }
