@@ -28,7 +28,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         Log.d(LOGTAG, "loadArticles called")
         val response = repository.getNewsArticles(getApplication<Application>().getString(R.string.api_key), getApplication<Application>().getString(R.string.search_word))
         if (response.isSuccessful) {
-            articleListLiveData.postValue(response.body())
+            articleListLiveData.postValue(response.body()?.articles)
         }
 
     }

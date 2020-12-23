@@ -22,15 +22,12 @@ import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
-    val apiKey = "413005df5f58476c868396878a752fb8"
-    val searchWord = "bitcoin"
-    private var articleList = mutableListOf<Article>()
 
     private val homeFragmentViewModel by lazy {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
     }
 
-    private lateinit var articleAdapter: ArticleAdapter
+    private val articleAdapter : ArticleAdapter = ArticleAdapter()
     private lateinit var binding : FragmentHomeBinding
 
     var copiedArticleList = mutableListOf<Article>()
@@ -45,8 +42,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         Log.d("ConfirmOnCreateView", "OnCreateView")
 
@@ -70,6 +66,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
     override fun onDestroy() {
         // RealmHelper().mRealm.close()
         super.onDestroy()
