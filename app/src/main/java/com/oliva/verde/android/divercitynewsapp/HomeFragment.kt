@@ -59,11 +59,9 @@ class HomeFragment : Fragment() {
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             Log.d("confirmArticle", articles.toString())
             articles.let {
-                articleAdapter.setArticleList(articles)
+                articleAdapter.setArticleList(it)
             }
-            articles.forEach{ it ->
-                Log.d("ConfirmArticle", it.title)
-            }
+
         })
     }
 
