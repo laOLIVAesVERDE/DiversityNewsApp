@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
+import com.oliva.verde.android.divercitynewsapp.view.callback.ArticleClickCallback
 
-class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
+class ArticleAdapter(private val articleClickCallback: ArticleClickCallback) : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
     private var articleList : List<Article>? = null
 
     fun setArticleList(articleList : List<Article>) {
@@ -52,10 +53,9 @@ class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
         val binding =
             DataBindingUtil.inflate(layoutInflater,
                 R.layout.news_row, parent, false) as NewsRowBinding
+        binding.callback = articleClickCallback
         // 生成したビューホルダをリターンする
-        return BindingHolder(
-            binding
-        )
+        return BindingHolder(binding)
     }
 
     // ビューホルダ内の各画面部品にデータを割り当てる

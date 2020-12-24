@@ -1,8 +1,10 @@
 package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,6 +14,7 @@ import com.oliva.verde.android.divercitynewsapp.injection.viewmodel.HomeFragment
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.view.callback.ArticleClickCallback
 
 
 class HomeFragment : Fragment() {
@@ -21,7 +24,14 @@ class HomeFragment : Fragment() {
     }
 
     private val articleAdapter : ArticleAdapter =
-        ArticleAdapter()
+        ArticleAdapter(object : ArticleClickCallback {
+            override fun onClick(article: Article) {
+                val url = article.url
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(activity!!, Uri.parse(url))
+            }
+    })
     private lateinit var binding : FragmentHomeBinding
 
     var copiedArticleList = mutableListOf<Article>()
