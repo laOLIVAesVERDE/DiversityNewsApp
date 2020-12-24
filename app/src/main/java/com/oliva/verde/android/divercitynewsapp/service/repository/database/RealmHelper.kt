@@ -1,9 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.model
-
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmResults
-import java.util.*
+package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
 /**
 class RealmHelper {

@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.ui.fargment
+package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
 
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +7,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.oliva.verde.android.divercitynewsapp.model.Article
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.injection.viewmodel.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
-import com.oliva.verde.android.divercitynewsapp.ui.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 
 
 class HomeFragment : Fragment() {

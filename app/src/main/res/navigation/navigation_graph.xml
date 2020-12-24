@@ -7,12 +7,12 @@
     <!-- idはbottom_navigation_menuで指定したものと対応させる-->
     <fragment
         android:id="@+id/navi_home"
-        android:name="com.oliva.verde.android.divercitynewsapp.ui.fargment.HomeFragment"
+        android:name="com.oliva.verde.android.divercitynewsapp.view.ui.fargment.HomeFragment"
         android:label="@string/bottom_navigation_home_title"/>
 
     <fragment
         android:id="@+id/navi_bookmark"
-        android:name="com.oliva.verde.android.divercitynewsapp.ui.fargment.StockFragment"
+        android:name="com.oliva.verde.android.divercitynewsapp.view.ui.fargment.StockFragment"
         android:label="@string/bottom_navigation_bookmark_title"/>
 
 </navigation>

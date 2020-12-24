@@ -1,7 +1,9 @@
-package com.oliva.verde.android.divercitynewsapp.model
+package com.oliva.verde.android.divercitynewsapp.service.repository
 
 import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
+import com.oliva.verde.android.divercitynewsapp.service.repository.api.ApiService
+import com.oliva.verde.android.divercitynewsapp.service.repository.api.ResponseData
 import retrofit2.Response
 import javax.inject.Inject
 

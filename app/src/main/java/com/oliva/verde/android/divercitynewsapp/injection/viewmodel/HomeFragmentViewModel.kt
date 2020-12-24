@@ -3,9 +3,9 @@ package com.oliva.verde.android.divercitynewsapp.injection.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.oliva.verde.android.divercitynewsapp.model.Article
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
-import com.oliva.verde.android.divercitynewsapp.model.Repository
+import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
 import kotlinx.coroutines.launch
 
 

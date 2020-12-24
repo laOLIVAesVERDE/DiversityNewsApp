@@ -1,9 +1,9 @@
-package com.oliva.verde.android.divercitynewsapp.ui.fargment
+package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import com.oliva.verde.android.divercitynewsapp.model.Article
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 
 

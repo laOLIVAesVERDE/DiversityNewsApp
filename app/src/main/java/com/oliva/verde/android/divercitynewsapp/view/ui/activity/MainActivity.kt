@@ -1,10 +1,10 @@
-package com.oliva.verde.android.divercitynewsapp.ui.activity
+package com.oliva.verde.android.divercitynewsapp.view.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.oliva.verde.android.divercitynewsapp.R
-import com.oliva.verde.android.divercitynewsapp.ui.fargment.HomeFragment
+import com.oliva.verde.android.divercitynewsapp.view.ui.fargment.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.model
+package com.oliva.verde.android.divercitynewsapp.service.repository
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

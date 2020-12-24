@@ -1,11 +1,11 @@
-package com.oliva.verde.android.divercitynewsapp.ui.adapter
+package com.oliva.verde.android.divercitynewsapp.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.oliva.verde.android.divercitynewsapp.model.Article
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 
@@ -51,8 +51,7 @@ class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding =
             DataBindingUtil.inflate(layoutInflater,
-                R.layout.news_row, parent, false)
-            as NewsRowBinding
+                R.layout.news_row, parent, false) as NewsRowBinding
         // 生成したビューホルダをリターンする
         return BindingHolder(
             binding
