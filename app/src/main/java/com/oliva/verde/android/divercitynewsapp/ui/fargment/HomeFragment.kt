@@ -1,24 +1,17 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.ui.fargment
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.SearchView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.model.Article
+import com.oliva.verde.android.divercitynewsapp.injection.viewmodel.HomeFragmentViewModel
+import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
-import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
-import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
+import com.oliva.verde.android.divercitynewsapp.ui.adapter.ArticleAdapter
 
 
 class HomeFragment : Fragment() {
@@ -27,7 +20,8 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
     }
 
-    private val articleAdapter : ArticleAdapter = ArticleAdapter()
+    private val articleAdapter : ArticleAdapter =
+        ArticleAdapter()
     private lateinit var binding : FragmentHomeBinding
 
     var copiedArticleList = mutableListOf<Article>()
@@ -46,7 +40,8 @@ class HomeFragment : Fragment() {
     ): View? {
         Log.d("ConfirmOnCreateView", "OnCreateView")
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_home, container, false)
         binding.apply {
             rvArticles.adapter = articleAdapter
         }

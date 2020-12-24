@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.model
 
 import io.realm.Realm
 import io.realm.RealmConfiguration

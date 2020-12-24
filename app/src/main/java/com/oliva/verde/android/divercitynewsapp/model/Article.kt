@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.model
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

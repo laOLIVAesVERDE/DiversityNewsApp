@@ -1,16 +1,12 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.injection.viewmodel
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.oliva.verde.android.divercitynewsapp.injection.ApiComponent
-import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
+import com.oliva.verde.android.divercitynewsapp.model.Article
+import com.oliva.verde.android.divercitynewsapp.R
+import com.oliva.verde.android.divercitynewsapp.model.Repository
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.lang.Exception
-import javax.inject.Inject
 
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,7 +22,9 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     private fun loadArticles() = viewModelScope.launch {
         Log.d(LOGTAG, "loadArticles called")
-        val response = repository.getNewsArticles(getApplication<Application>().getString(R.string.api_key), getApplication<Application>().getString(R.string.search_word))
+        val response = repository.getNewsArticles(getApplication<Application>().getString(
+            R.string.api_key
+        ), getApplication<Application>().getString(R.string.search_word))
         if (response.isSuccessful) {
             _articleListLiveData.postValue(response.body()?.articles)
         }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="article"
-            type="com.oliva.verde.android.divercitynewsapp.Article" />
+            type="com.oliva.verde.android.divercitynewsapp.model.Article" />
     </data>
 
     <LinearLayout

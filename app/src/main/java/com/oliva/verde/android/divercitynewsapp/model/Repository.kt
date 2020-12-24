@@ -1,12 +1,7 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.model
 
 import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 

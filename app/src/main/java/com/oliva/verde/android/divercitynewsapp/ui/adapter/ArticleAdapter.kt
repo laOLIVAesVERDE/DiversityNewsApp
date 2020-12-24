@@ -1,11 +1,12 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.model.Article
+import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 
 class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
@@ -49,10 +50,13 @@ class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.news_row, parent, false)
+            DataBindingUtil.inflate(layoutInflater,
+                R.layout.news_row, parent, false)
             as NewsRowBinding
         // 生成したビューホルダをリターンする
-        return BindingHolder(binding)
+        return BindingHolder(
+            binding
+        )
     }
 
     // ビューホルダ内の各画面部品にデータを割り当てる
