@@ -16,7 +16,7 @@ import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
-import com.oliva.verde.android.divercitynewsapp.view.callback.ArticleClickCallback
+import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 
 
 class HomeFragment : Fragment() {
@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
     }
 
     private val articleAdapter : ArticleAdapter =
-        ArticleAdapter(object : ArticleClickCallback {
+        ArticleAdapter(object : OnItemClickCallback {
             override fun onClick(article: Article) {
                 val url = article.url
                 val builder = CustomTabsIntent.Builder()

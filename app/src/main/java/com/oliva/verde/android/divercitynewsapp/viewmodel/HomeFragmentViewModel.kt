@@ -17,12 +17,9 @@ import kotlinx.coroutines.launch
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
     val LOGTAG = "HomeFragmentViewModel"
 
-    private val realm : Realm = Realm.getDefaultInstance()
-    private val stockArticleDao : StockArticleDao = StockArticleDao(realm)
     private val repository = Repository.instance
     var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
     val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
-    var stockArticleList : RealmResults<Article> = stockArticleDao.select()
 
     init {
         loadArticles()
@@ -38,5 +35,8 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private fun insertTargetArticle(article: Article) {
+        repository.stockArticleDao.insert(article)
+    }
 
 }
