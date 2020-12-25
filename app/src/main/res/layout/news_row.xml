@@ -65,7 +65,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:rotation="90"
-                android:onClick="@{() -> onItemClickCallback.onItemClick(article)}"
+                android:onClick="@{() -> onItemClickCallback.onContextClick(article)}"
                 app:tint="@color/pendingIcon" />
 
 
