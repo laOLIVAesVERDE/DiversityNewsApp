@@ -1,53 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="article"
             type="com.oliva.verde.android.divercitynewsapp.service.model.Article" />
         <variable
-            name="callback"
-            type="com.oliva.verde.android.divercitynewsapp.view.callback.ArticleClickCallback" />
+            name="onItemClickCallback"
+            type="com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback" />
     </data>
 
     <LinearLayout
         android:id="@+id/original_LinerLayout"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> callback.onClick(article)}"
-        android:background="?android:attr/selectableItemBackground">
+        android:onClick="@{() -> onItemClickCallback.onClick(article)}"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image_row"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="8dp"
-            app:imageUrl="@{article.urlToImage}"/>
+            app:imageUrl="@{article.urlToImage}" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/title_row"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@{article.title}"/>
+                android:baselineAligned="false"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/publish_date_row"
+                <TextView
+                    android:id="@+id/title_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@{article.title}" />
+
+                <TextView
+                    android:id="@+id/publish_date_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@{article.publishedAt.substring(0, 10)}" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:src="@drawable/ic_pending_white_24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@{article.publishedAt.substring(0, 10)}"/>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:rotation="90"
+                app:tint="@color/pendingIcon" />
 
-        </LinearLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 </layout>
