@@ -9,6 +9,7 @@ import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.view.callback.ArticleClickCallback
+import kotlinx.android.synthetic.main.news_row.view.*
 
 class ArticleAdapter(private val articleClickCallback: ArticleClickCallback) : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
     private var articleList : List<Article>? = null

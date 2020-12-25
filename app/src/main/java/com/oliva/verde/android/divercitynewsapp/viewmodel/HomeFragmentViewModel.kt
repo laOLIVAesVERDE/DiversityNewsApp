@@ -1,11 +1,14 @@
-package com.oliva.verde.android.divercitynewsapp.injection.viewmodel
+package com.oliva.verde.android.divercitynewsapp.viewmodel
 
 import android.app.Application
+import android.net.Uri
 import android.util.Log
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.*
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
+import com.oliva.verde.android.divercitynewsapp.view.callback.ArticleClickCallback
 import kotlinx.coroutines.launch
 
 
