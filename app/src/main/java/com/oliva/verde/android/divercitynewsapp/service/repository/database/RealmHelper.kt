@@ -1,6 +1,12 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
-/**
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmResults
+import java.util.*
+
+
 class RealmHelper {
     var mRealm = Realm.getInstance(
          RealmConfiguration.Builder()
@@ -58,4 +64,3 @@ class RealmHelper {
     }
 
 }
-        */

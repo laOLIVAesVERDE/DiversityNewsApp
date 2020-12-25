@@ -7,10 +7,11 @@ import java.util.*
 
 data class Article(
     @PrimaryKey open var id : String = UUID.randomUUID().toString(),
-    val url : String = "",
-    val urlToImage : String? = "",
-    val publishedAt : String = "",
-    val title : String = ""
+    open var url : String = "",
+    open var urlToImage : String? = "",
+    open var publishedAt : String = "",
+    open var title : String = "",
+    open var isReadFlag : Boolean = false
 ) : RealmObject()
     /**
     //@PrimaryKey open var id : String = UUID.randomUUID().toString(),
