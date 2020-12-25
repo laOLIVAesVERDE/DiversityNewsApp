@@ -25,6 +25,8 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
     }
 
+    private lateinit var binding : FragmentHomeBinding
+
     private val articleAdapter : ArticleAdapter =
         ArticleAdapter(object : OnItemClickCallback {
             override fun onItemClick(article: Article) {
@@ -35,11 +37,11 @@ class HomeFragment : Fragment() {
             }
 
             override fun onContextClick(article: Article) {
-
+                LayoutInflater.from(binding.root.context).inflate(R.layout.context_menu_add_to_stock, null)
             }
     })
 
-    private lateinit var binding : FragmentHomeBinding
+
 
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1

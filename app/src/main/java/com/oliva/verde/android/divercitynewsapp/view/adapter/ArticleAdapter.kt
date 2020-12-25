@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.view.adapter
 
 import android.app.Application
 import android.view.*
+import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -76,6 +77,8 @@ class ArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : Rec
         return articleList?.size ?: 0
     }
 
-    open class BindingHolder(var binding: NewsRowBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    open class BindingHolder(var binding: NewsRowBinding) : RecyclerView.ViewHolder(binding.root) {
+
+
+    }
 }
