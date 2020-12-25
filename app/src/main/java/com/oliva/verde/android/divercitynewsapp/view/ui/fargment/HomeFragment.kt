@@ -27,11 +27,15 @@ class HomeFragment : Fragment() {
 
     private val articleAdapter : ArticleAdapter =
         ArticleAdapter(object : OnItemClickCallback {
-            override fun onClick(article: Article) {
+            override fun onItemClick(article: Article) {
                 val url = article.url
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(activity!!, Uri.parse(url))
+            }
+
+            override fun onContextClick(article: Article) {
+
             }
     })
 
@@ -69,7 +73,6 @@ class HomeFragment : Fragment() {
             articles.let {
                 articleAdapter.setArticleList(it)
             }
-
         })
     }
 

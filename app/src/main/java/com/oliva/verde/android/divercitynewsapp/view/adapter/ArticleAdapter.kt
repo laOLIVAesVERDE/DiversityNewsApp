@@ -1,18 +1,25 @@
 package com.oliva.verde.android.divercitynewsapp.view.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.app.Application
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.MyApplication
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
+import com.oliva.verde.android.divercitynewsapp.injection.AppComponent
+import com.oliva.verde.android.divercitynewsapp.injection.AppComponentModule
+import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
+import com.oliva.verde.android.divercitynewsapp.injection.DaggerAppComponent
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import javax.inject.Inject
 
 
 class ArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
     private var articleList : List<Article>? = null
+
 
     fun setArticleList(articleList : List<Article>) {
 
