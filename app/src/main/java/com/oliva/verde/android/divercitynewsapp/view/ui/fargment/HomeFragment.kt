@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
@@ -43,7 +45,6 @@ class HomeFragment : Fragment() {
         Log.d("ConfirmOnCreate", "OnCreate")
         // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
-        // Realm.init(activity)
     }
 
     override fun onCreateView(
@@ -55,6 +56,7 @@ class HomeFragment : Fragment() {
             R.layout.fragment_home, container, false)
         binding.apply {
             rvArticles.adapter = articleAdapter
+            rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))
         }
         // Inflate the layout for this fragment
         return binding.root
