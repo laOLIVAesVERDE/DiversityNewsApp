@@ -4,6 +4,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.PopupWindow
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -37,7 +39,10 @@ class HomeFragment : Fragment() {
             }
 
             override fun onContextClick(article: Article) {
-                LayoutInflater.from(binding.root.context).inflate(R.layout.context_menu_add_to_stock, null)
+                val popupView = LayoutInflater.from(binding.root.context).inflate(R.layout.context_menu_add_to_stock, null)
+                val popupWindow = PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+                val button = popupView.findViewById<ImageView>(R.id.add_to_stock)
+                popupWindow.showAsDropDown(popupView, 0, 0)
             }
     })
 

@@ -1,8 +1,10 @@
 package com.oliva.verde.android.divercitynewsapp.view.adapter
 
 import android.app.Application
+import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +12,6 @@ import com.oliva.verde.android.divercitynewsapp.MyApplication
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
-import com.oliva.verde.android.divercitynewsapp.injection.AppComponent
-import com.oliva.verde.android.divercitynewsapp.injection.AppComponentModule
-import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
-import com.oliva.verde.android.divercitynewsapp.injection.DaggerAppComponent
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 import javax.inject.Inject
 
@@ -77,8 +75,5 @@ class ArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : Rec
         return articleList?.size ?: 0
     }
 
-    open class BindingHolder(var binding: NewsRowBinding) : RecyclerView.ViewHolder(binding.root) {
-
-
-    }
+    open class BindingHolder(var binding: NewsRowBinding) : RecyclerView.ViewHolder(binding.root) {}
 }
