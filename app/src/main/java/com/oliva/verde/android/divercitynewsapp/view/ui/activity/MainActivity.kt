@@ -1,12 +1,10 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.view.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import io.realm.Realm
-import kotlinx.android.synthetic.main.activity_top.*
+import com.oliva.verde.android.divercitynewsapp.R
+import com.oliva.verde.android.divercitynewsapp.view.ui.fargment.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.nav_host_fragment, HomeFragment())
+            .add(
+                R.id.nav_host_fragment,
+                HomeFragment()
+            )
             .commit()
     }
 }

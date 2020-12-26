@@ -1,15 +1,26 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.view.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.app.Application
+import android.view.*
+import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.MyApplication
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
+import com.oliva.verde.android.divercitynewsapp.injection.AppComponent
+import com.oliva.verde.android.divercitynewsapp.injection.AppComponentModule
+import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
+import com.oliva.verde.android.divercitynewsapp.injection.DaggerAppComponent
+import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import javax.inject.Inject
 
-class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
+
+class ArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
     private var articleList : List<Article>? = null
+
 
     fun setArticleList(articleList : List<Article>) {
 
@@ -49,8 +60,9 @@ class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.news_row, parent, false)
-            as NewsRowBinding
+            DataBindingUtil.inflate(layoutInflater,
+                R.layout.news_row, parent, false) as NewsRowBinding
+        binding.onItemClickCallback = onItemClickCallback
         // 生成したビューホルダをリターンする
         return BindingHolder(binding)
     }
@@ -65,6 +77,8 @@ class ArticleAdapter() : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
         return articleList?.size ?: 0
     }
 
-    open class BindingHolder(var binding: NewsRowBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    open class BindingHolder(var binding: NewsRowBinding) : RecyclerView.ViewHolder(binding.root) {
+
+
+    }
 }

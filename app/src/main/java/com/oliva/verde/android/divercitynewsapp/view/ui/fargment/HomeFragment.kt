@@ -1,12 +1,9 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
 
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.SearchView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,11 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
+import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
-import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
-import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
+import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 
 
 class HomeFragment : Fragment() {
@@ -27,8 +25,23 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
     }
 
-    private val articleAdapter : ArticleAdapter = ArticleAdapter()
     private lateinit var binding : FragmentHomeBinding
+
+    private val articleAdapter : ArticleAdapter =
+        ArticleAdapter(object : OnItemClickCallback {
+            override fun onItemClick(article: Article) {
+                val url = article.url
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(activity!!, Uri.parse(url))
+            }
+
+            override fun onContextClick(article: Article) {
+                LayoutInflater.from(binding.root.context).inflate(R.layout.context_menu_add_to_stock, null)
+            }
+    })
+
+
 
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
@@ -38,7 +51,6 @@ class HomeFragment : Fragment() {
         Log.d("ConfirmOnCreate", "OnCreate")
         // オプションメニューの表示を有効にする
         setHasOptionsMenu(true)
-        // Realm.init(activity)
     }
 
     override fun onCreateView(
@@ -46,9 +58,11 @@ class HomeFragment : Fragment() {
     ): View? {
         Log.d("ConfirmOnCreateView", "OnCreateView")
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_home, container, false)
         binding.apply {
             rvArticles.adapter = articleAdapter
+            rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))
         }
         // Inflate the layout for this fragment
         return binding.root
@@ -61,7 +75,6 @@ class HomeFragment : Fragment() {
             articles.let {
                 articleAdapter.setArticleList(it)
             }
-
         })
     }
 

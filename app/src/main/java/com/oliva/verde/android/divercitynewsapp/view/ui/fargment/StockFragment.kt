@@ -1,15 +1,10 @@
-package com.oliva.verde.android.divercitynewsapp
+package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.SearchView
-import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.R
 
 
 class StockFragment : Fragment() {
