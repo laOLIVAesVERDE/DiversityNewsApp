@@ -39,9 +39,9 @@ class HomeFragment : Fragment() {
             }
 
             override fun onContextClick(article: Article) {
+
                 val popupView = LayoutInflater.from(binding.root.context).inflate(R.layout.context_menu_add_to_stock, null)
                 val popupWindow = PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
-                val button = popupView.findViewById<ImageView>(R.id.add_to_stock)
                 popupWindow.showAsDropDown(popupView, 0, 0)
             }
     })
