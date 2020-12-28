@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
-import android.widget.ImageView
-import android.widget.PopupWindow
+import android.widget.*
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -23,6 +22,7 @@ import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallbac
 
 
 class HomeFragment : Fragment() {
+    private val imageButton = view?.findViewById<ImageButton>(R.id.image_button)
 
     private val homeFragmentViewModel by lazy {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
@@ -40,17 +40,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onContextClick(article: Article) {
-
-                val popupView = LayoutInflater.from(binding.root.context).inflate(R.layout.context_menu_add_to_stock, null)
-                val popupWindow = PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
-                val width : Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140F, context?.resources?.displayMetrics)
-                popupWindow.apply {
-                    windowLayoutType = width.toInt()
-                    isFocusable = true
-                    isTouchable = true
-                    isOutsideTouchable = true
-                }
-                popupWindow.showAsDropDown(popupView, 0, 0)
+                homeFragmentViewModel.insertTargetArticle(article)
             }
     })
 
@@ -84,7 +74,7 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
-            Log.d("confirmArticle", articles.toString())
+            Log.d("confirmArticle", articles.first().id)
             articles.let {
                 articleAdapter.setArticleList(it)
             }

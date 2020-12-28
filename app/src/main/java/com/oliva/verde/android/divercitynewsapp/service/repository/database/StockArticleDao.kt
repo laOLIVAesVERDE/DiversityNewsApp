@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
+import android.widget.Toast
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import io.realm.Realm
 import io.realm.RealmConfiguration

@@ -13,7 +13,12 @@ class MyApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         Realm.init(this)
-        Realm.setDefaultConfiguration(RealmConfiguration.Builder().inMemory().build())
+        Realm.setDefaultConfiguration(
+            RealmConfiguration
+                .Builder()
+                .inMemory()
+                .allowWritesOnUiThread(true)
+                .build())
     }
 
 }

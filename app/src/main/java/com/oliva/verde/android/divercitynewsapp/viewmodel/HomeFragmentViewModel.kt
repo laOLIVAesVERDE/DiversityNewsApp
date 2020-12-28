@@ -35,7 +35,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun insertTargetArticle(article: Article) {
+    fun insertTargetArticle(article: Article) = viewModelScope.launch {
         repository.stockArticleDao.insert(article)
     }
 
