@@ -3,6 +3,7 @@ package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -42,6 +43,13 @@ class HomeFragment : Fragment() {
 
                 val popupView = LayoutInflater.from(binding.root.context).inflate(R.layout.context_menu_add_to_stock, null)
                 val popupWindow = PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+                val width : Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140F, context?.resources?.displayMetrics)
+                popupWindow.apply {
+                    windowLayoutType = width.toInt()
+                    isFocusable = true
+                    isTouchable = true
+                    isOutsideTouchable = true
+                }
                 popupWindow.showAsDropDown(popupView, 0, 0)
             }
     })
