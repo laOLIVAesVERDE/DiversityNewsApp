@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
 
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -40,7 +41,18 @@ class HomeFragment : Fragment() {
             }
 
             override fun onContextClick(article: Article) {
-                homeFragmentViewModel.insertTargetArticle(article)
+                val button = view?.findViewById<ImageButton>(R.id.image_button)
+                val popupMenu  = PopupMenu(activity, button)
+                popupMenu.menuInflater.inflate(R.menu.context_menu_add_to_stock, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.add_to_stock -> {
+                            homeFragmentViewModel.insertTargetArticle(article)
+                        }
+                    }
+                    true
+                }
+                popupMenu.show()
             }
     })
 
