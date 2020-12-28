@@ -12,18 +12,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
+import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
-    private val imageButton = view?.findViewById<ImageButton>(R.id.image_button)
 
     private val homeFragmentViewModel by lazy {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
@@ -42,13 +44,14 @@ class HomeFragment : Fragment() {
 
             override fun onContextClick(article: Article) {
                 val button = view?.findViewById<ImageButton>(R.id.image_button)
+                // val button = ArticleAdapter.BindingHolder(NewsRowBinding()).binding.imageButton
                 val popupMenu  = PopupMenu(activity, button)
                 popupMenu.menuInflater.inflate(R.menu.context_menu_add_to_stock, popupMenu.menu)
-                popupMenu.gravity = Gravity.RIGHT
+
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.add_to_stock -> {
-                            homeFragmentViewModel.insertTargetArticle(article)
+                            lifecycleScope.launch { homeFragmentViewModel.insertTargetArticle(article) }
                         }
                     }
                     true
@@ -135,7 +138,7 @@ class HomeFragment : Fragment() {
         articleList.addAll(filteredList)
         adapter.notifyDataSetChanged()
     }
-
+    */
     override fun onCreateContextMenu(
         menu: ContextMenu,
         v: View,
@@ -146,6 +149,8 @@ class HomeFragment : Fragment() {
         menuInflater.inflate(R.menu.context_menu_add_to_stock, menu)
         menu.setHeaderTitle(R.string.news_list_context_header)
     }
+
+    /*
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         // 長押しされたViewに関する情報を取得する
