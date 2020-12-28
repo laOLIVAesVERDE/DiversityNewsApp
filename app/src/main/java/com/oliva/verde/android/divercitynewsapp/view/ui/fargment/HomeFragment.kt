@@ -44,6 +44,7 @@ class HomeFragment : Fragment() {
                 val button = view?.findViewById<ImageButton>(R.id.image_button)
                 val popupMenu  = PopupMenu(activity, button)
                 popupMenu.menuInflater.inflate(R.menu.context_menu_add_to_stock, popupMenu.menu)
+                popupMenu.gravity = Gravity.RIGHT
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.add_to_stock -> {
