@@ -3,8 +3,8 @@ package com.oliva.verde.android.divercitynewsapp.service.repository
 import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
 import com.oliva.verde.android.divercitynewsapp.service.repository.api.ApiService
-import com.oliva.verde.android.divercitynewsapp.service.repository.api.ResponseData
 import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import io.realm.Realm
 import io.realm.RealmResults
