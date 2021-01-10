@@ -21,6 +21,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     private var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
     val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
 
+
     init {
         loadArticles()
     }

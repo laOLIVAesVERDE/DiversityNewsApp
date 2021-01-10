@@ -26,6 +26,9 @@ import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
+    companion object {
+        val LOG_TAG = "HomeFragmnet"
+    }
 
     private val homeFragmentViewModel by lazy {
         ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
@@ -73,21 +76,19 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        Log.d("ConfirmOnCreateView", "OnCreateView")
+        Log.d(LOG_TAG, "OnCreateView")
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.apply {
             rvArticles.adapter = articleAdapter
             rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))
         }
-        // Inflate the layout for this fragment
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
-            Log.d("confirmArticle", articles.first().id)
             articles.let {
                 articleAdapter.setArticleList(it)
             }
@@ -136,6 +137,7 @@ class HomeFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
     */
+
     override fun onCreateContextMenu(
         menu: ContextMenu,
         v: View,
