@@ -17,7 +17,6 @@ class MyApplication : MultiDexApplication() {
             RealmConfiguration
                 .Builder()
                 .inMemory()
-                .allowWritesOnUiThread(true)
                 .build())
     }
 
