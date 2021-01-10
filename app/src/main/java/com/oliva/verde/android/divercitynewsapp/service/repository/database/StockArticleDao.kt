@@ -9,7 +9,7 @@ import java.util.*
 class StockArticleDao(val mRealm : Realm) {
 
 
-    fun insert(targetArticle: Article) {
+    suspend fun insert(targetArticle: Article) {
         mRealm.executeTransactionAsync(object : Realm.Transaction {
             override fun execute(realm: Realm) {
                 val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
