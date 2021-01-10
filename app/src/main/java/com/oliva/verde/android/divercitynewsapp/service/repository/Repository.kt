@@ -13,7 +13,15 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 class Repository {
-    val LOGTAG = "Repository"
+
+    companion object {
+        val LOGTAG = "Repository"
+        val instance : Repository
+            @Synchronized get() {
+                return Repository()
+            }
+    }
+
     private val realm : Realm = Realm.getDefaultInstance()
     val stockArticleDao : StockArticleDao = StockArticleDao(realm)
 
@@ -25,19 +33,8 @@ class Repository {
 
     init {
         DaggerApiComponent.create().inject(this)
-        Log.d(LOGTAG, "getNewsArticles called")
-
-    }
-
-    companion object Factory {
-        val instance : Repository
-        @Synchronized get() {
-            return Repository()
-        }
     }
 
     suspend fun getNewsArticles(apiKey: String, searchWord: String): Response<ResponseData> =
         apiService.getNews(apiKey, searchWord)
-
-
 }
