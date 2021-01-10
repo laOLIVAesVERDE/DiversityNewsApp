@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.api
 
+import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

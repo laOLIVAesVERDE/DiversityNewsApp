@@ -13,6 +13,8 @@ open class Article(
     open var title : String = "title",
     open var isReadFlag : Boolean = false
 ) : RealmObject() {}
+
+data class ResponseData(val articles : MutableList<Article>)
     /**
     //@PrimaryKey open var id : String = UUID.randomUUID().toString(),
     open var url: String = "url",
