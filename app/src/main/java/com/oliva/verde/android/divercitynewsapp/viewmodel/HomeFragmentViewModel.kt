@@ -18,13 +18,20 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     val LOGTAG = "HomeFragmentViewModel"
 
     private val repository = Repository.instance
-    var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
+    private var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
     val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
 
     init {
         loadArticles()
     }
 
+    /**
+     * ViewModelScope は、アプリで ViewModel ごとに定義される。
+     * このスコープ内で起動されたすべてのコルーチンは、ViewModel が消去されると自動的にキャンセルされる。
+     * ViewModelがアクティブな場合にのみ行う必要がある作業があるとき、コルーチンが役に立つ。
+     * 例：レイアウト用のデータを計算している場合、作業を ViewModel にスコープする必要があるため、
+     * 　　ViewModel が消去されると、作業はリソースの消費を避けるために自動的にキャンセルされる。
+     */
     private fun loadArticles() = viewModelScope.launch {
         Log.d(LOGTAG, "loadArticles called")
         val response = repository.getNewsArticles(getApplication<Application>().getString(

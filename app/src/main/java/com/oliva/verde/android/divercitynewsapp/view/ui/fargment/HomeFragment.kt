@@ -60,8 +60,6 @@ class HomeFragment : Fragment() {
             }
     })
 
-
-
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
 
@@ -77,8 +75,7 @@ class HomeFragment : Fragment() {
     ): View? {
         Log.d("ConfirmOnCreateView", "OnCreateView")
 
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.apply {
             rvArticles.adapter = articleAdapter
             rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))

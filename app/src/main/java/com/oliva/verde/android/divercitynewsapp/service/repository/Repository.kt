@@ -1,6 +1,5 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository
 
-import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
@@ -35,6 +34,7 @@ class Repository {
         DaggerApiComponent.create().inject(this)
     }
 
-    suspend fun getNewsArticles(apiKey: String, searchWord: String): Response<ResponseData> =
-        apiService.getNews(apiKey, searchWord)
+    suspend fun getNewsArticles(apiKey: String, searchWord: String): Response<ResponseData> {
+        return apiService.getNews(apiKey, searchWord)
+    }
 }

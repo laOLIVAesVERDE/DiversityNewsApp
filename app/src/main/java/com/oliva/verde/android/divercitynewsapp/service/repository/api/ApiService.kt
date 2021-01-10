@@ -6,11 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    // https://newsapi.org/v2/everything/?apiKey=${apiKey}&q=bitcoin というURLオブジェクトにGETリクエスト
-    @GET("v2/everything/") // アノテーション : ソースコード中に登場する要素（クラスやメソッドなど）に対して、コンパイラや実行環境に伝達したい付加的な情報（メタデータ）を注記する仕組み
-    // suspend : 適用された関数はメインスレッドをブロックせずに実行できるようになる
+    @GET("v2/everything/")
+    // suspend :    適用された関数はメインスレッドをブロックせずに実行できるようになる
+    //              また、Coroutine内または他の SuspendingFunction内からしか呼び出すことができない
     suspend fun getNews(@Query("apiKey") apiKey: String,
-                @Query("q") searchWord : String) : Response<ResponseData> // 返り値をSingle型とする(参照：https://qiita.com/takahirom/items/f3e576e91b219c7239e7)
+                @Query("q") searchWord : String) : Response<ResponseData>
 
     /**
    @GET("/v2/everything/")
