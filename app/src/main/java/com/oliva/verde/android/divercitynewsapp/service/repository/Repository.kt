@@ -25,7 +25,7 @@ class Repository {
     val stockArticleDao : StockArticleDao = StockArticleDao(realm)
 
     @Singleton
-    var stockArticleList : RealmResults<Article> = stockArticleDao.select()
+    var stockArticleList : RealmResults<Article> = stockArticleDao.selectAll()
 
     @Inject
     lateinit var apiService : ApiService

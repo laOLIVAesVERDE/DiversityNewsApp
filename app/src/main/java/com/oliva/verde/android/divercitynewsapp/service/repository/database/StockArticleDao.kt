@@ -25,17 +25,17 @@ class StockArticleDao(val mRealm : Realm) {
         })
     }
 
-    fun select() : RealmResults<Article> {
+    fun selectAll() : MutableList<Article> {
         return mRealm.where(Article::class.java).findAll()
     }
 
     fun delete(targetArticle: Article) {
-        mRealm.executeTransaction {
-            val article = mRealm.where(Article::class.java).equalTo("id", targetArticle.id).findFirst()
-            if (article != null) {
-                article.deleteFromRealm()
+        mRealm.executeTransactionAsync(object : Realm.Transaction {
+            override fun execute(realm: Realm) {
+                val article = realm.where(Article::class.java).equalTo("id", targetArticle.id).findFirst()
+                article?.deleteFromRealm()
             }
-        }
+        })
     }
 
     fun search(query : String): MutableList<Article> {

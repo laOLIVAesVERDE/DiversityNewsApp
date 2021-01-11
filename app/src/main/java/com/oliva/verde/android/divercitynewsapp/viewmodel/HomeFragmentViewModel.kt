@@ -15,12 +15,13 @@ import kotlinx.coroutines.launch
 
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
-    val LOGTAG = "HomeFragmentViewModel"
+    companion object {
+        val LOGTAG = "HomeFragmentViewModel"
+    }
 
     private val repository = Repository.instance
     private var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
     val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
-
 
     init {
         loadArticles()
@@ -43,7 +44,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    suspend fun insertTargetArticle(article: Article) = viewModelScope.launch {
+    fun insertTargetArticle(article: Article) = viewModelScope.launch {
         repository.stockArticleDao.insert(article)
     }
 
