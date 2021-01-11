@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("v2/everything/")
     // suspend :    適用された関数はメインスレッドをブロックせずに実行できるようになる
-    //              また、Coroutine内または他の SuspendingFunction内からしか呼び出すことができない
+    //              また、Coroutine内または他のSuspendingFunction内からしか呼び出すことができない
     suspend fun getNews(@Query("apiKey") apiKey: String,
                 @Query("q") searchWord : String) : Response<ResponseData>
 

@@ -9,7 +9,7 @@ import java.util.*
 class StockArticleDao(val mRealm : Realm) {
 
 
-    suspend fun insert(targetArticle: Article) {
+    fun insert(targetArticle: Article) {
         mRealm.executeTransactionAsync(object : Realm.Transaction {
             override fun execute(realm: Realm) {
                 val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
@@ -25,7 +25,7 @@ class StockArticleDao(val mRealm : Realm) {
         })
     }
 
-    fun selectAll() : MutableList<Article> {
+    suspend fun selectAll() : MutableList<Article> {
         return mRealm.where(Article::class.java).findAll()
     }
 

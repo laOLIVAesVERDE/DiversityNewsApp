@@ -18,10 +18,14 @@ class StockFragmentViewModel : ViewModel() {
     private var _stockArticleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
     val stockArticleListLiveData : LiveData<List<Article>> = _stockArticleListLiveData
 
-    fun getAllStockedArticles() = viewModelScope.launch {
+    init {
+        getAllStockedArticles()
+    }
+
+    private fun getAllStockedArticles() = viewModelScope.launch {
         Log.d(LOGTAG, "getAllStockedArticles called")
-        val realmResult = repository.stockArticleDao.selectAll()
-        _stockArticleListLiveData.postValue(realmResult)
+        val stkList = repository.getStockedArticles()
+        _stockArticleListLiveData.postValue(stkList)
     }
 
     fun deleteTargetArticle(targetArticle: Article) = viewModelScope.launch {
