@@ -1,10 +1,8 @@
-package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
+package com.oliva.verde.android.divercitynewsapp.view.ui.fragment
 
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import androidx.browser.customtabs.CustomTabsIntent
@@ -19,7 +17,6 @@ import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
-import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 import kotlinx.coroutines.launch

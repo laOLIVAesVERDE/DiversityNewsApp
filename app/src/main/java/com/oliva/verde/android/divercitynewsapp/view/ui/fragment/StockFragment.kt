@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.view.ui.fargment
+package com.oliva.verde.android.divercitynewsapp.view.ui.fragment
 
 import android.os.Bundle
 import android.view.*

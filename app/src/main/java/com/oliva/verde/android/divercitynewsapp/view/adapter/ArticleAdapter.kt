@@ -1,26 +1,13 @@
 package com.oliva.verde.android.divercitynewsapp.view.adapter
 
-import android.app.Application
-import android.net.Uri
-import android.util.Log
 import android.view.*
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import android.widget.PopupWindow
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.transition.Hold
-import com.oliva.verde.android.divercitynewsapp.MyApplication
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
-import com.oliva.verde.android.divercitynewsapp.view.ui.fargment.HomeFragment
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 class ArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<ArticleAdapter.BindingHolder>() {
