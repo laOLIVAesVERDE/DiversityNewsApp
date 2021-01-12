@@ -6,11 +6,10 @@ import io.realm.RealmResults
 import java.util.*
 
 
-class StockArticleDao(val mRealm : Realm) {
-
-
+object StockArticleDao {
     fun insert(targetArticle: Article) {
-        mRealm.executeTransactionAsync(object : Realm.Transaction {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransactionAsync(object : Realm.Transaction {
             override fun execute(realm: Realm) {
                 val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
                 article.apply {
@@ -23,44 +22,61 @@ class StockArticleDao(val mRealm : Realm) {
                 }
             }
         })
+        realm.close()
     }
 
-    suspend fun selectAll() : MutableList<Article> {
-        return mRealm.where(Article::class.java).findAll()
+    fun selectAll() : MutableList<Article> {
+        val realm = Realm.getDefaultInstance()
+        val articles = realm.where(Article::class.java).findAll()
+        realm.close()
+        return articles
     }
 
     fun delete(targetArticle: Article) {
-        mRealm.executeTransactionAsync(object : Realm.Transaction {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransactionAsync(object : Realm.Transaction {
             override fun execute(realm: Realm) {
                 val article = realm.where(Article::class.java).equalTo("id", targetArticle.id).findFirst()
                 article?.deleteFromRealm()
             }
         })
+        realm.close()
     }
 
     fun search(query : String): MutableList<Article> {
-        return mRealm.where(Article::class.java).contains("title", query).findAll()
+        val realm = Realm.getDefaultInstance()
+        val searchedArticles = realm.where(Article::class.java).contains("title", query).findAll()
+        realm.close()
+        return searchedArticles
     }
 
     // 未読記事から記事を検索
     fun searchFromIsNotRead(query: String) : MutableList<Article> {
-        return mRealm.where(Article::class.java)
+        val realm = Realm.getDefaultInstance()
+        val searchedArticles =  realm.where(Article::class.java)
             .equalTo("isReadFlag", false)
             .contains("title", query)
             .findAll()
+        realm.close()
+        return searchedArticles
     }
 
     fun updateFlag(id : String) {
-        mRealm.executeTransaction {
-            val article = mRealm.where(Article::class.java).equalTo("id", id).findFirst()
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            val article = realm.where(Article::class.java).equalTo("id", id).findFirst()
             if (article != null) {
                 article.isReadFlag = true
             }
         }
+        realm.close()
     }
 
-    fun readIsNotRead() :RealmResults<Article> {
-        return mRealm.where(Article::class.java).equalTo("isReadFlag", false).findAll()
+    fun searchNotReadArticles() :RealmResults<Article> {
+        val realm = Realm.getDefaultInstance()
+        val searchedArticles = realm.where(Article::class.java).equalTo("isReadFlag", false).findAll()
+        realm.close()
+        return searchedArticles
     }
 
 }

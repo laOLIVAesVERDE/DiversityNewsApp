@@ -9,9 +9,9 @@ import io.realm.RealmConfiguration
 
 class MyApplication : MultiDexApplication() {
 
-
     override fun onCreate() {
         super.onCreate()
+        // Realmの設定
         Realm.init(this)
         Realm.setDefaultConfiguration(
             RealmConfiguration
@@ -19,5 +19,4 @@ class MyApplication : MultiDexApplication() {
                 .inMemory()
                 .build())
     }
-
 }

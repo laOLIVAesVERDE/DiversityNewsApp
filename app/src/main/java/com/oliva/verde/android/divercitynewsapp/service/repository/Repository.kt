@@ -21,9 +21,6 @@ class Repository {
             }
     }
 
-    private val realm : Realm = Realm.getDefaultInstance()
-    val stockArticleDao : StockArticleDao = StockArticleDao(realm)
-
     @Inject
     lateinit var apiService : ApiService
 
@@ -35,7 +32,11 @@ class Repository {
         return apiService.getNews(apiKey, searchWord)
     }
 
-    suspend fun getStockedArticles() : MutableList<Article> {
-        return stockArticleDao.selectAll()
+    fun getStockedArticles() : MutableList<Article> {
+        return StockArticleDao.selectAll()
+    }
+
+    fun insertArticle(targetArticle : Article) {
+        StockArticleDao.insert(targetArticle)
     }
 }
