@@ -39,4 +39,8 @@ class Repository {
     fun insertArticle(targetArticle : Article) {
         StockArticleDao.insert(targetArticle)
     }
+
+    fun deleteTargetArticle(targetArticle: Article) {
+        StockArticleDao.delete(targetArticle)
+    }
 }

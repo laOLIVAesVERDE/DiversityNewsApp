@@ -1,10 +1,27 @@
 package com.oliva.verde.android.divercitynewsapp.view.ui.fragment
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageButton
+import android.widget.PopupMenu
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
+import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
+import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class StockFragment : Fragment() {
@@ -13,6 +30,39 @@ class StockFragment : Fragment() {
     var longClickedId = -1
     var searchFilteringFlag = 0
     var isReadFilteringFlag = 0
+
+    private val stockFragmentViewModel by lazy {
+        ViewModelProvider(this).get(StockFragmentViewModel::class.java)
+    }
+
+    private lateinit var binding : FragmentStockBinding
+
+    private val articleAdapter : ArticleAdapter =
+        ArticleAdapter(object : OnItemClickCallback {
+            override fun onItemClick(article: Article) {
+                val url = article.url
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(activity!!, Uri.parse(url))
+            }
+
+            override fun onContextClick(article: Article) {
+                val button = view?.findViewById<ImageButton>(R.id.image_button)
+                // val button = ArticleAdapter.BindingHolder(NewsRowBinding()).binding.imageButton
+                val popupMenu  = PopupMenu(activity, button)
+                popupMenu.menuInflater.inflate(R.menu.context_menu_remove_from_stock, popupMenu.menu)
+
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.add_to_stock -> {
+                            CoroutineScope(Dispatchers.IO).launch { stockFragmentViewModel.deleteTargetArticle(article) }
+                        }
+                    }
+                    true
+                }
+                popupMenu.show()
+            }
+        })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,21 +73,21 @@ class StockFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_stock, container, false)
-        /**
-        articleList = RealmHelper().read()
-        val lvArticles = view.findViewById<RecyclerView>(R.id.lvArticles)
-        // LayoutManager : 各アイテムを表示形式を管理するクラス
-        val layout = LinearLayoutManager(activity) // LinearLayoutManager : 各アイテムを縦のリストで表示する
-        // リサイクラービューオブジェクトのLayoutManagerプロパティにLinearLayoutManagerを設定
-        lvArticles.layoutManager = layout // 各アイテムが縦のリストで表示されるようになる
-        // 独自定義のAdapterクラスをlayoutに紐づける
-        lvArticles.adapter = ArticleAdapter(this@StockFragment, articleList)
-        // リサイクラービューに区切り線を追加
-        val decorator = DividerItemDecoration(activity, layout.orientation)
-        lvArticles?.addItemDecoration(decorator)
-        */
-        return view
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stock, container, false)
+        binding.apply {
+            rvArticles.adapter = articleAdapter
+            rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))
+        }
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
+            articles.let {
+                articleAdapter.setArticleList(it)
+            }
+        })
     }
 
     /**

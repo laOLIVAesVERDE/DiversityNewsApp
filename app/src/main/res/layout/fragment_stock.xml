@@ -10,11 +10,11 @@
         tools:context=".view.ui.fragment.StockFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lvArticles"
-            android:scrollbars="vertical"
+            android:id="@+id/rvArticles"
+            android:paddingBottom="60dp"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </FrameLayout>
 </layout>

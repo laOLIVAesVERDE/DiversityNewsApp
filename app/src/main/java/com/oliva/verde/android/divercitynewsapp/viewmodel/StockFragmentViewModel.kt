@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
+import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import kotlinx.coroutines.launch
 
 class StockFragmentViewModel : ViewModel() {
@@ -30,6 +31,6 @@ class StockFragmentViewModel : ViewModel() {
 
     fun deleteTargetArticle(targetArticle: Article) = viewModelScope.launch {
         Log.d(LOGTAG, "deleteTargetArticle called")
-
+        repository.deleteTargetArticle(targetArticle)
     }
 }
