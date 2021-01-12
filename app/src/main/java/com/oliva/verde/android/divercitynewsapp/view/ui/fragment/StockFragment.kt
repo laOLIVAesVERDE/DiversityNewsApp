@@ -70,13 +70,12 @@ class StockFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stock, container, false)
         binding.apply {
-            stockArticles.adapter = articleAdapter
-            stockArticles.addItemDecoration(DividerItemDecoration(stockArticles.context, LinearLayoutManager.VERTICAL))
+            rvArticles.adapter = articleAdapter
+            rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))
         }
         return binding.root
     }

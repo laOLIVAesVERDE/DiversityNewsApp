@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
@@ -20,6 +21,7 @@ import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class HomeFragment : Fragment() {
