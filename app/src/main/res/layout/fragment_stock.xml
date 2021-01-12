@@ -10,7 +10,7 @@
         tools:context=".view.ui.fragment.StockFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvArticles"
+            android:id="@+id/stockArticles"
             android:paddingBottom="60dp"
             android:layout_height="match_parent"
             android:layout_width="match_parent"

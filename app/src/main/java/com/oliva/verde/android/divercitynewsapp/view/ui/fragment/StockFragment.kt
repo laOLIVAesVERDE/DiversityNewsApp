@@ -75,8 +75,8 @@ class StockFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stock, container, false)
         binding.apply {
-            rvArticles.adapter = articleAdapter
-            rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))
+            stockArticles.adapter = articleAdapter
+            stockArticles.addItemDecoration(DividerItemDecoration(stockArticles.context, LinearLayoutManager.VERTICAL))
         }
         return binding.root
     }

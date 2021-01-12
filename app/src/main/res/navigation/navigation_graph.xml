@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
     app:startDestination="@id/navi_home">
 
@@ -8,11 +10,13 @@
     <fragment
         android:id="@+id/navi_home"
         android:name="com.oliva.verde.android.divercitynewsapp.view.ui.fragment.HomeFragment"
-        android:label="@string/bottom_navigation_home_title"/>
+        android:label="@string/bottom_navigation_home_title"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navi_bookmark"
         android:name="com.oliva.verde.android.divercitynewsapp.view.ui.fragment.StockFragment"
-        android:label="@string/bottom_navigation_bookmark_title"/>
+        android:label="@string/bottom_navigation_bookmark_title"
+        tools:layout="@layout/fragment_stock"/>
 
 </navigation>
