@@ -22,13 +22,12 @@ object StockArticleDao {
                 }
             }
         })
-        realm.close()
     }
 
     fun selectAll() : MutableList<Article> {
         val realm = Realm.getDefaultInstance()
         val articles = realm.where(Article::class.java).findAll()
-        realm.close()
+
         return articles
     }
 
@@ -40,13 +39,12 @@ object StockArticleDao {
                 article?.deleteFromRealm()
             }
         })
-        realm.close()
     }
 
     fun search(query : String): MutableList<Article> {
         val realm = Realm.getDefaultInstance()
         val searchedArticles = realm.where(Article::class.java).contains("title", query).findAll()
-        realm.close()
+
         return searchedArticles
     }
 
@@ -57,7 +55,6 @@ object StockArticleDao {
             .equalTo("isReadFlag", false)
             .contains("title", query)
             .findAll()
-        realm.close()
         return searchedArticles
     }
 
@@ -69,13 +66,12 @@ object StockArticleDao {
                 article.isReadFlag = true
             }
         }
-        realm.close()
     }
 
     fun searchNotReadArticles() :RealmResults<Article> {
         val realm = Realm.getDefaultInstance()
         val searchedArticles = realm.where(Article::class.java).equalTo("isReadFlag", false).findAll()
-        realm.close()
+
         return searchedArticles
     }
 
