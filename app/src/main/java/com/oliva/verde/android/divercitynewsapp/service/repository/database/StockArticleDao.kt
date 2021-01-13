@@ -1,15 +1,36 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
+import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import io.realm.Realm
 import io.realm.RealmResults
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 
 
 object StockArticleDao {
-    fun insert(targetArticle: Article) {
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransactionAsync(object : Realm.Transaction {
+    val LOGTAG = "StockArticleDao"
+
+    suspend fun insert(targetArticle: Article) {
+        Log.d(LOGTAG, "insert")
+        withContext(Dispatchers.IO) {
+            val realm = Realm.getDefaultInstance()
+            realm.executeTransaction {
+                val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
+                article.apply {
+                    url = targetArticle.url
+                    urlToImage = targetArticle.urlToImage
+                    publishedAt = targetArticle.publishedAt
+                    title = targetArticle.title
+                    isReadFlag = false
+                }
+                realm.copyToRealm(article)
+            }
+        }
+
+        /*
+        realm.executeTransactionAsync(Realm.Transaction {
             override fun execute(realm: Realm) {
                 val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
                 article.apply {
@@ -18,27 +39,30 @@ object StockArticleDao {
                     publishedAt = targetArticle.publishedAt
                     title = targetArticle.title
                     isReadFlag = false
-                    realm.insert(article)
                 }
+                realm.copyToRealm(article)
             }
-        })
+        }
+
+         */
     }
 
-    fun selectAll() : MutableList<Article> {
+    fun selectAll() : RealmResults<Article> {
+        Log.d(LOGTAG, "selectAll")
         val realm = Realm.getDefaultInstance()
         val articles = realm.where(Article::class.java).findAll()
 
         return articles
     }
 
-    fun delete(targetArticle: Article) {
+    suspend fun delete(targetArticle: Article) {
         val realm = Realm.getDefaultInstance()
-        realm.executeTransactionAsync(object : Realm.Transaction {
-            override fun execute(realm: Realm) {
+        withContext(Dispatchers.IO) {
+            realm.executeTransaction{
                 val article = realm.where(Article::class.java).equalTo("id", targetArticle.id).findFirst()
                 article?.deleteFromRealm()
             }
-        })
+        }
     }
 
     fun search(query : String): MutableList<Article> {

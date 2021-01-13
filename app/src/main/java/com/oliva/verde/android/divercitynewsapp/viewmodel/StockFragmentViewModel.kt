@@ -26,6 +26,9 @@ class StockFragmentViewModel : ViewModel() {
     private fun getAllStockedArticles() = viewModelScope.launch {
         Log.d(LOGTAG, "getAllStockedArticles called")
         val stkList = repository.getStockedArticles()
+        stkList.forEach {
+            Log.d(LOGTAG, it.title)
+        }
         _stockArticleListLiveData.postValue(stkList)
     }
 

@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository
 
+import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerApiComponent
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
@@ -33,14 +34,16 @@ class Repository {
     }
 
     fun getStockedArticles() : MutableList<Article> {
+        Log.d(LOGTAG, "getStockedArticles")
         return StockArticleDao.selectAll()
     }
 
-    fun insertArticle(targetArticle : Article) {
+    suspend fun insertArticle(targetArticle : Article) {
+        Log.d(LOGTAG, "insertArticle")
         StockArticleDao.insert(targetArticle)
     }
 
-    fun deleteTargetArticle(targetArticle: Article) {
+    suspend fun deleteTargetArticle(targetArticle: Article) {
         StockArticleDao.delete(targetArticle)
     }
 }

@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.view.ui.fragment
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -25,6 +26,9 @@ import kotlinx.coroutines.launch
 
 
 class StockFragment : Fragment() {
+    companion object {
+        val LOGTAG = "StockFragment"
+    }
     var articleList = mutableListOf<Article>()
     var filteredList = mutableListOf<Article>()
     var longClickedId = -1
@@ -83,9 +87,10 @@ class StockFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
-            articles.let {
-                articleAdapter.setArticleList(it)
+            articles.forEach {
+                Log.d(LOGTAG, it.title)
             }
+            articleAdapter.setArticleList(articles)
         })
     }
 
