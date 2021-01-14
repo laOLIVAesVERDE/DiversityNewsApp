@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
@@ -23,6 +24,7 @@ import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class StockFragment : Fragment() {
@@ -87,10 +89,14 @@ class StockFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
-            articles.forEach {
-                Log.d(LOGTAG, it.title)
+            stockFragmentViewModel.viewModelScope.launch {
+                withContext(Dispatchers.Main) {
+                    articles.forEach {
+                        Log.d(LOGTAG, it.title)
+                    }
+                    articleAdapter.setArticleList(articles)
+                }
             }
-            articleAdapter.setArticleList(articles)
         })
     }
 

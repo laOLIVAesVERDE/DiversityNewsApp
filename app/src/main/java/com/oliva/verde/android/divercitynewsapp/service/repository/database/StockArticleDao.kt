@@ -14,20 +14,19 @@ object StockArticleDao {
 
     suspend fun insert(targetArticle: Article) {
         Log.d(LOGTAG, "insert")
-        withContext(Dispatchers.IO) {
-            val realm = Realm.getDefaultInstance()
-            realm.executeTransaction {
-                val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
-                article.apply {
-                    url = targetArticle.url
-                    urlToImage = targetArticle.urlToImage
-                    publishedAt = targetArticle.publishedAt
-                    title = targetArticle.title
-                    isReadFlag = false
-                }
-                realm.copyToRealm(article)
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
+            article.apply {
+                url = targetArticle.url
+                urlToImage = targetArticle.urlToImage
+                publishedAt = targetArticle.publishedAt
+                title = targetArticle.title
+                isReadFlag = false
             }
+            realm.copyToRealm(article)
         }
+
 
         /*
         realm.executeTransactionAsync(Realm.Transaction {

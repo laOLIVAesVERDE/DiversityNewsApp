@@ -23,7 +23,7 @@ class StockFragmentViewModel : ViewModel() {
         getAllStockedArticles()
     }
 
-    private fun getAllStockedArticles() = viewModelScope.launch {
+    private fun getAllStockedArticles() {
         Log.d(LOGTAG, "getAllStockedArticles called")
         val stkList = repository.getStockedArticles()
         stkList.forEach {
@@ -32,7 +32,7 @@ class StockFragmentViewModel : ViewModel() {
         _stockArticleListLiveData.postValue(stkList)
     }
 
-    fun deleteTargetArticle(targetArticle: Article) = viewModelScope.launch {
+    suspend fun deleteTargetArticle(targetArticle: Article) {
         Log.d(LOGTAG, "deleteTargetArticle called")
         repository.deleteTargetArticle(targetArticle)
     }
