@@ -13,10 +13,6 @@ class MyApplication : MultiDexApplication() {
         super.onCreate()
         // Realmの設定
         Realm.init(this)
-        Realm.setDefaultConfiguration(
-            RealmConfiguration
-                .Builder()
-                .inMemory()
-                .build())
+
     }
 }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
+import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
@@ -115,12 +116,13 @@ class StockFragment : Fragment() {
     }
     **/
 
-    /**
+
     override fun onDestroy() {
-        RealmHelper().mRealm.close()
+        StockArticleDao.realm.close()
         super.onDestroy()
     }
 
+    /*
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu_for_stock_fragment, menu)
