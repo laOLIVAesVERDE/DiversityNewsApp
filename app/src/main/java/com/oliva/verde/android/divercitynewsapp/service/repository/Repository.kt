@@ -38,7 +38,7 @@ class Repository {
         return StockArticleDao.selectAll()
     }
 
-    suspend fun insertArticle(targetArticle : Article) {
+    fun insertArticle(targetArticle : Article) {
         Log.d(LOGTAG, "insertArticle")
         StockArticleDao.insert(targetArticle)
     }

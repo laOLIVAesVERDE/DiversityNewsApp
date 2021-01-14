@@ -12,7 +12,7 @@ import java.util.*
 object StockArticleDao {
     val LOGTAG = "StockArticleDao"
 
-    suspend fun insert(targetArticle: Article) {
+    fun insert(targetArticle: Article) {
         Log.d(LOGTAG, "insert")
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
