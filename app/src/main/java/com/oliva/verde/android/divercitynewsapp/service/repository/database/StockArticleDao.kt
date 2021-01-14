@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.util.*
 
 
-object StockArticleDao {
+class StockArticleDao(realm : Realm) {
     val LOGTAG = "StockArticleDao"
 
     fun insert(targetArticle: Article) {
@@ -25,8 +25,8 @@ object StockArticleDao {
                 isReadFlag = false
             }
             realm.copyToRealm(article)
+            realm.close()
         }
-        realm.close()
 
 
         /*
