@@ -1,6 +1,10 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
 import android.util.Log
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -9,8 +13,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
+@Dao
+interface StockArticleDao {
+    @Query("SELECT * FROM Article")
+    suspend fun findAll() : List<Article>
 
-object StockArticleDao {
+    /**
+     * レコードが存在したら置き換え、存在しなければインサート
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun add(targetArticle: Article)
+    /*
     val LOGTAG = "StockArticleDao"
     var realm: Realm = Realm.getInstance(
         RealmConfiguration.Builder()
@@ -20,7 +33,6 @@ object StockArticleDao {
 
     fun insert(targetArticle: Article) {
         Log.d(LOGTAG, "insert")
-        realm = Realm.getDefaultInstance()
         realm.executeTransaction {
             val article = realm.createObject(Article::class.java, UUID.randomUUID().toString())
             article.apply {
@@ -54,13 +66,11 @@ object StockArticleDao {
 
     fun selectAll() : RealmResults<Article> {
         Log.d(LOGTAG, "selectAll")
-        realm = Realm.getDefaultInstance()
         val articles = realm.where(Article::class.java).findAll()
         return articles
     }
 
     suspend fun delete(targetArticle: Article) {
-        realm = Realm.getDefaultInstance()
         withContext(Dispatchers.IO) {
             realm.executeTransaction{
                 val article = realm.where(Article::class.java).equalTo("id", targetArticle.id).findFirst()
@@ -70,14 +80,12 @@ object StockArticleDao {
     }
 
     fun search(query : String): MutableList<Article> {
-        realm = Realm.getDefaultInstance()
         val searchedArticles = realm.where(Article::class.java).contains("title", query).findAll()
         return searchedArticles
     }
 
     // 未読記事から記事を検索
     fun searchFromIsNotRead(query: String) : MutableList<Article> {
-        realm = Realm.getDefaultInstance()
         val searchedArticles =  realm.where(Article::class.java)
             .equalTo("isReadFlag", false)
             .contains("title", query)
@@ -86,7 +94,6 @@ object StockArticleDao {
     }
 
     fun updateFlag(id : String) {
-        realm = Realm.getDefaultInstance()
         realm.executeTransaction {
             val article = realm.where(Article::class.java).equalTo("id", id).findFirst()
             if (article != null) {
@@ -96,9 +103,10 @@ object StockArticleDao {
     }
 
     fun searchNotReadArticles() :RealmResults<Article> {
-        realm = Realm.getDefaultInstance()
         val searchedArticles = realm.where(Article::class.java).equalTo("isReadFlag", false).findAll()
         return searchedArticles
     }
+
+     */
 
 }

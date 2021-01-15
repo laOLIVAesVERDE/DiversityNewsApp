@@ -103,7 +103,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        StockArticleDao.realm.close()
+        // StockArticleDao.realm.close()
         super.onDestroy()
     }
 
