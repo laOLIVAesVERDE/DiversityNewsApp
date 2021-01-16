@@ -14,11 +14,12 @@ import javax.inject.Singleton
 class DatabaseModule {
 
     @Provides
-    fun provideDatabase(application: Application) : RoomDatabase {
-        return Room.databaseBuilder(application.applicationContext, RoomDatabase::class.java, "stockedArticle")
+    fun provideDatabase(mApplication: Application) : Database {
+        return Room.databaseBuilder(mApplication.applicationContext, Database::class.java, "stockedArticle")
             .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
             .build()
     }
+
 
     @Provides
     fun provideStockArticleDao(database: Database) : StockArticleDao {

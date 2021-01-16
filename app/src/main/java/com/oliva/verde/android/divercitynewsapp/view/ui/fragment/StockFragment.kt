@@ -62,7 +62,7 @@ class StockFragment : Fragment() {
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.add_to_stock -> {
-                            CoroutineScope(Dispatchers.IO).launch { stockFragmentViewModel.deleteTargetArticle(article) }
+                            // CoroutineScope(Dispatchers.IO).launch { stockFragmentViewModel.deleteTargetArticle(article) }
                         }
                     }
                     true
