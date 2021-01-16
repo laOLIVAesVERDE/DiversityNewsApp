@@ -7,6 +7,7 @@ import java.util.*
 @Entity
 data class Article(
     @PrimaryKey(autoGenerate = true)
+    val id : Long,
     var url : String = "url",
     var urlToImage : String? = "urlToImage",
     var publishedAt : String = "publishedAt",
