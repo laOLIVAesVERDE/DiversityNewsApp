@@ -44,7 +44,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun insertTargetArticle(article: Article) {
+    suspend fun insertTargetArticle(article: Article) {
         repository.insertArticle(article)
     }
 }

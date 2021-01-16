@@ -16,7 +16,7 @@ import java.util.*
 @Dao
 interface StockArticleDao {
     @Query("SELECT * FROM Article")
-    suspend fun findAll() : List<Article>
+    suspend fun findAll() : MutableList<Article>
 
     /**
      * レコードが存在したら置き換え、存在しなければインサート

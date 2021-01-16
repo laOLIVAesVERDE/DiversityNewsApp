@@ -25,6 +25,9 @@ class Repository {
     @Inject
     lateinit var apiService : ApiService
 
+    @Inject
+    lateinit var stockArticleDao: StockArticleDao
+
     init {
         DaggerApiComponent.create().inject(this)
     }
@@ -33,17 +36,21 @@ class Repository {
         return apiService.getNews(apiKey, searchWord)
     }
 
-    fun getStockedArticles() : MutableList<Article> {
+
+    suspend fun getStockedArticles() : MutableList<Article> {
         Log.d(LOGTAG, "getStockedArticles")
-        return StockArticleDao.selectAll()
+        return stockArticleDao.findAll()
     }
 
-    fun insertArticle(targetArticle : Article) {
+    suspend fun insertArticle(targetArticle : Article) {
         Log.d(LOGTAG, "insertArticle")
-        StockArticleDao.insert(targetArticle)
+        stockArticleDao.add(targetArticle)
     }
 
+    /*
     suspend fun deleteTargetArticle(targetArticle: Article) {
         StockArticleDao.delete(targetArticle)
     }
+
+     */
 }

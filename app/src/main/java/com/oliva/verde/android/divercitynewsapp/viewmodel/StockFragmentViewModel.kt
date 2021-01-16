@@ -20,10 +20,12 @@ class StockFragmentViewModel : ViewModel() {
     val stockArticleListLiveData : LiveData<List<Article>> = _stockArticleListLiveData
 
     init {
-        getAllStockedArticles()
+        viewModelScope.launch {
+            getAllStockedArticles()
+        }
     }
 
-    private fun getAllStockedArticles() {
+    private suspend fun getAllStockedArticles() {
         Log.d(LOGTAG, "getAllStockedArticles called")
         val stkList = repository.getStockedArticles()
         stkList.forEach {
@@ -32,8 +34,11 @@ class StockFragmentViewModel : ViewModel() {
         _stockArticleListLiveData.postValue(stkList)
     }
 
+    /*
     suspend fun deleteTargetArticle(targetArticle: Article) {
         Log.d(LOGTAG, "deleteTargetArticle called")
         repository.deleteTargetArticle(targetArticle)
     }
+
+     */
 }
