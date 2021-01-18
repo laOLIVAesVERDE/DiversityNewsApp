@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.service.repository
 
 import android.app.Application
 import android.util.Log
+import com.oliva.verde.android.divercitynewsapp.MyApplication
 import com.oliva.verde.android.divercitynewsapp.injection.ApiModule
 import com.oliva.verde.android.divercitynewsapp.injection.AppComponentModule
 import com.oliva.verde.android.divercitynewsapp.injection.DaggerAppComponent
@@ -33,10 +34,7 @@ class Repository {
     lateinit var stockArticleDao: StockArticleDao
 
     init {
-        DaggerAppComponent
-            .builder()
-            .appComponentModule(AppComponentModule(mApplication = Application()))
-            .build()
+        MyApplication.appComponent.inject(this)
     }
 
     suspend fun getNewsArticles(apiKey: String, searchWord: String): Response<ResponseData> {
