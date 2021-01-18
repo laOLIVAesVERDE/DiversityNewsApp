@@ -9,6 +9,7 @@ import com.oliva.verde.android.divercitynewsapp.injection.DaggerAppComponent
 import com.oliva.verde.android.divercitynewsapp.injection.DatabaseModule
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
+import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.service.repository.api.ApiService
 import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import io.realm.Realm
@@ -42,12 +43,12 @@ class Repository {
     }
 
 
-    suspend fun getStockedArticles() : MutableList<Article> {
+    suspend fun getStockedArticles() : MutableList<StockArticle> {
         Log.d(LOGTAG, "getStockedArticles")
         return stockArticleDao.findAll()
     }
 
-    suspend fun insertArticle(targetArticle : Article) {
+    suspend fun insertArticle(targetArticle : StockArticle) {
         Log.d(LOGTAG, "insertArticle")
         stockArticleDao.add(targetArticle)
     }

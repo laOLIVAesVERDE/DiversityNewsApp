@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
@@ -15,14 +16,14 @@ import java.util.*
 
 @Dao
 interface StockArticleDao {
-    @Query("SELECT * FROM Article")
-    suspend fun findAll() : MutableList<Article>
+    @Query("SELECT * FROM StockArticle")
+    suspend fun findAll() : MutableList<StockArticle>
 
     /**
      * レコードが存在したら置き換え、存在しなければインサート
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun add(targetArticle: Article)
+    suspend fun add(targetArticle: StockArticle)
     /*
     val LOGTAG = "StockArticleDao"
     var realm: Realm = Realm.getInstance(

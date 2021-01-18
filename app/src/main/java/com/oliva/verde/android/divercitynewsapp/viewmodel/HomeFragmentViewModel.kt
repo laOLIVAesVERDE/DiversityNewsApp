@@ -7,6 +7,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.*
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
+import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
 import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import io.realm.Realm
@@ -44,7 +45,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    suspend fun insertTargetArticle(article: Article) {
-        repository.insertArticle(article)
+    suspend fun insertTargetArticle(stockArticle: StockArticle) {
+        repository.insertArticle(stockArticle)
     }
 }

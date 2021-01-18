@@ -89,6 +89,7 @@ class StockFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        /*
         stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             stockFragmentViewModel.viewModelScope.launch {
                 withContext(Dispatchers.Main) {
@@ -99,6 +100,8 @@ class StockFragment : Fragment() {
                 }
             }
         })
+
+         */
     }
 
     /**

@@ -19,6 +19,7 @@ import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
+import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
@@ -57,9 +58,17 @@ class HomeFragment : Fragment() {
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.add_to_stock -> {
-                            homeFragmentViewModel.viewModelScope.launch {
+                            lifecycleScope.launch {
                                 withContext(Dispatchers.IO) {
-                                    homeFragmentViewModel.insertTargetArticle(article)
+                                    val targetStockArticle = StockArticle(
+                                        id = 0,
+                                        url = article.url,
+                                        urlToImage = article.urlToImage,
+                                        publishedAt = article.publishedAt,
+                                        title = article.title,
+                                        isReadFlag = false
+                                    )
+                                    homeFragmentViewModel.insertTargetArticle(targetStockArticle)
                                 }
                             }
                         }
