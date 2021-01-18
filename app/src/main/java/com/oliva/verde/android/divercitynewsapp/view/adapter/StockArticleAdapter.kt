@@ -10,41 +10,43 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
+import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 
-class StockArticleAdapter {
-    private var articleList : List<Article>? = null
+class StockArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<StockArticleAdapter.BindingHolder>() {
+    private var mStockArticleList : List<StockArticle>? = null
 
 
-    fun setArticleList(articleList : List<Article>) {
+    fun setArticleList(stockArticleList : List<StockArticle>) {
 
-        if (this.articleList == null) {
-            this.articleList = articleList
-            notifyItemRangeInserted(0, articleList.size)
+        if (this.mStockArticleList == null) {
+            this.mStockArticleList = stockArticleList
+            notifyItemRangeInserted(0, stockArticleList.size)
         } else {
             val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
                 override fun getOldListSize(): Int {
-                    return  requireNotNull(this@ArticleAdapter.articleList).size
+                    return  requireNotNull(this@StockArticleAdapter.mStockArticleList).size
                 }
 
                 override fun getNewListSize(): Int {
-                    return articleList.size
+                    return stockArticleList.size
                 }
 
                 override fun areContentsTheSame(
                     oldItemPosition: Int,
                     newItemPosition: Int
                 ): Boolean {
-                    val oldList = this@ArticleAdapter.articleList
-                    return oldList?.get(oldItemPosition)?.title == articleList[newItemPosition].title
+                    val oldList = this@StockArticleAdapter.mStockArticleList
+                    return oldList?.get(oldItemPosition)?.title == stockArticleList[newItemPosition].title
                 }
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    val newArticle = articleList[newItemPosition]
-                    val oldArticle = articleList[oldItemPosition]
+                    val newArticle = stockArticleList[newItemPosition]
+                    val oldArticle = stockArticleList[oldItemPosition]
                     return newArticle.title == oldArticle.title && newArticle.url == oldArticle.url
                 }
             })
-            this.articleList = articleList
+            this.mStockArticleList = stockArticleList
             result.dispatchUpdatesTo(this)
         }
     }
@@ -62,12 +64,12 @@ class StockArticleAdapter {
 
     // ビューホルダ内の各画面部品にデータを割り当てる
     override fun onBindViewHolder(holder: BindingHolder, position: Int) {
-        holder.binding.article = articleList?.get(position)
+        holder.binding.article = mStockArticleList?.get(position)
         holder.binding.executePendingBindings()
     }
 
     override fun getItemCount(): Int {
-        return articleList?.size ?: 0
+        return mStockArticleList?.size ?: 0
     }
 
     open class BindingHolder(var binding: NewsRowBinding) : RecyclerView.ViewHolder(binding.root), View.OnCreateContextMenuListener {
