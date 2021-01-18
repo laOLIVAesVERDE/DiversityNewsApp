@@ -11,18 +11,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
-import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
-import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.view.adapter.StockArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -44,8 +41,8 @@ class StockFragment : Fragment() {
 
     private lateinit var binding : FragmentStockBinding
 
-    private val articleAdapter : ArticleAdapter =
-        ArticleAdapter(object : OnItemClickCallback {
+    private val stockArticleAdapter : StockArticleAdapter =
+        StockArticleAdapter(object : OnItemClickCallback {
             override fun onItemClick(article: Article) {
                 val url = article.url
                 val builder = CustomTabsIntent.Builder()
@@ -81,7 +78,7 @@ class StockFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stock, container, false)
         binding.apply {
-            rvArticles.adapter = articleAdapter
+            rvArticles.adapter = stockArticleAdapter
             rvArticles.addItemDecoration(DividerItemDecoration(rvArticles.context, LinearLayoutManager.VERTICAL))
         }
         return binding.root
@@ -89,19 +86,16 @@ class StockFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        /*
-        stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
+        stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { stockArticles ->
             stockFragmentViewModel.viewModelScope.launch {
                 withContext(Dispatchers.Main) {
-                    articles.forEach {
+                    stockArticles.forEach {
                         Log.d(LOGTAG, it.title)
                     }
-                    articleAdapter.setArticleList(articles)
+                    stockArticleAdapter.setArticleList(stockArticles)
                 }
             }
         })
-
-         */
     }
 
     /**

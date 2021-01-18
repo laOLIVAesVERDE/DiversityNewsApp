@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="stockArticle"
+            type="com.oliva.verde.android.divercitynewsapp.service.model.StockArticle" />
+        <variable
+            name="onItemClickCallback"
+            type="com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/original_LinerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> onItemClickCallback.onItemClick(stockArticle)}"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_row"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            app:imageUrl="@{stockArticle.urlToImage}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@{stockArticle.title}" />
+
+                <TextView
+                    android:id="@+id/publish_date_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@{stockArticle.publishedAt.substring(0, 10)}" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:background="?android:attr/selectableItemBackground"
+                android:id="@+id/image_button"
+                android:src="@drawable/ic_pending_white_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:rotation="90"
+                android:layout_marginBottom="10dp"
+                android:onClick="@{() -> onItemClickCallback.onContextClick(stockArticle)}"
+                app:tint="@color/pendingIcon" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

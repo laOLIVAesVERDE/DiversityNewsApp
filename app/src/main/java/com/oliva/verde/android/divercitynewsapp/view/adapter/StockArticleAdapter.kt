@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
+import com.oliva.verde.android.divercitynewsapp.databinding.StockNewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
@@ -56,7 +57,7 @@ class StockArticleAdapter(private val onItemClickCallback: OnItemClickCallback) 
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding =
             DataBindingUtil.inflate(layoutInflater,
-                R.layout.news_row, parent, false) as NewsRowBinding
+                R.layout.stock_news_row, parent, false) as StockNewsRowBinding
         binding.onItemClickCallback = onItemClickCallback
         // 生成したビューホルダをリターンする
         return BindingHolder(binding)
@@ -64,7 +65,7 @@ class StockArticleAdapter(private val onItemClickCallback: OnItemClickCallback) 
 
     // ビューホルダ内の各画面部品にデータを割り当てる
     override fun onBindViewHolder(holder: BindingHolder, position: Int) {
-        holder.binding.article = mStockArticleList?.get(position)
+        holder.binding.stockArticle = mStockArticleList?.get(position)
         holder.binding.executePendingBindings()
     }
 
@@ -72,7 +73,7 @@ class StockArticleAdapter(private val onItemClickCallback: OnItemClickCallback) 
         return mStockArticleList?.size ?: 0
     }
 
-    open class BindingHolder(var binding: NewsRowBinding) : RecyclerView.ViewHolder(binding.root), View.OnCreateContextMenuListener {
+    open class BindingHolder(var binding: StockNewsRowBinding) : RecyclerView.ViewHolder(binding.root), View.OnCreateContextMenuListener {
         override fun onCreateContextMenu(
             menu: ContextMenu?,
             v: View?,
