@@ -22,6 +22,7 @@ import com.oliva.verde.android.divercitynewsapp.view.adapter.StockArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnStockArticleClickCallBack
 import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -100,14 +101,20 @@ class StockFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Log.d(LOGTAG, "onActivityCreated")
         stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { stockArticles ->
-            stockFragmentViewModel.viewModelScope.launch {
-                stockArticles.forEach {
-                    Log.d(LOGTAG, it.title)
-                }
-                stockArticleAdapter.setArticleList(stockArticles)
+            stockArticles.forEach {
+                Log.d(LOGTAG, it.title)
             }
+            stockArticleAdapter.setArticleList(stockArticles)
+            getAllStockedArticles()
         })
+    }
+
+    private fun getAllStockedArticles() {
+        CoroutineScope(Dispatchers.IO).launch {
+            stockFragmentViewModel.getAllStockedArticles()
+        }
     }
 
     /**

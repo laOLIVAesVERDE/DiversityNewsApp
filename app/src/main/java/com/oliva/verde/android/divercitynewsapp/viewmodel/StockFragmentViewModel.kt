@@ -9,7 +9,9 @@ import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
 import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StockFragmentViewModel : ViewModel() {
     companion object {
@@ -26,7 +28,7 @@ class StockFragmentViewModel : ViewModel() {
         }
     }
 
-    private suspend fun getAllStockedArticles() {
+    suspend fun getAllStockedArticles() {
         Log.d(LOGTAG, "getAllStockedArticles called")
         val stkList = repository.getStockedArticles()
         stkList.forEach {
