@@ -37,6 +37,10 @@ class StockFragmentViewModel : ViewModel() {
         _stockArticleListLiveData.postValue(stkList)
     }
 
+    suspend fun deleteTargetArticle(stockArticle: StockArticle) {
+        repository.deleteStockArticle(stockArticle)
+    }
+
     /*
     suspend fun deleteTargetArticle(targetArticle: Article) {
         Log.d(LOGTAG, "deleteTargetArticle called")

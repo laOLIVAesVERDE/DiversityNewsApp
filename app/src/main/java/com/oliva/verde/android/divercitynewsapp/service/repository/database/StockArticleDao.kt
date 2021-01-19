@@ -1,10 +1,7 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
 import android.util.Log
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import io.realm.Realm
@@ -24,6 +21,9 @@ interface StockArticleDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(targetArticle: StockArticle)
+
+    @Delete
+    suspend fun delete(targetArticle: StockArticle)
     /*
     val LOGTAG = "StockArticleDao"
     var realm: Realm = Realm.getInstance(

@@ -53,6 +53,11 @@ class Repository {
         stockArticleDao.add(targetArticle)
     }
 
+    suspend fun deleteStockArticle(targetArticle: StockArticle) {
+        Log.d(LOGTAG, "deleteArticle")
+        stockArticleDao.delete(targetArticle)
+    }
+
     /*
     suspend fun deleteTargetArticle(targetArticle: Article) {
         StockArticleDao.delete(targetArticle)

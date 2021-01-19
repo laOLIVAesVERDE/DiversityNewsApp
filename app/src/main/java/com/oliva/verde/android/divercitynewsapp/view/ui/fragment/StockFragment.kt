@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,11 +48,39 @@ class StockFragment : Fragment() {
     private val stockArticleAdapter : StockArticleAdapter =
         StockArticleAdapter(object : OnStockArticleClickCallBack {
             override fun onItemClick(stockArticle: StockArticle) {
-                TODO("Not yet implemented")
+                val url = stockArticle.url
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(activity!!, Uri.parse(url))
             }
 
             override fun onContextClick(stockArticle: StockArticle) {
-                TODO("Not yet implemented")
+                val button = view?.findViewById<ImageButton>(R.id.image_button)
+                // val button = ArticleAdapter.BindingHolder(NewsRowBinding()).binding.imageButton
+                val popupMenu  = PopupMenu(activity, button)
+                popupMenu.menuInflater.inflate(R.menu.context_menu_remove_from_stock, popupMenu.menu)
+
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.delete_from_stock -> {
+                            lifecycleScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    val targetStockArticle = StockArticle(
+                                        id = 0,
+                                        url = stockArticle.url,
+                                        urlToImage = stockArticle.urlToImage,
+                                        publishedAt = stockArticle.publishedAt,
+                                        title = stockArticle.title,
+                                        isReadFlag = false
+                                    )
+                                    stockFragmentViewModel.deleteTargetArticle(targetStockArticle)
+                                }
+                            }
+                        }
+                    }
+                    true
+                }
+                popupMenu.show()
             }
         })
         /*
