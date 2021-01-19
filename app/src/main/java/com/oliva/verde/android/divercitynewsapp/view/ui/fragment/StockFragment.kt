@@ -17,8 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
+import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.view.adapter.StockArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import com.oliva.verde.android.divercitynewsapp.view.callback.OnStockArticleClickCallBack
 import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,9 +44,19 @@ class StockFragment : Fragment() {
     private lateinit var binding : FragmentStockBinding
 
     private val stockArticleAdapter : StockArticleAdapter =
-        StockArticleAdapter(object : OnItemClickCallback {
-            override fun onItemClick(article: Article) {
-                val url = article.url
+        StockArticleAdapter(object : OnStockArticleClickCallBack {
+            override fun onItemClick(stockArticle: StockArticle) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onContextClick(stockArticle: StockArticle) {
+                TODO("Not yet implemented")
+            }
+        })
+        /*
+        StockArticleAdapter(object : OnStockArticleClickCallBack {
+            override fun onItemClick(stockArticle: StockArticle) {
+                val url = stockArticle.url
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(activity!!, Uri.parse(url))
@@ -68,6 +80,8 @@ class StockFragment : Fragment() {
             }
         })
 
+         */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -88,12 +102,10 @@ class StockFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         stockFragmentViewModel.stockArticleListLiveData.observe(viewLifecycleOwner, Observer { stockArticles ->
             stockFragmentViewModel.viewModelScope.launch {
-                withContext(Dispatchers.Main) {
-                    stockArticles.forEach {
-                        Log.d(LOGTAG, it.title)
-                    }
-                    stockArticleAdapter.setArticleList(stockArticles)
+                stockArticles.forEach {
+                    Log.d(LOGTAG, it.title)
                 }
+                stockArticleAdapter.setArticleList(stockArticles)
             }
         })
     }

@@ -13,8 +13,9 @@ import com.oliva.verde.android.divercitynewsapp.databinding.StockNewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import com.oliva.verde.android.divercitynewsapp.view.callback.OnStockArticleClickCallBack
 
-class StockArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<StockArticleAdapter.BindingHolder>() {
+class StockArticleAdapter(private val onStockArticleClickCallBack: OnStockArticleClickCallBack) : RecyclerView.Adapter<StockArticleAdapter.BindingHolder>() {
     private var mStockArticleList : List<StockArticle>? = null
 
 
@@ -58,7 +59,7 @@ class StockArticleAdapter(private val onItemClickCallback: OnItemClickCallback) 
         val binding =
             DataBindingUtil.inflate(layoutInflater,
                 R.layout.stock_news_row, parent, false) as StockNewsRowBinding
-        binding.onItemClickCallback = onItemClickCallback
+        binding.onStockArticleClickCallBack = onStockArticleClickCallBack
         // 生成したビューホルダをリターンする
         return BindingHolder(binding)
     }
