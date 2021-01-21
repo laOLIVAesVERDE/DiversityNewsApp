@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
     private val articleAdapter : ArticleAdapter =
         ArticleAdapter(object : OnItemClickCallback {
             override fun onItemClick(article: Article) {
+                article as Article.ResponseArticle
                 val url = article.url
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
@@ -50,6 +51,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onContextClick(article: Article) {
+                article as Article.ResponseArticle
                 val button = view?.findViewById<ImageButton>(R.id.image_button)
                 // val button = ArticleAdapter.BindingHolder(NewsRowBinding()).binding.imageButton
                 val popupMenu  = PopupMenu(activity, button)
@@ -77,7 +79,7 @@ class HomeFragment : Fragment() {
                 }
                 popupMenu.show()
             }
-    })
+        })
 
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
