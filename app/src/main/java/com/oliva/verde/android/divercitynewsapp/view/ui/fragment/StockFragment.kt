@@ -12,16 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
 import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
-import com.oliva.verde.android.divercitynewsapp.view.adapter.StockArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
-import com.oliva.verde.android.divercitynewsapp.view.callback.OnStockArticleClickCallBack
 import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,16 +43,18 @@ class StockFragment : Fragment() {
 
     private lateinit var binding : FragmentStockBinding
 
-    private val stockArticleAdapter : StockArticleAdapter =
-        StockArticleAdapter(object : OnStockArticleClickCallBack {
-            override fun onItemClick(stockArticle: StockArticle) {
-                val url = stockArticle.url
+    private val stockArticleAdapter : ArticleAdapter =
+        ArticleAdapter(object : OnItemClickCallback {
+            override fun onItemClick(article: Article) {
+                article as Article.StockArticle
+                val url = article.url
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(activity!!, Uri.parse(url))
             }
 
-            override fun onContextClick(stockArticle: StockArticle) {
+            override fun onContextClick(article: Article) {
+                article as Article.StockArticle
                 val button = view?.findViewById<ImageButton>(R.id.image_button)
                 // val button = ArticleAdapter.BindingHolder(NewsRowBinding()).binding.imageButton
                 val popupMenu  = PopupMenu(activity, button)
@@ -67,10 +67,10 @@ class StockFragment : Fragment() {
                                 withContext(Dispatchers.IO) {
                                     val targetStockArticle = StockArticle(
                                         id = 0,
-                                        url = stockArticle.url,
-                                        urlToImage = stockArticle.urlToImage,
-                                        publishedAt = stockArticle.publishedAt,
-                                        title = stockArticle.title,
+                                        url = article.url,
+                                        urlToImage = article.urlToImage,
+                                        publishedAt = article.publishedAt,
+                                        title = article.title,
                                         isReadFlag = false
                                     )
                                     stockFragmentViewModel.deleteTargetArticle(targetStockArticle)
