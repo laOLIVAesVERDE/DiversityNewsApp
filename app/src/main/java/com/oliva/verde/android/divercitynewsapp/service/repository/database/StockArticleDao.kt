@@ -1,29 +1,21 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
-import android.util.Log
 import androidx.room.*
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
-import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmResults
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.*
 
 @Dao
 interface StockArticleDao {
     @Query("SELECT * FROM StockArticle")
-    suspend fun findAll() : MutableList<StockArticle>
+    suspend fun findAll() : MutableList<Article.StockArticle>
 
     /**
      * レコードが存在したら置き換え、存在しなければインサート
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun add(targetArticle: StockArticle)
+    suspend fun add(targetArticle: Article.StockArticle)
 
     @Delete
-    suspend fun delete(targetArticle: StockArticle)
+    suspend fun delete(targetArticle: Article.StockArticle)
     /*
     val LOGTAG = "StockArticleDao"
     var realm: Realm = Realm.getInstance(

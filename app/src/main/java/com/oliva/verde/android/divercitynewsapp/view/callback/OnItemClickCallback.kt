@@ -4,7 +4,7 @@ import android.widget.ImageButton
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 
 interface OnItemClickCallback {
-    fun onItemClick(article: Article)
-    fun onContextClick(article: Article)
+    fun <T> onItemClick(t : T)
+    fun <T> onContextClick(t : T)
 }
 

@@ -1,17 +1,11 @@
 package com.oliva.verde.android.divercitynewsapp.viewmodel
 
 import android.app.Application
-import android.net.Uri
 import android.util.Log
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.*
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
-import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
-import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
-import io.realm.Realm
-import io.realm.RealmResults
 import kotlinx.coroutines.launch
 
 
@@ -21,8 +15,8 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private val repository = Repository.instance
-    private var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
-    val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
+    private var _responseArticleListLiveData : MutableLiveData<List<Article.ResponseArticle>> = MutableLiveData()
+    val responseArticleListLiveData : LiveData<List<Article.ResponseArticle>> = _responseArticleListLiveData
 
     init {
         loadArticles()
@@ -41,11 +35,11 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
             R.string.api_key
         ), getApplication<Application>().getString(R.string.search_word))
         if (response.isSuccessful) {
-            _articleListLiveData.postValue(response.body()?.articles)
+            _responseArticleListLiveData.postValue(response.body()?.articles)
         }
     }
 
-    suspend fun insertTargetArticle(stockArticle: StockArticle) {
+    suspend fun insertTargetArticle(stockArticle: Article.StockArticle) {
         repository.insertArticle(stockArticle)
     }
 

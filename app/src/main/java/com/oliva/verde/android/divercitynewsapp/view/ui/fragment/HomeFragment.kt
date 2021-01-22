@@ -11,22 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
-import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
-import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -42,14 +37,16 @@ class HomeFragment : Fragment() {
 
     private val articleAdapter : ArticleAdapter =
         ArticleAdapter(object : OnItemClickCallback {
-            override fun onItemClick(article: Article) {
+            override fun <T> onItemClick(t: T) {
+                val article = t as Article.ResponseArticle
                 val url = article.url
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(activity!!, Uri.parse(url))
             }
 
-            override fun onContextClick(article: Article) {
+            override fun <T> onContextClick(t: T) {
+                val article = t as Article.ResponseArticle
                 val button = view?.findViewById<ImageButton>(R.id.image_button)
                 // val button = ArticleAdapter.BindingHolder(NewsRowBinding()).binding.imageButton
                 val popupMenu  = PopupMenu(activity, button)
@@ -60,7 +57,7 @@ class HomeFragment : Fragment() {
                         R.id.add_to_stock -> {
                             lifecycleScope.launch {
                                 withContext(Dispatchers.IO) {
-                                    val targetStockArticle = StockArticle(
+                                    val targetStockArticle = Article.StockArticle(
                                         id = 0,
                                         url = article.url,
                                         urlToImage = article.urlToImage,
@@ -77,7 +74,7 @@ class HomeFragment : Fragment() {
                 }
                 popupMenu.show()
             }
-    })
+        })
 
     var copiedArticleList = mutableListOf<Article>()
     var longClickedId = -1
@@ -104,7 +101,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
+        homeFragmentViewModel.responseArticleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             articles.let {
                 articleAdapter.setArticleList(it)
             }

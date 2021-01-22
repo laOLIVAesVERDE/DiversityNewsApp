@@ -6,12 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
-import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
 import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
-import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class StockFragmentViewModel : ViewModel() {
     companion object {
@@ -19,8 +15,8 @@ class StockFragmentViewModel : ViewModel() {
     }
 
     private val repository = Repository.instance
-    private var _stockArticleListLiveData : MutableLiveData<List<StockArticle>> = MutableLiveData()
-    val stockArticleListLiveData : LiveData<List<StockArticle>> = _stockArticleListLiveData
+    private var _stockArticleListLiveData : MutableLiveData<List<Article.StockArticle>> = MutableLiveData()
+    val stockArticleListLiveData : LiveData<List<Article.StockArticle>> = _stockArticleListLiveData
 
     init {
         viewModelScope.launch {
@@ -37,7 +33,7 @@ class StockFragmentViewModel : ViewModel() {
         _stockArticleListLiveData.postValue(stkList)
     }
 
-    suspend fun deleteTargetArticle(stockArticle: StockArticle) {
+    suspend fun deleteTargetArticle(stockArticle: Article.StockArticle) {
         repository.deleteStockArticle(stockArticle)
     }
 

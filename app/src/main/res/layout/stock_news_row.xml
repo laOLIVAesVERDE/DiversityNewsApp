@@ -7,20 +7,20 @@
     <data>
         <variable
             name="stockArticle"
-            type="com.oliva.verde.android.divercitynewsapp.service.model.StockArticle" />
+            type="com.oliva.verde.android.divercitynewsapp.service.model.Article.StockArticle" />
         <variable
-            name="onStockArticleClickCallBack"
-            type="com.oliva.verde.android.divercitynewsapp.view.callback.OnStockArticleClickCallBack" />
+            name="onItemClickCallBack"
+            type="com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback" />
     </data>
 
     <LinearLayout
-        android:id="@+id/original_LinerLayout"
+        android:id="@+id/stockArticleItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> onStockArticleClickCallBack.onItemClick(stockArticle)}"
+        android:onClick="@{() -> onItemClickCallBack.onItemClick(stockArticle)}"
         android:orientation="horizontal">
 
         <ImageView
@@ -67,7 +67,7 @@
                 android:layout_marginEnd="10dp"
                 android:rotation="90"
                 android:layout_marginBottom="10dp"
-                android:onClick="@{() -> onStockArticleClickCallBack.onContextClick(stockArticle)}"
+                android:onClick="@{() -> onItemClickCallBack.onContextClick(stockArticle)}"
                 app:tint="@color/pendingIcon" />
 
 
