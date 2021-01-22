@@ -1,15 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.service.repository.database
 
-import android.util.Log
 import androidx.room.*
-import com.oliva.verde.android.divercitynewsapp.service.model.Article
-import com.oliva.verde.android.divercitynewsapp.service.model.StockArticle
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmResults
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.*
 
 @Dao
 interface StockArticleDao {

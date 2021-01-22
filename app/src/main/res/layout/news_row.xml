@@ -6,21 +6,21 @@
 
     <data>
         <variable
-            name="article"
-            type="com.oliva.verde.android.divercitynewsapp.service.model.Article" />
+            name="responseArticle"
+            type="com.oliva.verde.android.divercitynewsapp.service.model.Article.ResponseArticle" />
         <variable
             name="onItemClickCallback"
             type="com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback" />
     </data>
 
     <LinearLayout
-        android:id="@+id/original_LinerLayout"
+        android:id="@+id/responseArticleItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> onItemClickCallback.onItemClick(article)}"
+        android:onClick="@{() -> onItemClickCallback.onItemClick(responseArticle)}"
         android:orientation="horizontal">
 
         <ImageView
@@ -28,7 +28,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="8dp"
-            app:imageUrl="@{article.urlToImage}" />
+            app:imageUrl="@{}" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,14 +45,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@{article.title}" />
+                    android:text="@{responseArticle.title}" />
 
                 <TextView
                     android:id="@+id/publish_date_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@{article.publishedAt.substring(0, 10)}" />
+                    android:text="@{responseArticle.publishedAt.substring(0, 10)}" />
 
             </LinearLayout>
 
@@ -67,7 +67,7 @@
                 android:layout_marginEnd="10dp"
                 android:rotation="90"
                 android:layout_marginBottom="10dp"
-                android:onClick="@{() -> onItemClickCallback.onContextClick(article)}"
+                android:onClick="@{() -> onItemClickCallback.onContextClick(responseArticle)}"
                 app:tint="@color/pendingIcon" />
 
 
