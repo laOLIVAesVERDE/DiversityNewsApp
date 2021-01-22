@@ -15,8 +15,8 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private val repository = Repository.instance
-    private var _articleListLiveData : MutableLiveData<List<Article>> = MutableLiveData()
-    val articleListLiveData : LiveData<List<Article>> = _articleListLiveData
+    private var _responseArticleListLiveData : MutableLiveData<List<Article.ResponseArticle>> = MutableLiveData()
+    val responseArticleListLiveData : LiveData<List<Article.ResponseArticle>> = _responseArticleListLiveData
 
     init {
         loadArticles()
@@ -35,11 +35,11 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
             R.string.api_key
         ), getApplication<Application>().getString(R.string.search_word))
         if (response.isSuccessful) {
-            _articleListLiveData.postValue(response.body()?.articles)
+            _responseArticleListLiveData.postValue(response.body()?.articles)
         }
     }
 
-    suspend fun insertTargetArticle(stockArticle: StockArticle) {
+    suspend fun insertTargetArticle(stockArticle: Article.StockArticle) {
         repository.insertArticle(stockArticle)
     }
 

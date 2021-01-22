@@ -101,7 +101,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        homeFragmentViewModel.articleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
+        homeFragmentViewModel.responseArticleListLiveData.observe(viewLifecycleOwner, Observer { articles ->
             articles.let {
                 articleAdapter.setArticleList(it)
             }
