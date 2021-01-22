@@ -20,7 +20,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> onStockArticleClickCallBack.onItemClick(stockArticle)}"
+        android:onClick="@{() -> onItemClickCallBack.onItemClick(stockArticle)}"
         android:orientation="horizontal">
 
         <ImageView
@@ -67,7 +67,7 @@
                 android:layout_marginEnd="10dp"
                 android:rotation="90"
                 android:layout_marginBottom="10dp"
-                android:onClick="@{() -> onStockArticleClickCallBack.onContextClick(stockArticle)}"
+                android:onClick="@{() -> onItemClickCallBack.onContextClick(stockArticle)}"
                 app:tint="@color/pendingIcon" />
 
 
