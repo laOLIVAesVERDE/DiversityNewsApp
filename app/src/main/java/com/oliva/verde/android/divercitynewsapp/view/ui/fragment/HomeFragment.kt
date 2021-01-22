@@ -37,16 +37,16 @@ class HomeFragment : Fragment() {
 
     private val articleAdapter : ArticleAdapter =
         ArticleAdapter(object : OnItemClickCallback {
-            override fun onItemClick(article: Article) {
-                article as Article.ResponseArticle
+            override fun <T> onItemClick(t: T) {
+                val article = t as Article.ResponseArticle
                 val url = article.url
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(activity!!, Uri.parse(url))
             }
 
-            override fun onContextClick(article: Article) {
-                article as Article.ResponseArticle
+            override fun <T> onContextClick(t: T) {
+                val article = t as Article.ResponseArticle
                 val button = view?.findViewById<ImageButton>(R.id.image_button)
                 // val button = ArticleAdapter.BindingHolder(NewsRowBinding()).binding.imageButton
                 val popupMenu  = PopupMenu(activity, button)
@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
                         R.id.add_to_stock -> {
                             lifecycleScope.launch {
                                 withContext(Dispatchers.IO) {
-                                    val targetStockArticle = StockArticle(
+                                    val targetStockArticle = Article.StockArticle(
                                         id = 0,
                                         url = article.url,
                                         urlToImage = article.urlToImage,
