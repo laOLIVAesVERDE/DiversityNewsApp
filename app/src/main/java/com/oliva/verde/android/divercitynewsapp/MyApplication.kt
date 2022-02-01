@@ -1,9 +1,7 @@
 package com.oliva.verde.android.divercitynewsapp
 
 import android.app.Application
-import androidx.multidex.MultiDexApplication
-import com.oliva.verde.android.divercitynewsapp.injection.*
-import io.realm.Realm
-import io.realm.RealmConfiguration
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class MyApplication : Application()
