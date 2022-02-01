@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.injection
+package com.oliva.verde.android.divercitynewsapp.di
 
 import android.app.Application
 import androidx.room.Room
@@ -7,7 +7,6 @@ import com.oliva.verde.android.divercitynewsapp.service.repository.database.Data
 import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 
 @Module

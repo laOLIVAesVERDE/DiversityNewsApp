@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.injection
+package com.oliva.verde.android.divercitynewsapp.di
 
 import android.app.Application
 import dagger.Module

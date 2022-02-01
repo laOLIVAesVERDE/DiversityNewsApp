@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.injection
+package com.oliva.verde.android.divercitynewsapp.di
 
 import com.oliva.verde.android.divercitynewsapp.MyApplication
 import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
