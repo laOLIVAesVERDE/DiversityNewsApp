@@ -1,6 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.di
 
-import com.oliva.verde.android.divercitynewsapp.service.repository.api.ApiService
+import com.oliva.verde.android.divercitynewsapp.data.remote.ApiService
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module

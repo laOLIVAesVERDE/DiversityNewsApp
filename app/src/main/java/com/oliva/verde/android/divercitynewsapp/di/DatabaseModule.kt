@@ -3,8 +3,8 @@ package com.oliva.verde.android.divercitynewsapp.di
 import android.app.Application
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.oliva.verde.android.divercitynewsapp.service.repository.database.Database
-import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
+import com.oliva.verde.android.divercitynewsapp.data.local.Database
+import com.oliva.verde.android.divercitynewsapp.data.local.StockArticleDao
 import dagger.Module
 import dagger.Provides
 
