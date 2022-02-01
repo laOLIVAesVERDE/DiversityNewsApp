@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.service.repository.database
+package com.oliva.verde.android.divercitynewsapp.data.local
 
 import androidx.room.*
 import com.oliva.verde.android.divercitynewsapp.service.model.Article

@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.service.repository.api
+package com.oliva.verde.android.divercitynewsapp.data.remote
 
 import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
 import retrofit2.Response

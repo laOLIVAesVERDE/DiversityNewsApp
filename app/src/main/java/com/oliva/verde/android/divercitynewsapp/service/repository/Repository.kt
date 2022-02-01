@@ -4,8 +4,8 @@ import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.MyApplication
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
-import com.oliva.verde.android.divercitynewsapp.service.repository.api.ApiService
-import com.oliva.verde.android.divercitynewsapp.service.repository.database.StockArticleDao
+import com.oliva.verde.android.divercitynewsapp.data.remote.ApiService
+import com.oliva.verde.android.divercitynewsapp.data.local.StockArticleDao
 import retrofit2.Response
 import javax.inject.Inject
 
