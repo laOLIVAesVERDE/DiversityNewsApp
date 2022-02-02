@@ -1,6 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.di
 
-import com.oliva.verde.android.divercitynewsapp.data.remote.ApiService
+import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -29,7 +29,7 @@ class ApiModule {
     }
 
     @Provides
-    fun provideApiService(client: OkHttpClient, moshi: Moshi) : ApiService {
+    fun provideApiService(client: OkHttpClient, moshi: Moshi) : ArticleApiService {
         val ENDPOINT = "https://newsapi.org/"
 
         val retrofit = Retrofit.Builder()
@@ -37,6 +37,6 @@ class ApiModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
-        return retrofit.create(ApiService::class.java)
+        return retrofit.create(ArticleApiService::class.java)
     }
 }
