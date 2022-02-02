@@ -6,15 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
-import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
-import kotlinx.coroutines.launch
+import com.oliva.verde.android.divercitynewsapp.service.repository.ArticleRepository
 
 class StockFragmentViewModel : ViewModel() {
     companion object {
         val LOGTAG = "StockFragmentViewModel"
     }
 
-    private val repository = Repository.instance
+    private val repository = ArticleRepository.instance
     private var _stockArticleListLiveData : MutableLiveData<List<Article.StockArticle>> = MutableLiveData()
     val stockArticleListLiveData : LiveData<List<Article.StockArticle>> = _stockArticleListLiveData
 

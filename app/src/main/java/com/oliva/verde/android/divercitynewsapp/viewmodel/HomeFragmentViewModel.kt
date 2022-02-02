@@ -5,8 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.oliva.verde.android.divercitynewsapp.service.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
-import com.oliva.verde.android.divercitynewsapp.service.repository.Repository
-import kotlinx.coroutines.launch
+import com.oliva.verde.android.divercitynewsapp.service.repository.ArticleRepository
 
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
@@ -14,7 +13,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         val LOGTAG = "HomeFragmentViewModel"
     }
 
-    private val repository = Repository.instance
+    private val repository = ArticleRepository.instance
     private var _responseArticleListLiveData : MutableLiveData<List<Article.ResponseArticle>> = MutableLiveData()
     val responseArticleListLiveData : LiveData<List<Article.ResponseArticle>> = _responseArticleListLiveData
 
