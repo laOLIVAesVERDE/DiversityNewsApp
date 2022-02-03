@@ -2,7 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.data.repository
 
 import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
 import com.oliva.verde.android.divercitynewsapp.data.remote.dto.ArticleDto
-import com.oliva.verde.android.divercitynewsapp.service.repository.ArticleRepository
+import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
 import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(

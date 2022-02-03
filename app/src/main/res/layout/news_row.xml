@@ -7,7 +7,7 @@
     <data>
         <variable
             name="responseArticle"
-            type="com.oliva.verde.android.divercitynewsapp.service.model.Article.ResponseArticle" />
+            type="com.oliva.verde.android.divercitynewsapp.domain.model.Article.ResponseArticle" />
         <variable
             name="onItemClickCallback"
             type="com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback" />

@@ -2,7 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.di
 
 import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
 import com.oliva.verde.android.divercitynewsapp.data.repository.ArticleRepositoryImpl
-import com.oliva.verde.android.divercitynewsapp.service.repository.ArticleRepository
+import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

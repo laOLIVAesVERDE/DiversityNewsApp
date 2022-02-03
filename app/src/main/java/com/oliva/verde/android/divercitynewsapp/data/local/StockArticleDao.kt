@@ -1,7 +1,7 @@
 package com.oliva.verde.android.divercitynewsapp.data.local
 
 import androidx.room.*
-import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 
 @Dao
 interface StockArticleDao {

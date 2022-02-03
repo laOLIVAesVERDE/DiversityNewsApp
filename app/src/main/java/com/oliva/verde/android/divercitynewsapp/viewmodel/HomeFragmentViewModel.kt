@@ -3,9 +3,9 @@ package com.oliva.verde.android.divercitynewsapp.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.oliva.verde.android.divercitynewsapp.service.model.Article
+import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
-import com.oliva.verde.android.divercitynewsapp.service.repository.ArticleRepository
+import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
 
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {

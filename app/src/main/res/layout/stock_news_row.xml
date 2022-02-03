@@ -7,7 +7,7 @@
     <data>
         <variable
             name="stockArticle"
-            type="com.oliva.verde.android.divercitynewsapp.service.model.Article.StockArticle" />
+            type="com.oliva.verde.android.divercitynewsapp.domain.model.Article.StockArticle" />
         <variable
             name="onItemClickCallBack"
             type="com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback" />
