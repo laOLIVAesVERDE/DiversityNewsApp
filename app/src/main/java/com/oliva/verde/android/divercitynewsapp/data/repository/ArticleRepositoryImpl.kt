@@ -9,6 +9,6 @@ class ArticleRepositoryImpl @Inject constructor(
   private val api: ArticleApiService
 ) : ArticleRepository{
   override suspend fun getArticles(searchWord: String): List<ArticleDto> {
-    return api.getArticles(searchWord)
+    return api.getArticles(searchWord = searchWord)
   }
 }
