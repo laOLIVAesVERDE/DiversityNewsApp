@@ -1,9 +1,9 @@
-package com.oliva.verde.android.divercitynewsapp.service.repository
+package com.oliva.verde.android.divercitynewsapp.domain.repository
 
 import android.util.Log
 import com.oliva.verde.android.divercitynewsapp.MyApplication
-import com.oliva.verde.android.divercitynewsapp.service.model.Article
-import com.oliva.verde.android.divercitynewsapp.service.model.ResponseData
+import com.oliva.verde.android.divercitynewsapp.domain.model.Article
+import com.oliva.verde.android.divercitynewsapp.domain.model.ResponseData
 import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
 import com.oliva.verde.android.divercitynewsapp.data.local.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.data.remote.dto.ArticleDto

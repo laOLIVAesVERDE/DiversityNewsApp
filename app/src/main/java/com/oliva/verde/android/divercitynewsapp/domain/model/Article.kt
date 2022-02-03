@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.service.model
+package com.oliva.verde.android.divercitynewsapp.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
