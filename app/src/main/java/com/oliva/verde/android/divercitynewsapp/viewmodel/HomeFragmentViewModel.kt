@@ -6,9 +6,10 @@ import androidx.lifecycle.*
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 
-
-class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class HomeFragmentViewModel(application: Application) : ViewModel() {
     companion object {
         val LOGTAG = "HomeFragmentViewModel"
     }

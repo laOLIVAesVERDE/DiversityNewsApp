@@ -1,14 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.domain.repository
 
-import android.util.Log
-import com.oliva.verde.android.divercitynewsapp.MyApplication
-import com.oliva.verde.android.divercitynewsapp.domain.model.Article
-import com.oliva.verde.android.divercitynewsapp.domain.model.ResponseData
-import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
-import com.oliva.verde.android.divercitynewsapp.data.local.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.data.remote.dto.ArticleDto
-import retrofit2.Response
-import javax.inject.Inject
 
 interface ArticleRepository {
 

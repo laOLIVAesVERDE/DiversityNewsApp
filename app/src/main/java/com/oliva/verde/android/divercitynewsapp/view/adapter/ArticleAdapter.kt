@@ -9,7 +9,6 @@ import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.databinding.StockNewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
-import java.lang.ArithmeticException
 
 
 class ArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<BaseBindingHolder>() {
