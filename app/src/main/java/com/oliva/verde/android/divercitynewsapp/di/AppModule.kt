@@ -1,6 +1,8 @@
 package com.oliva.verde.android.divercitynewsapp.di
 
 import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
+import com.oliva.verde.android.divercitynewsapp.data.repository.ArticleRepositoryImpl
+import com.oliva.verde.android.divercitynewsapp.service.repository.ArticleRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +23,12 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ArticleApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideArticleRepository(apiService: ArticleApiService) : ArticleRepository {
+        return ArticleRepositoryImpl(apiService)
     }
 }
 //class ApiModule {
