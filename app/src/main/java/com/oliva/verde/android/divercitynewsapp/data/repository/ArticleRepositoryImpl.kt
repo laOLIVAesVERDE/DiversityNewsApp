@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(
   private val api: ArticleApiService
-) : ArticleRepository{
+) : ArticleRepository {
   override suspend fun getArticles(searchWord: String): List<ArticleDto> {
     return api.getArticles(searchWord = searchWord)
   }
