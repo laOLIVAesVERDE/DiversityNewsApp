@@ -2,6 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
+import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 
 data class ArticleDto(
     @SerializedName("author")
@@ -21,3 +22,7 @@ data class ArticleDto(
     @SerializedName("urlToImage")
     val urlToImage: String
 )
+
+fun ArticleDto.toArticle() : Article.ResponseArticle {
+    return Article.ResponseArticle(url, urlToImage, publishedAt, title)
+}
