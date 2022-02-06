@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 data class StockArticleDto (
     @PrimaryKey(autoGenerate = true)
     val id : Long,
-    var url : String = "url",
-    var urlToImage : String? = "urlToImage",
-    var publishedAt : String = "publishedAt",
-    var title : String = "title",
-    var isReadFlag : Boolean = false
+    val url : String = "url",
+    val urlToImage : String? = "urlToImage",
+    val publishedAt : String = "publishedAt",
+    val title : String = "title",
+    val isReadFlag : Boolean = false
 )
