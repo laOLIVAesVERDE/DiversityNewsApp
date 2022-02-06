@@ -3,6 +3,7 @@ package com.oliva.verde.android.divercitynewsapp.presentation.article_list.compo
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.oliva.verde.android.divercitynewsapp.common.Resource
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 import com.oliva.verde.android.divercitynewsapp.domain.use_case.get_articles.GetArticlesUseCase
 import com.oliva.verde.android.divercitynewsapp.presentation.article_list.ArticleListState
@@ -30,7 +31,19 @@ class HomeFragmentViewModel @Inject constructor(
      */
     private fun loadArticles(searchWord: String = "") {
         getArticlesUseCase(searchWord).onEach { result ->
-
+            when (result) {
+                is Resource.Success -> {
+                    _state.value = ArticleListState(articles = result.data ?: emptyList())
+                }
+                is Resource.Error -> {
+                    _state.value = ArticleListState(
+                        error = result.message ?: "An unexpected error occurred"
+                    )
+                }
+                is Resource.Loading -> {
+                    _state.value = ArticleListState(isLoading = true)
+                }
+            }
         }
     }
 
