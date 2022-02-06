@@ -22,5 +22,3 @@ sealed class Article {
         val isReadFlag : Boolean = false
     ) : Article()
 }
-
-data class ResponseData(val articles : MutableList<Article.ResponseArticle>)
