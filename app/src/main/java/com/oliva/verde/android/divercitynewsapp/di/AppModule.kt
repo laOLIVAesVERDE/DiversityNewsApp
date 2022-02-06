@@ -1,11 +1,17 @@
 package com.oliva.verde.android.divercitynewsapp.di
 
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.oliva.verde.android.divercitynewsapp.data.local.Database
+import com.oliva.verde.android.divercitynewsapp.data.local.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
 import com.oliva.verde.android.divercitynewsapp.data.repository.ArticleRepositoryImpl
 import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,8 +33,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideArticleRepository(apiService: ArticleApiService) : ArticleRepository {
-        return ArticleRepositoryImpl(apiService)
+    fun provideDataBase(@ApplicationContext context: Context) : Database {
+        return Room.databaseBuilder(context, Database::class.java, "stockedArticle")
+            .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStockArticleDao(database: Database) : StockArticleDao {
+        return database.stockArticleDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideArticleRepository(apiService: ArticleApiService, dao: StockArticleDao) : ArticleRepository {
+        return ArticleRepositoryImpl(apiService, dao)
     }
 }
 //class ApiModule {
