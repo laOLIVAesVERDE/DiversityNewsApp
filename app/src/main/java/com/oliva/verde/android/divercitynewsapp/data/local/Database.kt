@@ -1,9 +1,10 @@
 package com.oliva.verde.android.divercitynewsapp.data.local
 
+import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.oliva.verde.android.divercitynewsapp.domain.model.Article
+import com.oliva.verde.android.divercitynewsapp.data.local.dto.StockArticleDto
 
-@Database(entities = [Article.StockArticle::class], version = 1)
+@Database(entities = [StockArticleDto::class], version = 1)
 abstract class Database : RoomDatabase() {
     abstract fun stockArticleDao() : StockArticleDao
 }
