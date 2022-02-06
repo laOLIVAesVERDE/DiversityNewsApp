@@ -1,12 +1,13 @@
 package com.oliva.verde.android.divercitynewsapp.data.local
 
 import androidx.room.*
+import com.oliva.verde.android.divercitynewsapp.data.local.dto.StockArticleDto
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 
 @Dao
 interface StockArticleDao {
     @Query("SELECT * FROM StockArticle")
-    suspend fun findAll() : MutableList<Article.StockArticle>
+    suspend fun findAll() : List<StockArticleDto>
 
     /**
      * レコードが存在したら置き換え、存在しなければインサート
