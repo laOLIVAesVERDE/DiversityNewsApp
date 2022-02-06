@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.view.callback
+package com.oliva.verde.android.divercitynewsapp.presentation.callback
 
 interface OnItemClickCallback {
     fun <T> onItemClick(t : T)

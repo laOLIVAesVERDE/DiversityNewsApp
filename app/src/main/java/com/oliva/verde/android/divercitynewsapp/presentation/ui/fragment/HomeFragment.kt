@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.view.ui.fragment
+package com.oliva.verde.android.divercitynewsapp.presentation.ui.fragment
 
 import android.net.Uri
 import android.os.Bundle
@@ -14,11 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
-import com.oliva.verde.android.divercitynewsapp.viewmodel.HomeFragmentViewModel
+import com.oliva.verde.android.divercitynewsapp.presentation.article_list.components.HomeFragmentViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
-import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
-import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import com.oliva.verde.android.divercitynewsapp.presentation.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.presentation.callback.OnItemClickCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

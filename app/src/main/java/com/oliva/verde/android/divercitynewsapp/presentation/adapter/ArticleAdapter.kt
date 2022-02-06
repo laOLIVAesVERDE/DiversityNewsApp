@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.view.adapter
+package com.oliva.verde.android.divercitynewsapp.presentation.adapter
 
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -8,7 +8,7 @@ import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.NewsRowBinding
 import com.oliva.verde.android.divercitynewsapp.databinding.StockNewsRowBinding
-import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import com.oliva.verde.android.divercitynewsapp.presentation.callback.OnItemClickCallback
 
 
 class ArticleAdapter(private val onItemClickCallback: OnItemClickCallback) : RecyclerView.Adapter<BaseBindingHolder>() {

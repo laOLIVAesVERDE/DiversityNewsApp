@@ -2,7 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.di
 
 import com.oliva.verde.android.divercitynewsapp.MyApplication
 import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
-import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.presentation.adapter.ArticleAdapter
 import dagger.Component
 import javax.inject.Singleton
 

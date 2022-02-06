@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.view.adapter
+package com.oliva.verde.android.divercitynewsapp.presentation.adapter
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

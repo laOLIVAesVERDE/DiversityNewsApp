@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.view.ui.fragment
+package com.oliva.verde.android.divercitynewsapp.presentation.ui.fragment
 
 import android.net.Uri
 import android.os.Bundle
@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
-import com.oliva.verde.android.divercitynewsapp.view.adapter.ArticleAdapter
-import com.oliva.verde.android.divercitynewsapp.view.callback.OnItemClickCallback
+import com.oliva.verde.android.divercitynewsapp.presentation.adapter.ArticleAdapter
+import com.oliva.verde.android.divercitynewsapp.presentation.callback.OnItemClickCallback
 import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

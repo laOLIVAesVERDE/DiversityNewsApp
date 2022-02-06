@@ -1,16 +1,15 @@
-package com.oliva.verde.android.divercitynewsapp.view.ui.activity
+package com.oliva.verde.android.divercitynewsapp.presentation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.oliva.verde.android.divercitynewsapp.R
-import com.oliva.verde.android.divercitynewsapp.view.ui.fragment.HomeFragment
-import com.oliva.verde.android.divercitynewsapp.view.ui.fragment.StockFragment
+import com.oliva.verde.android.divercitynewsapp.presentation.ui.fragment.HomeFragment
+import com.oliva.verde.android.divercitynewsapp.presentation.ui.fragment.StockFragment
 import kotlinx.android.synthetic.main.activity_top.*
 
 class MainActivity : AppCompatActivity() {
