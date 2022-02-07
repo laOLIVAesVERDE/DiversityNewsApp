@@ -11,9 +11,7 @@ sealed class Article {
         val title: String = "title"
     ) : Article()
 
-    @Entity
     data class StockArticle (
-        @PrimaryKey(autoGenerate = true)
         val id : Long,
         val url : String = "url",
         val urlToImage : String? = "urlToImage",
