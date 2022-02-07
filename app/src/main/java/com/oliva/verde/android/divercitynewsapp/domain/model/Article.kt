@@ -1,8 +1,5 @@
 package com.oliva.verde.android.divercitynewsapp.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
 sealed class Article {
     data class ResponseArticle(
         val url: String = "url",
