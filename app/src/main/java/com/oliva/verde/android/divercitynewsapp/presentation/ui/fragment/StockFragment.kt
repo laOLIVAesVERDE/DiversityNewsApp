@@ -19,7 +19,7 @@ import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
 import com.oliva.verde.android.divercitynewsapp.presentation.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.presentation.callback.OnItemClickCallback
-import com.oliva.verde.android.divercitynewsapp.viewmodel.StockFragmentViewModel
+import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components.StockFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

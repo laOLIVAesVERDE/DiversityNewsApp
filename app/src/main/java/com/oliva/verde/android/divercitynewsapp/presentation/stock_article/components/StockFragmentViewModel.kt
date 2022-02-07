@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.viewmodel
+package com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components
 
 import android.util.Log
 import androidx.lifecycle.LiveData
