@@ -1,40 +1,45 @@
 package com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.oliva.verde.android.divercitynewsapp.domain.model.Article
-import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
+import com.oliva.verde.android.divercitynewsapp.common.Resource
+import com.oliva.verde.android.divercitynewsapp.domain.use_case.get_stock_articles.GetStockArticlesUseCase
+import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.StockArticleListState
+import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class StockFragmentViewModel : ViewModel() {
-    companion object {
-        val LOGTAG = "StockFragmentViewModel"
-    }
-
-    private val repository = ArticleRepository.instance
-    private var _stockArticleListLiveData : MutableLiveData<List<Article.StockArticle>> = MutableLiveData()
-    val stockArticleListLiveData : LiveData<List<Article.StockArticle>> = _stockArticleListLiveData
+class StockFragmentViewModel @Inject constructor(
+    private val getStockArticlesUseCase: GetStockArticlesUseCase
+) : ViewModel() {
+    private val _state = mutableStateOf(StockArticleListState())
+    val state: State<StockArticleListState> = _state
 
     init {
-        viewModelScope.launch {
-            getAllStockedArticles()
+        getAllStockedArticles()
+    }
+
+    fun getAllStockedArticles() {
+        getStockArticlesUseCase().onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                   _state.value = StockArticleListState(stockArticles = result.data  ?: emptyList())
+                }
+                is Resource.Error -> {
+                    _state.value = StockArticleListState(
+                        error = result.message ?: "An unexpected error occurred"
+                    )
+                }
+                is Resource.Loading -> {
+                    _state.value = StockArticleListState(isLoading = true)
+                }
+            }
         }
     }
 
-    suspend fun getAllStockedArticles() {
-        Log.d(LOGTAG, "getAllStockedArticles called")
-        val stkList = repository.getStockedArticles()
-        stkList.forEach {
-            Log.d(LOGTAG, it.title)
-        }
-        _stockArticleListLiveData.postValue(stkList)
-    }
-
-    suspend fun deleteTargetArticle(stockArticle: Article.StockArticle) {
-        repository.deleteStockArticle(stockArticle)
-    }
+//    suspend fun deleteTargetArticle(stockArticle: Article.StockArticle) {
+//        repository.deleteStockArticle(stockArticle)
+//    }
 
     /*
     suspend fun deleteTargetArticle(targetArticle: Article) {
