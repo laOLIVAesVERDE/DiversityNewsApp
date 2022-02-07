@@ -2,9 +2,7 @@ package com.oliva.verde.android.divercitynewsapp.domain.use_case.get_stock_artic
 
 import com.oliva.verde.android.divercitynewsapp.common.Resource
 import com.oliva.verde.android.divercitynewsapp.data.local.dto.toStockArticle
-import com.oliva.verde.android.divercitynewsapp.data.remote.dto.toArticle
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
-import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
 import com.oliva.verde.android.divercitynewsapp.domain.repository.StockArticleRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
