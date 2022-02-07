@@ -6,7 +6,7 @@ import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 
 @Dao
 interface StockArticleDao {
-    @Query("SELECT * FROM StockArticle")
+    @Query("SELECT * FROM StockArticleDto")
     suspend fun findAll() : List<StockArticleDto>
 
     /**
