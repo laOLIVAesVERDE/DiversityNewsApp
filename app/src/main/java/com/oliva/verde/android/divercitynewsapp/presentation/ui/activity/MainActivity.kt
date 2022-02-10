@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.fragment.app.Fragment
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.presentation.ui.Screen
@@ -30,8 +32,11 @@ class MainActivity : AppCompatActivity() {
         Scaffold(
             bottomBar = {
                 BottomNavigation {
-
-                    
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val currentDestination = navBackStackEntry?.destination
+                    items.forEach { screen ->
+                        
+                    }
                 }
             }
         ) {
