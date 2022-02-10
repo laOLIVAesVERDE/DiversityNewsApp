@@ -1,6 +1,11 @@
 package com.oliva.verde.android.divercitynewsapp.presentation.ui
 
-sealed class Screen(val route: String) {
-    object ArticleList: Screen("article_list")
-    object StockArticleList: Screen("stock_article_list")
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.ui.graphics.vector.ImageVector
+
+sealed class Screen(val route: String, val icon: ImageVector) {
+    object ArticleList: Screen("article_list", Icons.Filled.Home)
+    object StockArticleList: Screen("stock_article_list", Icons.Filled.Favorite)
 }
