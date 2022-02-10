@@ -2,7 +2,11 @@ package com.oliva.verde.android.divercitynewsapp.presentation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.fragment.app.Fragment
+import androidx.navigation.compose.rememberNavController
 import com.oliva.verde.android.divercitynewsapp.R
 
 class MainActivity : AppCompatActivity() {
@@ -13,6 +17,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_top)
 
 
+    }
+    
+    @Composable
+    fun MainScreenView() {
+        val navController = rememberNavController()
+        Scaffold(
+            bottomBar = {
+                BottomNavigation() {
+                    
+                }
+            }
+        ) {
+            
+        }
     }
 
     private fun setCurrentFragment(fragment: Fragment)=
