@@ -4,16 +4,16 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.presentation.ui.Screen
 
@@ -50,9 +50,17 @@ class MainActivity : AppCompatActivity() {
     ) {
         BottomNavigation {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
+            val currentRoute = navBackStackEntry?.destination?.route
             screenList.forEach { screen ->
-                
+                BottomNavigationItem(
+                    icon = {
+                        Icon(imageVector = screen.icon, contentDescription = screen.route)
+                    },
+                    selected = currentRoute == screen.route,
+                    onClick = {
+
+                    }
+                )
             }
         }
     }
