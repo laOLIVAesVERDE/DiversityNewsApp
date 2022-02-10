@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.fragment.app.Fragment
 import androidx.navigation.compose.rememberNavController
 import com.oliva.verde.android.divercitynewsapp.R
+import com.oliva.verde.android.divercitynewsapp.presentation.ui.Screen
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,9 +23,14 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun MainScreenView() {
         val navController = rememberNavController()
+        val items = listOf(
+            Screen.ArticleList,
+            Screen.StockArticleList
+        )
         Scaffold(
             bottomBar = {
-                BottomNavigation() {
+                BottomNavigation {
+
                     
                 }
             }
