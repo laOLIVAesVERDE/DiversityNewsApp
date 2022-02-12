@@ -58,7 +58,9 @@ class MainActivity : AppCompatActivity() {
                     },
                     selected = currentRoute == screen.route,
                     onClick = {
-
+                        navController.navigate(screen.route) {
+                            
+                        }
                     }
                 )
             }
