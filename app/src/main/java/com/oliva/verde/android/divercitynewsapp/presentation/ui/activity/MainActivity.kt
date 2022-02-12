@@ -59,7 +59,13 @@ class MainActivity : AppCompatActivity() {
                     selected = currentRoute == screen.route,
                     onClick = {
                         navController.navigate(screen.route) {
-                            
+                            navController.graph.startDestinationRoute?.let {
+                                popUpTo(it) {
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
                     }
                 )
