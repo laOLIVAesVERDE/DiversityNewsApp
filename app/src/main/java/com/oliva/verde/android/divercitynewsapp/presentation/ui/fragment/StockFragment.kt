@@ -19,7 +19,7 @@ import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentStockBinding
 import com.oliva.verde.android.divercitynewsapp.presentation.adapter.ArticleAdapter
 import com.oliva.verde.android.divercitynewsapp.presentation.callback.OnItemClickCallback
-import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components.StockFragmentViewModel
+import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components.StockArticleViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,7 +37,7 @@ class StockFragment : Fragment() {
     var isReadFilteringFlag = 0
 
     private val stockFragmentViewModel by lazy {
-        ViewModelProvider(this).get(StockFragmentViewModel::class.java)
+        ViewModelProvider(this).get(StockArticleViewModel::class.java)
     }
 
     private lateinit var binding : FragmentStockBinding

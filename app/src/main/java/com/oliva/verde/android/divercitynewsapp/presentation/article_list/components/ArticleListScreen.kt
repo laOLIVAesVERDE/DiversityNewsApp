@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 @Composable
 fun ArticleListScreen(
     navController: NavController,
-    viewModel: HomeFragmentViewModel = hiltViewModel(),
+    viewModel: ArticleViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     

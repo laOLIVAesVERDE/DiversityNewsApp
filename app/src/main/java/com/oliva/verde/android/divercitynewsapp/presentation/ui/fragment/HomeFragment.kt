@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
-import com.oliva.verde.android.divercitynewsapp.presentation.article_list.components.HomeFragmentViewModel
+import com.oliva.verde.android.divercitynewsapp.presentation.article_list.components.ArticleViewModel
 import com.oliva.verde.android.divercitynewsapp.R
 import com.oliva.verde.android.divercitynewsapp.databinding.FragmentHomeBinding
 import com.oliva.verde.android.divercitynewsapp.presentation.adapter.ArticleAdapter
@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
     }
 
     private val homeFragmentViewModel by lazy {
-        ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
+        ViewModelProvider(this).get(ArticleViewModel::class.java)
     }
 
     private lateinit var binding : FragmentHomeBinding
