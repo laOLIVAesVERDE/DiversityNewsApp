@@ -17,6 +17,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.oliva.verde.android.divercitynewsapp.R
+import com.oliva.verde.android.divercitynewsapp.presentation.article_list.components.ArticleListScreen
+import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components.StockArticleListScreen
 import com.oliva.verde.android.divercitynewsapp.presentation.ui.Screen
 
 class MainActivity : AppCompatActivity() {
@@ -41,8 +43,12 @@ class MainActivity : AppCompatActivity() {
             }
         ) {
             NavHost(navController = navController, startDestination = Screen.ArticleList.route) {
-                composable(Screen.ArticleList.route) {}
-                composable(Screen.StockArticleList.route) {}
+                composable(Screen.ArticleList.route) {
+                    ArticleListScreen(navController = navController)
+                }
+                composable(Screen.StockArticleList.route) {
+                    StockArticleListScreen(navController = navController)
+                }
             }
         }
     }
