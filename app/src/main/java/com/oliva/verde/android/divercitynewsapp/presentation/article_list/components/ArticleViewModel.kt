@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeFragmentViewModel @Inject constructor(
+class ArticleViewModel @Inject constructor(
     private val getArticlesUseCase: GetArticlesUseCase
 ) : ViewModel() {
     private val _state = mutableStateOf(ArticleListState())

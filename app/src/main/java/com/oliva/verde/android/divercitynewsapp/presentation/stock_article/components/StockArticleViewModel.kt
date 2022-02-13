@@ -9,7 +9,7 @@ import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.Stock
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class StockFragmentViewModel @Inject constructor(
+class StockArticleViewModel @Inject constructor(
     private val getStockArticlesUseCase: GetStockArticlesUseCase
 ) : ViewModel() {
     private val _state = mutableStateOf(StockArticleListState())
