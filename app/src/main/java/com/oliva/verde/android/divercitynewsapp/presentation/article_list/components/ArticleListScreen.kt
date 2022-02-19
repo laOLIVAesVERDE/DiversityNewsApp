@@ -20,12 +20,12 @@ import androidx.navigation.NavController
 
 @Composable
 fun ArticleListScreen(
+    modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: ArticleViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    viewModel: ArticleViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state.articles) { article ->
                 ArticleListItem(article = article) {

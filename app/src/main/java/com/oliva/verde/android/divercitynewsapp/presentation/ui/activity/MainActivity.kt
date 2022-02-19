@@ -3,6 +3,7 @@ package com.oliva.verde.android.divercitynewsapp.presentation.ui.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -41,10 +42,13 @@ class MainActivity : ComponentActivity() {
                     screenList = screens
                 )
             }
-        ) {
+        ) { paddingValues ->
             NavHost(navController = navController, startDestination = Screen.ArticleList.route) {
                 composable(Screen.ArticleList.route) {
-                    ArticleListScreen(navController = navController)
+                    ArticleListScreen(
+                        navController = navController,
+                        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+                    )
                 }
                 composable(Screen.StockArticleList.route) {
                     StockArticleListScreen(navController = navController)
