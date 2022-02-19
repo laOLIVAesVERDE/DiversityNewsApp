@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface ArticleApiService {
     @GET("v2/everything/")
     suspend fun getArticles(@Query("apiKey") apiKey: String = BuildConfig.API_KEY,
-                            @Query("q") searchWord : String) : List<ArticleDto>
+                            @Query("q") searchWord : String) : ArticleDto
 }

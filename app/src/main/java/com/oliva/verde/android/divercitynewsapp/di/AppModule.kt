@@ -50,7 +50,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideArticleRepository(apiService: ArticleApiService, dao: StockArticleDao) : ArticleRepository {
-        return ArticleRepositoryImpl(apiService, dao)
+        return ArticleRepositoryImpl(apiService)
     }
 
     @Provides

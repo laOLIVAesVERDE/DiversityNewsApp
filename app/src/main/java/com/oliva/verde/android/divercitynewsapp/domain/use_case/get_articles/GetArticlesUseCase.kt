@@ -1,7 +1,7 @@
 package com.oliva.verde.android.divercitynewsapp.domain.use_case.get_articles
 
 import com.oliva.verde.android.divercitynewsapp.common.Resource
-import com.oliva.verde.android.divercitynewsapp.data.remote.dto.toArticle
+import com.oliva.verde.android.divercitynewsapp.data.remote.dto.toArticleList
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,7 @@ class GetArticlesUseCase @Inject constructor(
     operator fun invoke(searchWord: String): Flow<Resource<List<Article.ResponseArticle>>> = flow {
         try {
             emit(Resource.Loading())
-            val articles = articlesRepository.getArticles(searchWord).map { it.toArticle() }
+            val articles = articlesRepository.getArticles(searchWord).toArticleList()
             emit(Resource.Success<List<Article.ResponseArticle>>(articles))
         } catch (e: HttpException) {
             emit(Resource.Error<List<Article.ResponseArticle>>(e.localizedMessage ?: "An unexpected error occurred"))

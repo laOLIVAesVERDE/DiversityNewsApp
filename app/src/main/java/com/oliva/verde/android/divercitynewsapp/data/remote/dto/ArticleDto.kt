@@ -5,24 +5,21 @@ import com.google.gson.annotations.SerializedName
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 
 data class ArticleDto(
-    @SerializedName("author")
-    val author: String,
-    @SerializedName("content")
-    val content: String,
-    @SerializedName("description")
-    val description: String,
-    @SerializedName("publishedAt")
-    val publishedAt: String,
-    @SerializedName("source")
-    val source: Source,
-    @SerializedName("title")
-    val title: String,
-    @SerializedName("url")
-    val url: String,
-    @SerializedName("urlToImage")
-    val urlToImage: String
+    @SerializedName("articles")
+    val articles: List<ArticleData>,
+    @SerializedName("status")
+    val status: String,
+    @SerializedName("totalResults")
+    val totalResults: Int
 )
 
-fun ArticleDto.toArticle() : Article.ResponseArticle {
-    return Article.ResponseArticle(url, urlToImage, publishedAt, title)
+fun ArticleDto.toArticleList(): List<Article.ResponseArticle> {
+    return articles.map { article ->
+        Article.ResponseArticle(
+            url = article.url,
+            urlToImage = article.urlToImage,
+            publishedAt = article.publishedAt,
+            title = article.title
+        )
+    }
 }

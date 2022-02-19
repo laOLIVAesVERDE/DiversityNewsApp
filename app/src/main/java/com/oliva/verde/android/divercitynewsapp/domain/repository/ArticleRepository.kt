@@ -1,6 +1,5 @@
 package com.oliva.verde.android.divercitynewsapp.domain.repository
 
-import com.oliva.verde.android.divercitynewsapp.data.local.dto.StockArticleDto
 import com.oliva.verde.android.divercitynewsapp.data.remote.dto.ArticleDto
 
 interface ArticleRepository {
@@ -16,8 +15,7 @@ interface ArticleRepository {
 //        MyApplication.appComponent.inject(this)
 //    }
 
-    suspend fun getArticles(searchWord: String): List<ArticleDto>
-    suspend fun getStockArticles(): List<StockArticleDto>
+    suspend fun getArticles(searchWord: String): ArticleDto
 
 
 //    suspend fun getStockedArticles() : MutableList<Article.StockArticle> {
