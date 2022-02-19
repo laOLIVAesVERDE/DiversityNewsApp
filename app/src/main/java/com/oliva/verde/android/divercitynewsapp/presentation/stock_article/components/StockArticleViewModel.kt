@@ -3,9 +3,11 @@ package com.oliva.verde.android.divercitynewsapp.presentation.stock_article.comp
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.oliva.verde.android.divercitynewsapp.common.Resource
 import com.oliva.verde.android.divercitynewsapp.domain.use_case.get_stock_articles.GetStockArticlesUseCase
 import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.StockArticleListState
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -19,7 +21,7 @@ class StockArticleViewModel @Inject constructor(
         getAllStockedArticles()
     }
 
-    fun getAllStockedArticles() {
+    private fun getAllStockedArticles() {
         getStockArticlesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
@@ -34,7 +36,7 @@ class StockArticleViewModel @Inject constructor(
                     _state.value = StockArticleListState(isLoading = true)
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
 //    suspend fun deleteTargetArticle(stockArticle: Article.StockArticle) {
