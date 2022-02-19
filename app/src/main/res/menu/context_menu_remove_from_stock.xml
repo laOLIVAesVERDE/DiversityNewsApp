@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/delete_from_stock"
-        app:showAsAction="never"
-        android:title="@string/news_list_context_remove"/>
-
-</menu>
