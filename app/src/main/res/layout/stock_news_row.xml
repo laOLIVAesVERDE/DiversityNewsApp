@@ -20,15 +20,13 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> onItemClickCallBack.onItemClick(stockArticle)}"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image_row"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="8dp"
-            app:imageUrl="@{stockArticle.urlToImage}" />
+            android:layout_margin="8dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,15 +42,13 @@
                     android:id="@+id/title_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@{stockArticle.title}" />
+                    android:layout_margin="10dp" />
 
                 <TextView
                     android:id="@+id/publish_date_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@{stockArticle.publishedAt.substring(0, 10)}" />
+                    android:layout_margin="10dp" />
 
             </LinearLayout>
 
@@ -67,7 +63,6 @@
                 android:layout_marginEnd="10dp"
                 android:rotation="90"
                 android:layout_marginBottom="10dp"
-                android:onClick="@{() -> onItemClickCallBack.onContextClick(stockArticle)}"
                 app:tint="@color/pendingIcon" />
 
 
