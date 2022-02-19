@@ -1,5 +1,6 @@
 package com.oliva.verde.android.divercitynewsapp.presentation.article_list.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,7 +28,9 @@ fun ArticleListScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state.articles) { article ->
-                
+                ArticleListItem(article = article) {
+                    Log.d("", article.url)
+                }
             }
         }
         if (state.error.isNotBlank()) {
