@@ -32,3 +32,10 @@ fun ArticleListItem(
         )
     }
 }
+
+@Composable
+fun ArticleDescription(
+    article: Article.ResponseArticle
+) {
+    
+}
