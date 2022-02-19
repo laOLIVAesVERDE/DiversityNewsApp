@@ -13,10 +13,10 @@ interface StockArticleDao {
      * レコードが存在したら置き換え、存在しなければインサート
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun add(targetArticle: Article.StockArticle)
+    suspend fun add(targetArticle: StockArticleDto)
 
     @Delete
-    suspend fun delete(targetArticle: Article.StockArticle)
+    suspend fun delete(targetArticle: StockArticleDto)
     /*
     val LOGTAG = "StockArticleDao"
     var realm: Realm = Realm.getInstance(

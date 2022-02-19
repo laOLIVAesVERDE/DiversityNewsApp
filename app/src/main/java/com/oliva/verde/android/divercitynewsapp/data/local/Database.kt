@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.oliva.verde.android.divercitynewsapp.data.local.dto.StockArticleDto
 
-@Database(entities = [StockArticleDto::class], version = 1)
+@Database(entities = [StockArticleDto::class], version = 1, exportSchema = false)
 abstract class Database : RoomDatabase() {
     abstract fun stockArticleDao() : StockArticleDao
 }
