@@ -45,14 +45,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@{responseArticle.title}" />
+                    android:text="@{responseArticle.title}"
+                    tools:text="記事タイトル"/>
 
                 <TextView
                     android:id="@+id/publish_date_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@{responseArticle.publishedAt.substring(0, 10)}" />
+                    android:text="@{responseArticle.publishedAt.substring(0, 10)}"
+                    tools:text="2022/2/19"/>
 
             </LinearLayout>
 
