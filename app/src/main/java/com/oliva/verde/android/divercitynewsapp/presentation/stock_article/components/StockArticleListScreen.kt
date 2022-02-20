@@ -1,9 +1,12 @@
 package com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -22,7 +25,14 @@ fun StockArticleListScreen(
     modifier: Modifier = Modifier
 ) {
     val state = viewModel.state.value
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(state.stockArticles) { stockArticle ->
+                StockArticleListItem(stockArticle = stockArticle) {
+                    Log.d("confirm", stockArticle.url)
+                }
+            }
+        }
         if (state.error.isNotBlank()) {
             Text(
                 text = state.error,
