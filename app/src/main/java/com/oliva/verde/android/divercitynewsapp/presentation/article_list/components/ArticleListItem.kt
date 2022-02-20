@@ -32,7 +32,7 @@ fun ArticleListItem(
             contentDescription = article.title,
             modifier = Modifier
                 .size(100.dp)
-                .clip(RoundedCornerShape(4.dp)),
+                .clip(RoundedCornerShape(8.dp)),
             contentScale = ContentScale.FillBounds
         )
         ArticleDescription(article = article)

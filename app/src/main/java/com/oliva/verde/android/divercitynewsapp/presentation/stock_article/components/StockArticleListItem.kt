@@ -35,7 +35,7 @@ fun StockArticleListItem(
             contentDescription = stockArticle.title,
             modifier = Modifier
                 .size(100.dp)
-                .clip(RoundedCornerShape(4.dp)),
+                .clip(RoundedCornerShape(8.dp)),
             contentScale = ContentScale.FillBounds
         )
         StockArticleDescription(stockArticle = stockArticle)
