@@ -4,10 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 
@@ -21,7 +24,7 @@ fun ArticleListItem(
             .fillMaxWidth()
             .clickable { onItemClick() }
             .padding(10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceAround,
     ) {
         Image(
             painter = rememberImagePainter(article.urlToImage),
@@ -30,12 +33,26 @@ fun ArticleListItem(
                 .size(100.dp)
                 .clip(RoundedCornerShape(4.dp))
         )
+        ArticleDescription(article = article)
     }
 }
 
 @Composable
 fun ArticleDescription(
+    modifier: Modifier = Modifier,
     article: Article.ResponseArticle
 ) {
-    
+    Column {
+        Text(
+            text = article.title,
+            color = Color.Black,
+            fontSize = 14.sp
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = article.publishedAt,
+            color = Color.Black,
+            fontSize = 12.sp
+        )
+    }
 }

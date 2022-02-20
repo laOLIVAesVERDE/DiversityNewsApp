@@ -51,7 +51,10 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable(Screen.StockArticleList.route) {
-                    StockArticleListScreen(navController = navController)
+                    StockArticleListScreen(
+                        navController = navController,
+                        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+                    )
                 }
             }
         }
