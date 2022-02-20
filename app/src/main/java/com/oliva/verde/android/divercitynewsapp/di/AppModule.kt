@@ -8,6 +8,7 @@ import com.oliva.verde.android.divercitynewsapp.data.local.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.data.remote.ArticleApiService
 import com.oliva.verde.android.divercitynewsapp.data.repository.ArticleRepositoryImpl
 import com.oliva.verde.android.divercitynewsapp.data.repository.StockArticleRepositoryImpl
+import com.oliva.verde.android.divercitynewsapp.data.repository.TestStockArticleRepositoryImpl
 import com.oliva.verde.android.divercitynewsapp.domain.repository.ArticleRepository
 import com.oliva.verde.android.divercitynewsapp.domain.repository.StockArticleRepository
 import dagger.Module
@@ -56,7 +57,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideStockArticleRepository(dao: StockArticleDao) : StockArticleRepository {
-        return StockArticleRepositoryImpl(dao)
+        return TestStockArticleRepositoryImpl()
     }
 }
 //class ApiModule {
