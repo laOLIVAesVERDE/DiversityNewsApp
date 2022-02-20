@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.oliva.verde.android.divercitynewsapp.common.Resource
 import com.oliva.verde.android.divercitynewsapp.domain.use_case.get_stock_articles.GetStockArticlesUseCase
 import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.StockArticleListState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@HiltViewModel
 class StockArticleViewModel @Inject constructor(
     private val getStockArticlesUseCase: GetStockArticlesUseCase
 ) : ViewModel() {

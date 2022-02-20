@@ -20,9 +20,9 @@ import androidx.navigation.NavController
 
 @Composable
 fun StockArticleListScreen(
+    modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: StockArticleViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    viewModel: StockArticleViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     Box(modifier = modifier.fillMaxSize()) {
