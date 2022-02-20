@@ -45,13 +45,17 @@ private fun StockArticleDescription(
     modifier: Modifier = Modifier,
     stockArticle: Article.StockArticle
 ) {
-    Column {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp)
+    ) {
         Text(
             text = stockArticle.title,
             color = Color.Black,
             fontSize = 14.sp
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = stockArticle.publishedAt,
             color = Color.Black,
