@@ -8,6 +8,8 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -72,7 +74,7 @@ class MainActivity : ComponentActivity() {
             screenList.forEach { screen ->
                 BottomNavigationItem(
                     icon = {
-                        Icon(imageVector = screen.icon, contentDescription = screen.route)
+                        Icon(imageVector = screen.icon ?: Icons.Filled.Home, contentDescription = screen.route)
                     },
                     selected = currentRoute == screen.route,
                     onClick = {
