@@ -14,11 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.oliva.verde.android.divercitynewsapp.presentation.article_list.components.ArticleListScreen
+import com.oliva.verde.android.divercitynewsapp.presentation.common.components.WebViewScreen
 import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.components.StockArticleListScreen
 import com.oliva.verde.android.divercitynewsapp.presentation.ui.Screen
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,15 +36,16 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainScreenView() {
         val navController = rememberNavController()
-        val screens = listOf(
+        val bottomNavScreens = listOf(
             Screen.ArticleList,
             Screen.StockArticleList
         )
+        
         Scaffold(
             bottomBar = {
                 BottomNav(
                     navController = navController,
-                    screenList = screens
+                    screenList = bottomNavScreens
                 )
             }
         ) { paddingValues ->
@@ -57,6 +61,12 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
                     )
+                }
+                composable(
+                    Screen.WebView.route + "/{url}",
+                    arguments = listOf(navArgument("url") { type = NavType.StringType})
+                ) { backStackEntry ->
+                    WebViewScreen(url = backStackEntry.arguments?.getString("url") ?: "")
                 }
             }
         }
