@@ -20,10 +20,11 @@ import com.oliva.verde.android.divercitynewsapp.presentation.webview.components.
 
 @Composable
 fun WebViewScreen(
+    modifier: Modifier = Modifier,
     viewModel: WebViewViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = {

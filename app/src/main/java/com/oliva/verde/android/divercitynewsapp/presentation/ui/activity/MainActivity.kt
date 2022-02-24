@@ -66,7 +66,9 @@ class MainActivity : ComponentActivity() {
                 composable(
                     Screen.WebView.route + "/{${Constants.PARAM_WEB_VIEW_URL}}"
                 ) {
-                    WebViewScreen()
+                    WebViewScreen(
+                        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+                    )
                 }
             }
         }
