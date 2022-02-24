@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.oliva.verde.android.divercitynewsapp.common.Util
 import com.oliva.verde.android.divercitynewsapp.presentation.ui.Screen
 
 @Composable
@@ -30,8 +31,9 @@ fun ArticleListScreen(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state.articles) { article ->
                 ArticleListItem(article = article) {
+                    Log.e("confirm", "url : ${article.url}")
                     navController.navigate(
-                        Screen.WebView.route + "/${article.url}"
+                        Screen.WebView.route + "/${Util.replaceSlashToHyphen(article.url)}"
                     )
                 }
             }
