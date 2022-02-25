@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.oliva.verde.android.divercitynewsapp.common.Util
+import com.oliva.verde.android.divercitynewsapp.presentation.ui.Screen
 
 @Composable
 fun StockArticleListScreen(
@@ -29,7 +31,9 @@ fun StockArticleListScreen(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state.stockArticles) { stockArticle ->
                 StockArticleListItem(stockArticle = stockArticle) {
-                    Log.d("confirm", stockArticle.url)
+                    navController.navigate(
+                        Screen.WebView.route + "/${Util.replaceSlashToHyphen(stockArticle.url)}"
+                    )
                 }
             }
         }
