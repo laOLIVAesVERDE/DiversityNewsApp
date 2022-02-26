@@ -11,4 +11,12 @@ class StockArticleRepositoryImpl @Inject constructor(
     override suspend fun getStockArticles(): List<StockArticleDto> {
         return dao.findAll()
     }
+
+    override suspend fun add() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun delete() {
+        TODO("Not yet implemented")
+    }
 }
