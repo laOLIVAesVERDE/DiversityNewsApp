@@ -1,9 +1,13 @@
 package com.oliva.verde.android.divercitynewsapp.data.repository
 
+import com.oliva.verde.android.divercitynewsapp.data.local.StockArticleDao
 import com.oliva.verde.android.divercitynewsapp.data.local.dto.StockArticleDto
 import com.oliva.verde.android.divercitynewsapp.domain.repository.StockArticleRepository
+import javax.inject.Inject
 
-class TestStockArticleRepositoryImpl : StockArticleRepository {
+class TestStockArticleRepositoryImpl @Inject constructor(
+    private val dao: StockArticleDao
+) : StockArticleRepository {
     private val testArticle = StockArticleDto(
         id = 0,
         url = "https://www.engadget.com/meta-not-threatening-to-leave-europe-204440537.html",
@@ -19,5 +23,13 @@ class TestStockArticleRepositoryImpl : StockArticleRepository {
     }
     override suspend fun getStockArticles(): List<StockArticleDto> {
         return testStockArticles
+    }
+
+    override suspend fun add() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun delete() {
+        TODO("Not yet implemented")
     }
 }
