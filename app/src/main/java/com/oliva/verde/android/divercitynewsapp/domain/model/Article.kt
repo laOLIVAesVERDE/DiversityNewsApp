@@ -1,5 +1,7 @@
 package com.oliva.verde.android.divercitynewsapp.domain.model
 
+import com.oliva.verde.android.divercitynewsapp.data.local.dto.StockArticleDto
+
 sealed class Article {
     data class ResponseArticle(
         val url: String = "url",
@@ -15,5 +17,9 @@ sealed class Article {
         val publishedAt : String = "publishedAt",
         val title : String = "title",
         val isReadFlag : Boolean = false
-    ) : Article()
+    ) : Article() {
+        fun StockArticle.toStockArticleDto() : StockArticleDto {
+            return StockArticleDto(id, url, urlToImage, publishedAt, title, isReadFlag)
+        }
+    }
 }
