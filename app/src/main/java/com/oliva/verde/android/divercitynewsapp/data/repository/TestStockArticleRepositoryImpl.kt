@@ -25,11 +25,11 @@ class TestStockArticleRepositoryImpl @Inject constructor(
         return testStockArticles
     }
 
-    override suspend fun add() {
-        TODO("Not yet implemented")
+    override suspend fun add(dto: StockArticleDto) {
+        dao.add(dto)
     }
 
-    override suspend fun delete() {
-        TODO("Not yet implemented")
+    override suspend fun delete(dto: StockArticleDto) {
+        dao.delete(dto)
     }
 }
