@@ -1,4 +1,4 @@
-package com.oliva.verde.android.divercitynewsapp.domain.use_case.get_stock_articles
+package com.oliva.verde.android.divercitynewsapp.domain.use_case.stock.get_articles
 
 import com.oliva.verde.android.divercitynewsapp.common.Resource
 import com.oliva.verde.android.divercitynewsapp.data.local.dto.toStockArticle

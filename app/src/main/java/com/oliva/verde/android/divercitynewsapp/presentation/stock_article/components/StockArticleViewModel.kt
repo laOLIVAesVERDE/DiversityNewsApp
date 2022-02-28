@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliva.verde.android.divercitynewsapp.common.Resource
-import com.oliva.verde.android.divercitynewsapp.domain.use_case.get_stock_articles.GetStockArticlesUseCase
+import com.oliva.verde.android.divercitynewsapp.domain.use_case.stock.get_articles.GetStockArticlesUseCase
 import com.oliva.verde.android.divercitynewsapp.presentation.stock_article.StockArticleListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
