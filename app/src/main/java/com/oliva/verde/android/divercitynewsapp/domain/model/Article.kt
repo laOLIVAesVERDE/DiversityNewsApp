@@ -18,7 +18,7 @@ sealed class Article {
         val title : String = "title",
         val isReadFlag : Boolean = false
     ) : Article() {
-        fun StockArticle.toStockArticleDto() : StockArticleDto {
+        fun toStockArticleDto() : StockArticleDto {
             return StockArticleDto(id, url, urlToImage, publishedAt, title, isReadFlag)
         }
     }
