@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class RemoveArticleUseCase @Inject constructor(
+class DeleteArticleUseCase @Inject constructor(
     private val stockArticleRepository: StockArticleRepository
 ) {
     operator fun invoke(stockArticle: Article.StockArticle): Flow<Resource<Boolean>> = flow {
         try {
             val dto = stockArticle.toStockArticleDto()
-            stockArticleRepository.add(dto)
+            stockArticleRepository.delete(dto)
         } catch (e: Throwable) {
             emit(Resource.Error<Boolean>(e.localizedMessage ?: "An unexpected error occurred"))
         }
