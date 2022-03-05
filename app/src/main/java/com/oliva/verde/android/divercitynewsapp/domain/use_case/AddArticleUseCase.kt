@@ -12,9 +12,10 @@ class AddArticleUseCase @Inject constructor(
 ) {
     operator fun invoke(stockArticle: Article.StockArticle): Flow<Resource<Boolean>> = flow {
         try {
-            stockArticleRepository.add()
-        } catch () {
-
+            val dto = stockArticle.toStockArticleDto()
+            stockArticleRepository.add(dto)
+        } catch (e: Throwable) {
+            emit(Resource.Error<Boolean>(e.localizedMessage ?: "An unexpected error occurred"))
         }
     }
 }
