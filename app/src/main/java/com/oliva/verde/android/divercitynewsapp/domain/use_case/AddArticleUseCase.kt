@@ -14,6 +14,7 @@ class AddArticleUseCase @Inject constructor(
         try {
             val dto = stockArticle.toStockArticleDto()
             stockArticleRepository.add(dto)
+            emit(Resource.Success<Boolean>(true))
         } catch (e: Throwable) {
             emit(Resource.Error<Boolean>(e.localizedMessage ?: "An unexpected error occurred"))
         }
