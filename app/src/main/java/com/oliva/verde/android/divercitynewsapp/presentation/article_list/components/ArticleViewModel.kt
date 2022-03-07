@@ -27,13 +27,6 @@ class ArticleViewModel @Inject constructor(
         loadArticles()
     }
 
-    /**
-     * ViewModelScope は、アプリで ViewModel ごとに定義される。
-     * このスコープ内で起動されたすべてのコルーチンは、ViewModel が消去されると自動的にキャンセルされる。
-     * ViewModelがアクティブな場合にのみ行う必要がある作業があるとき、コルーチンが役に立つ。
-     * 例：レイアウト用のデータを計算している場合、作業を ViewModel にスコープする必要があるため、
-     * 　　ViewModel が消去されると、作業はリソースの消費を避けるために自動的にキャンセルされる。
-     */
     private fun loadArticles(searchWord: String = "meta") {
         getArticlesUseCase(searchWord).onEach { result ->
             Log.d("confirm", "${result.data}")
@@ -52,10 +45,4 @@ class ArticleViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
-    suspend fun insertTargetArticle(stockArticle: Article.StockArticle) {
-//        repository.insertArticle(stockArticle)
-    }
-
-
 }
