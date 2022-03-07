@@ -7,7 +7,7 @@ import com.oliva.verde.android.divercitynewsapp.domain.model.Article
 @Entity
 data class StockArticleDto (
     @PrimaryKey(autoGenerate = true)
-    val id : Long,
+    val id : Long = 0,
     val url : String = "url",
     val urlToImage : String? = "urlToImage",
     val publishedAt : String = "publishedAt",
