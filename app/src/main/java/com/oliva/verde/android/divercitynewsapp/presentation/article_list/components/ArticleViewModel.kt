@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliva.verde.android.divercitynewsapp.common.Resource
 import com.oliva.verde.android.divercitynewsapp.domain.model.Article
+import com.oliva.verde.android.divercitynewsapp.domain.use_case.AddArticleUseCase
 import com.oliva.verde.android.divercitynewsapp.domain.use_case.get_articles.GetArticlesUseCase
 import com.oliva.verde.android.divercitynewsapp.presentation.article_list.ArticleListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
-    private val getArticlesUseCase: GetArticlesUseCase
+    private val getArticlesUseCase: GetArticlesUseCase,
+    private val addArticleUseCase: AddArticleUseCase
 ) : ViewModel() {
     private val _state = mutableStateOf(ArticleListState())
     val state: State<ArticleListState> = _state
