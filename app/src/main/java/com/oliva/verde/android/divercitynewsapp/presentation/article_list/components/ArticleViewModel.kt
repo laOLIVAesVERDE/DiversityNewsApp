@@ -45,4 +45,22 @@ class ArticleViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    private fun addArticle(article: Article.ResponseArticle) {
+        addArticleUseCase.invoke(article).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    _state.value = ArticleListState(isAddSuccess = true)
+                }
+                is Resource.Error -> {
+                    _state.value = ArticleListState(
+                        error = result.message ?: "An unexpected error occurred"
+                    )
+                }
+                is Resource.Loading -> {
+                    _state.value = ArticleListState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 }
