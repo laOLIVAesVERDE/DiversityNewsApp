@@ -8,7 +8,11 @@ sealed class Article {
         val urlToImage: String? = "urlToImage",
         val publishedAt: String = "publishedAt",
         val title: String = "title"
-    ) : Article()
+    ) : Article() {
+        fun toStockArticleDto() : StockArticleDto {
+            return StockArticleDto(url = url, urlToImage = urlToImage, publishedAt = publishedAt, title = title)
+        }
+    }
 
     data class StockArticle (
         val id : Long,
