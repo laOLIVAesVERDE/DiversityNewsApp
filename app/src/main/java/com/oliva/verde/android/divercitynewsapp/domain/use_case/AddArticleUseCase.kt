@@ -10,9 +10,9 @@ import javax.inject.Inject
 class AddArticleUseCase @Inject constructor(
     private val stockArticleRepository: StockArticleRepository
 ) {
-    operator fun invoke(stockArticle: Article.StockArticle): Flow<Resource<Boolean>> = flow {
+    operator fun invoke(article: Article.ResponseArticle): Flow<Resource<Boolean>> = flow {
         try {
-            val dto = stockArticle.toStockArticleDto()
+            val dto = article.toStockArticleDto()
             stockArticleRepository.add(dto)
             emit(Resource.Success<Boolean>(true))
         } catch (e: Throwable) {
