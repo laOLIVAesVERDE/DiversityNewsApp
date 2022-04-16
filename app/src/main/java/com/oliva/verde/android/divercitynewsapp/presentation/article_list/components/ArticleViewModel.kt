@@ -29,7 +29,6 @@ class ArticleViewModel @Inject constructor(
 
     private fun loadArticles(searchWord: String = "meta") {
         getArticlesUseCase(searchWord).onEach { result ->
-            Log.d("confirm", "${result.data}")
             when (result) {
                 is Resource.Success -> {
                     _state.value = ArticleListState(articles = result.data ?: emptyList())
